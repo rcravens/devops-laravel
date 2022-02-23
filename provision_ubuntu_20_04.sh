@@ -38,7 +38,7 @@ python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-comple
 sudo ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Install all versions of PHP
-/bin/bash ./installers.php_all.sh
+/bin/bash ./installers/php_all.sh
 
 # Disable not used PHP FPM
 sudo systemctl disable php5.6-fpm
