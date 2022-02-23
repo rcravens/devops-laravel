@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 sudo newusers users.txt
 
 exit 1
