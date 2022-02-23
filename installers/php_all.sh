@@ -296,8 +296,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/8.0/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/8.0/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/8.0/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/8.0/fpm/pool.d/www.conf
+sudo sed -i "s/user = */user = $username/" /etc/php/8.0/fpm/pool.d/www.conf
+sudo sed -i "s/group = */group = $username/" /etc/php/8.0/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/8.0/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/8.0/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/8.0/fpm/pool.d/www.conf

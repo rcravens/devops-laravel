@@ -63,5 +63,9 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.2
 # Install apache
 /bin/bash ./installers/apache.sh $username
 
+# Install nginx
+/bin/bash ./installers/nginx.sh $username
+
+
 
 
