@@ -17,4 +17,4 @@ sudo su $username <<'EOF'
 EOF
 
 # Add Composer Global Bin To Path
-sudo printf "\nPATH=\"$(sudo su - $username -c 'composer config -g home 2>/dev/null')/vendor/bin:\$PATH\"\n" | sudo tee -a /home/$username/.profile
+#sudo printf "\nPATH=\"$(sudo su - $username -c 'composer config -g home 2>/dev/null')/vendor/bin:\$PATH\"\n" | sudo tee -a /home/$username/.profile
