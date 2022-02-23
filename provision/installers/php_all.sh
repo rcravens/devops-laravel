@@ -1,7 +1,5 @@
 #!/bin/bash
 
-username=$1
-
 # Install Some PPAs
 sudo apt-add-repository ppa:ondrej/php -y
 sudo apt-add-repository ppa:chris-lea/redis-server -y

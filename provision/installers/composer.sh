@@ -1,7 +1,5 @@
 #!/bin/bash
 
-username=$1
-
 # Install Composer
 sudo curl -sS https://getcomposer.org/installer | sudo php
 sudo mv composer.phar /usr/local/bin/composer

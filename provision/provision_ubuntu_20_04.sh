@@ -1,19 +1,12 @@
 #!/bin/bash
 
 # Save current directory and cd into script path
-initial_working_directory=$(pwd)
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-echo "current_working_directory = $initial_working_directory"
-echo "parent_path = $parent_path"
-echo "first var = $0"
-echo "second var = $1"
 cd "$parent_path"
 
 # Load the config file
 source ./config.sh
 
 # Create deployment user
-username=deploy
 sudo userdel -r $username
 sudo newusers users.txt
 sudo usermod -aG sudo $username
@@ -61,22 +54,22 @@ sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.2
 sudo update-alternatives --set php-config /usr/bin/php-config7.2
 
 # Install composer
-source ./installers/composer.sh $username
+source ./installers/composer.sh
 
 # Install apache
-source ./installers/apache.sh $username
+source ./installers/apache.sh
 
 # Install nginx
-source ./installers/nginx.sh $username
+source ./installers/nginx.sh
 
 # Install node
-source ./installers/node.sh $username
+source ./installers/node.sh
 
 # Install sqlite
-source ./installers/sqlite.sh $username
+source ./installers/sqlite.sh
 
 # Install mysql
-source ./installers/mysql.sh $username
+source ./installers/mysql.sh
 
 # Return back to the original directory
 cd $initial_working_directory

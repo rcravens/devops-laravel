@@ -1,7 +1,5 @@
 #!/bin/bash
 
-username=$1
-
 # Install Nginx
 sudo apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages nginx
 

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-username=$1
-
 # Install Apache
 sudo apt-get install -y apache2 libapache2-mod-fcgid
 sudo sed -i "s/www-data/$username/" /etc/apache2/envvars
