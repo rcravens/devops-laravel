@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# Save current directory and cd into script path
+initial_working_directory=$(pwd)
+cd "$(dirname "$0")"
+
+exit 1
+
 # Load the config file
-source config.sh
+source ./config.sh
 
 # Create deployment user
 username=deploy
@@ -66,6 +72,7 @@ source ./installers/node.sh $username
 # Install sqllite
 source ./installers/sqlite.sh $username
 
-
+# Return back to the original directory
+cd $initial_working_directory
 
 
