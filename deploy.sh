@@ -32,6 +32,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     /usr/bin/composer install
     /usr/bin/npm install
 
+
     # create symlinks
     title Activation
     /bin/bash /srv/code/web/scripts/activate.sh $foldername
