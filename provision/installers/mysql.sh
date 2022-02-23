@@ -1,27 +1,30 @@
 #!/bin/bash
 
 # Install MySQL
-sudo echo "mysql-server mysql-server/root_password password $mysql_root_password" | sudo debconf-set-selections
-sudo echo "mysql-server mysql-server/root_password_again password $mysql_root_password" | sudo debconf-set-selections
+sudo echo "mysql-server mysql-server/root_password password $db_root_password" | sudo debconf-set-selections
+sudo echo "mysql-server mysql-server/root_password_again password $db_root_password" | sudo debconf-set-selections
 sudo apt-get install -y mysql-server
 
 # Configure MySQL 8 Remote Access and Native Pluggable Authentication
-sudo cat > /etc/mysql/conf.d/mysqld.cnf << EOF
+sudo su
+cat > /etc/mysql/conf.d/mysqld.cnf << EOF
 [mysqld]
 bind-address = 0.0.0.0
 default_authentication_plugin = mysql_native_password
 EOF
 
 # Configure MySQL Password Lifetime
-sudo echo "default_password_lifetime = 0" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+echo "default_password_lifetime = 0" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Configure MySQL Remote Access
-sudo sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+exit
+
 sudo service mysql restart
 
-export MYSQL_PWD=$mysql_root_password
+export MYSQL_PWD=$db_root_password
 
-sudo mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$mysql_root_password';"
+sudo mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$db_root_password';"
 sudo mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
 sudo mysql --user="root" -e "CREATE USER 'homestead'@'0.0.0.0' IDENTIFIED BY 'secret';"
 sudo mysql --user="root" -e "CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';"
@@ -35,4 +38,7 @@ sudo tee /home/vagrant/.my.cnf <<EOL
 character-set-server=utf8mb4
 collation-server=utf8mb4_bin
 EOL
+
 sudo service mysql restart
+
+unset MYSQL_PWD

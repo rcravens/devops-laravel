@@ -5,5 +5,5 @@
 # Deployment user
 username=deploy
 
-# MySql
-mysql_root_password=secret
+# Database
+db_root_password=secret
