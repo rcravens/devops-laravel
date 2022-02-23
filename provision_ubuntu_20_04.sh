@@ -120,8 +120,50 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.0/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.0/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = vagrant/" /etc/php/7.0/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = vagrant/" /etc/php/7.0/fpm/pool.d/www.conf
-sudo sed -i "s/listen\.owner.*/listen.owner = vagrant/" /etc/php/7.0/fpm/pool.d/www.conf
-sudo sed -i "s/listen\.group.*/listen.group = vagrant/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.0/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.0/fpm/pool.d/www.conf
+
+# PHP 7.1
+sudo apt-get install -y --allow-change-held-packages \
+php7.1-bcmath php7.1-bz2 php7.1-cgi php7.1-cli php7.1-common php7.1-curl php7.1-dba php7.1-dev php7.1-enchant \
+php7.1-fpm php7.1-gd php7.1-gmp php7.1-imap php7.1-interbase php7.1-intl php7.1-json php7.1-ldap php7.1-mbstring \
+php7.1-mcrypt php7.1-mysql php7.1-odbc php7.1-opcache php7.1-pgsql php7.1-phpdbg php7.1-pspell php7.1-readline \
+php7.1-recode php7.1-snmp php7.1-soap php7.1-sqlite3 php7.1-sybase php7.1-tidy php7.1-xdebug php7.1-xml php7.1-xmlrpc \
+php7.1-xsl php7.1-zip php7.1-imagick php7.1-memcached php7.1-redis
+
+# Configure php.ini for CLI
+sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.1/cli/php.ini
+sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.1/cli/php.ini
+sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.1/cli/php.ini
+sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.1/cli/php.ini
+
+# Configure Xdebug
+sudo echo "xdebug.remote_enable = 1" >> /etc/php/7.1/mods-available/xdebug.ini
+sudo echo "xdebug.remote_connect_back = 1" >> /etc/php/7.1/mods-available/xdebug.ini
+sudo echo "xdebug.remote_port = 9000" >> /etc/php/7.1/mods-available/xdebug.ini
+sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.1/mods-available/xdebug.ini
+sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.1/mods-available/opcache.ini
+
+# Configure php.ini for FPM
+sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/post_max_size = .*/post_max_size = 100M/" /etc/php/7.1/fpm/php.ini
+sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.1/fpm/php.ini
+
+sudo printf "[openssl]\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
+sudo printf "openssl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
+sudo printf "[curl]\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
+sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
+
+# Configure FPM
+sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.1/fpm/pool.d/www.conf
