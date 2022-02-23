@@ -18,7 +18,7 @@ sudo ln -sf /home/$username/.config/nginx/nginx.conf /etc/nginx/conf.d/nginx.con
 sudo phpdismod -s cli xdebug
 
 # Set The Nginx & PHP-FPM User
-sudo sed -i "s/user www-data;/user $username;/" /etc/nginx/nginx.conf
+sudo sed -i "s/user .*;/user $username;/" /etc/nginx/nginx.conf
 sudo sed -i "s/# server_names_hash_bucket_size.*/server_names_hash_bucket_size 64;/" /etc/nginx/nginx.conf
 
 
