@@ -38,7 +38,7 @@ python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-comple
 sudo ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Install all versions of PHP
-/bin/bash ./installers/php_all.sh
+/bin/bash ./installers/php_all.sh $username
 
 # Disable not used PHP FPM
 sudo systemctl disable php5.6-fpm
@@ -54,4 +54,9 @@ sudo update-alternatives --set php-config /usr/bin/php-config8.0
 sudo update-alternatives --set phpize /usr/bin/phpize8.0
 sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.2
 sudo update-alternatives --set php-config /usr/bin/php-config7.2
+
+# Install composer
+/bin/bash ./installers/composer.sh $username
+
+
 

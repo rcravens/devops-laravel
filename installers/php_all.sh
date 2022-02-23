@@ -1,3 +1,7 @@
+#!/bin/bash
+
+username=$1
+
 # Install Generic PHP packages
 sudo apt-get install -y --allow-change-held-packages \
 php-imagick php-memcached php-redis php-xdebug php-dev imagemagick mcrypt
