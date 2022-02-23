@@ -16,7 +16,7 @@ default_authentication_plugin = mysql_native_password
 EOF'
 
 # Configure MySQL Password Lifetime
-sudo echo "default_password_lifetime = 0" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo bash -c 'echo "default_password_lifetime = 0" >> /etc/mysql/mysql.conf.d/mysqld.cnf'
 
 # Configure MySQL Remote Access
 sudo sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -24,6 +24,9 @@ sudo sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/my
 sudo service mysql restart
 
 export MYSQL_PWD=$db_root_password
+
+echo "db_root_password=$db_root_password"
+echo "MYSQL_PWD=$MYSQL_PWD"
 
 sudo mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$db_root_password';"
 sudo mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
