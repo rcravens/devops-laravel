@@ -2,7 +2,11 @@
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
-cd "$(dirname "$0")"
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+echo "parent_path = $parent_path"
+echo "first var = $0"
+echo "second var = $1"
+cd $parent_path
 
 exit 1
 
