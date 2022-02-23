@@ -8,9 +8,6 @@ echo "parent_path = $parent_path"
 echo "first var = $0"
 echo "second var = $1"
 cd "$parent_path"
-pwd
-
-exit 1
 
 # Load the config file
 source ./config.sh
