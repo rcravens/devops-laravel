@@ -5,7 +5,7 @@ username=$1
 # Install Composer
 sudo curl -sS https://getcomposer.org/installer | sudo php
 sudo mv composer.phar /usr/local/bin/composer
-sudo chown -R $username:$username /home/$username/.config
+
 
 # Install Global Packages
 sudo su $username <<'EOF'
