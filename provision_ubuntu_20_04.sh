@@ -6,6 +6,7 @@ sudo userdel -r $username
 sudo newusers users.txt
 sudo usermod -aG sudo $username
 sudo usermod -aG adm $username
+sudo usermod -aG www-data $username
 sudo mkdir /home/$username/.config
 sudo chown -R $username:$username /home/$username/.config
 
@@ -21,16 +22,6 @@ locale-gen en_US.UTF-8
 
 sudo apt-get install -y software-properties-common curl gnupg debian-keyring debian-archive-keyring apt-transport-https \
 ca-certificates
-
-# Install Some PPAs
-sudo apt-add-repository ppa:ondrej/php -y
-sudo apt-add-repository ppa:chris-lea/redis-server -y
-
-# NodeJS
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-
-## Update Package Lists
-sudo apt-get update -y
 
 # Install Some Basic Packages
 sudo apt-get install -y build-essential dos2unix gcc git git-lfs libmcrypt4 libpcre3-dev libpng-dev chrony unzip make pv \
@@ -65,6 +56,9 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.2
 
 # Install nginx
 /bin/bash ./installers/nginx.sh $username
+
+# Install node
+/bin/bash ./installers/node.sh $username
 
 
 

@@ -15,3 +15,6 @@ sudo su $username <<'EOF'
 /usr/local/bin/composer global require "slince/composer-registry-manager=^2.0"
 /usr/local/bin/composer global require tightenco/takeout
 EOF
+
+# Add Composer Global Bin To Path
+sudo printf "\nPATH=\"$(sudo su - $username -c 'composer config -g home 2>/dev/null')/vendor/bin:\$PATH\"\n" | sudo tee -a /home/$username/.profile

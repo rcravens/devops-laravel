@@ -2,6 +2,13 @@
 
 username=$1
 
+# Install Some PPAs
+sudo apt-add-repository ppa:ondrej/php -y
+sudo apt-add-repository ppa:chris-lea/redis-server -y
+
+## Update Package Lists
+sudo apt-get update -y
+
 # Install Generic PHP packages
 sudo apt-get install -y --allow-change-held-packages \
 php-imagick php-memcached php-redis php-xdebug php-dev imagemagick mcrypt
