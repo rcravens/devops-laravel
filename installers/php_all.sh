@@ -43,8 +43,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/5.6/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/5.6/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/5.6/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/5.6/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/5.6/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/5.6/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/5.6/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/5.6/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/5.6/fpm/pool.d/www.conf
@@ -85,8 +85,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.0/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.0/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.0/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/7.0/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.0/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.0/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.0/fpm/pool.d/www.conf
@@ -127,8 +127,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.1/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.1/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/7.1/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.1/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.1/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.1/fpm/pool.d/www.conf
@@ -169,8 +169,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.2/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.2/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.2/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.2/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/7.2/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/7.2/fpm/pool.d/www.conf
 
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.2/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.2/fpm/pool.d/www.conf
@@ -212,8 +212,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.3/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.3/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.3/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.3/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/7.3/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/7.3/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.3/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.3/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.3/fpm/pool.d/www.conf
@@ -254,8 +254,8 @@ sudo printf "[curl]\n" | sudo tee -a /etc/php/7.4/fpm/php.ini
 sudo printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | sudo tee -a /etc/php/7.4/fpm/php.ini
 
 # Configure FPM
-sudo sed -i "s/user = www-data/user = $username/" /etc/php/7.4/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = $username/" /etc/php/7.4/fpm/pool.d/www.conf
+sudo sed -i "s/user.*/user = $username/" /etc/php/7.4/fpm/pool.d/www.conf
+sudo sed -i "s/group.*/group = $username/" /etc/php/7.4/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/7.4/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/7.4/fpm/pool.d/www.conf
 sudo sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.4/fpm/pool.d/www.conf
