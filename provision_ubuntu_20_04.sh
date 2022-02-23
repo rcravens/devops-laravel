@@ -5,6 +5,9 @@ username=deploy
 sudo userdel -r $username
 sudo newusers users.txt
 sudo usermod -aG sudo $username
+sudo usermod -aG adm $username
+
+exit 1
 
 # Update Package List
 sudo apt-get update
