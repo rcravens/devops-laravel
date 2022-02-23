@@ -60,5 +60,8 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.2
 # Install composer
 /bin/bash ./installers/composer.sh $username
 
+# Install apache
+/bin/bash ./installers/apache.sh $username
+
 
 
