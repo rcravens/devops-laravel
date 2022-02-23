@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -x
-
+# Create deployment user
+username=deploy
+sudo userdel -r $username
 sudo newusers users.txt
-
-exit 1
+sudo usermod -aG sudo $username
 
 # Update Package List
-apt-get update
+sudo apt-get update
 
 # Update System Packages
 apt-get upgrade -y
