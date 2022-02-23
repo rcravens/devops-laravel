@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load the config file
+source config.sh
+
 # Create deployment user
 username=deploy
 sudo userdel -r $username
@@ -31,7 +34,7 @@ python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-comple
 sudo ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Install all versions of PHP
-/bin/bash ./installers/php_all.sh $username
+source ./installers/php_all.sh $username
 
 # Disable not used PHP FPM
 sudo systemctl disable php5.6-fpm
@@ -49,16 +52,19 @@ sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.2
 sudo update-alternatives --set php-config /usr/bin/php-config7.2
 
 # Install composer
-/bin/bash ./installers/composer.sh $username
+source ./installers/composer.sh $username
 
 # Install apache
-/bin/bash ./installers/apache.sh $username
+source ./installers/apache.sh $username
 
 # Install nginx
-/bin/bash ./installers/nginx.sh $username
+source ./installers/nginx.sh $username
 
 # Install node
-/bin/bash ./installers/node.sh $username
+source ./installers/node.sh $username
+
+# Install sqllite
+source ./installers/sqlite.sh $username
 
 
 
