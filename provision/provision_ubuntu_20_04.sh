@@ -72,8 +72,11 @@ source ./installers/nginx.sh $username
 # Install node
 source ./installers/node.sh $username
 
-# Install sqllite
+# Install sqlite
 source ./installers/sqlite.sh $username
+
+# Install mysql
+source ./installers/mysql.sh $username
 
 # Return back to the original directory
 cd $initial_working_directory
