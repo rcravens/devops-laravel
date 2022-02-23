@@ -7,8 +7,6 @@ sudo newusers users.txt
 sudo usermod -aG sudo $username
 sudo usermod -aG adm $username
 
-exit 1
-
 # Update Package List
 sudo apt-get update
 
@@ -80,8 +78,9 @@ printf "[curl]\n" | tee -a /etc/php/5.6/fpm/php.ini
 printf "curl.cainfo = /etc/ssl/certs/ca-certificates.crt\n" | tee -a /etc/php/5.6/fpm/php.ini
 
 # Configure FPM
-sed -i "s/user = www-data/user = vagrant/" /etc/php/5.6/fpm/pool.d/www.conf
-sed -i "s/group = www-data/group = vagrant/" /etc/php/5.6/fpm/pool.d/www.conf
-sed -i "s/listen\.owner.*/listen.owner = vagrant/" /etc/php/5.6/fpm/pool.d/www.conf
-sed -i "s/listen\.group.*/listen.group = vagrant/" /etc/php/5.6/fpm/pool.d/www.conf
+sed -i "s/user = www-data/user = $username/" /etc/php/5.6/fpm/pool.d/www.conf
+sed -i "s/group = www-data/group = $username/" /etc/php/5.6/fpm/pool.d/www.conf
+sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/5.6/fpm/pool.d/www.conf
+sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/5.6/fpm/pool.d/www.conf
 sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/5.6/fpm/pool.d/www.conf
+
