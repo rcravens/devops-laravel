@@ -43,6 +43,10 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # create symlinks
     title Activation
+    is_new_dot_env=false
+    if [ ! -f $deploy_directory/.env ]; then
+      is_new_dot_env=true
+    fi
     source $parent_path/activate.sh
 
     # migrations
@@ -52,7 +56,9 @@ foldername=$(date +%Y%m%d%H%M%S)
       else
         title Migrations
         cd $deploy_directory/releases/$foldername
-        sudo -u $username php artisan key:generate
+        if [ "$is_new_dot_env" = true ]; then
+          sudo -u $username php artisan key:generate
+        fi
         sudo -u $username php artisan migrate --force
       fi
     fi
