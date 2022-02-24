@@ -17,6 +17,13 @@ cd "$parent_path"
 source ../config.sh
 
 {
+    # git short hash of remote repo
+    cd $deploy_directory/current/
+    remote_git_line=$(git ls-remote | head -n 1)
+    remote_hash=${remote_git_line:0:7}
+    local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
+    echo "remote_hash=$remote_hash, local_hash=$local_hash"
+
     # create a directory for git clone
     temp_directory_name=$(date +%Y%m%d%H%M%S)
 
@@ -29,14 +36,9 @@ source ../config.sh
     cd $deploy_directory/releases
     echo  "folder=$deploy_directory/releases/$foldername"
 
-    # git short hash of remote repo
-    remote_git_line=$(git ls-remote | head -n 1)
-    remote_hash=${remote_git_line:0:7}
     # git clone into this new directory
     sudo -u $username git clone --depth 1 $repo $temp_directory_name
     cd $foldername
-    local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
-    echo "remote_hash=$remote_hash, local_hash=$local_hash"
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
 
 
