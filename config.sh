@@ -11,4 +11,5 @@ db_root_password=secret
 # Deployment
 deploy_directory=/home/$username/web
 repo=https://github.com/rcravens/laravel.git
+app_domain=laravel-cravens.centralus.cloudapp.azure.com
 is_laravel=true
