@@ -5,6 +5,23 @@
 # create symlinks
 
 if [ "$is_laravel" = true ]; then
+
+  # initial setup
+  if [ ! -f $deploy_directory/.env ]; then
+      sudo cp $parent_path/.env $deploy_directory/.env
+      sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
+      echo 'about to generate key'
+      pwd
+      php artisan key:generate
+  fi
+  if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
+      sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
+      sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/laravel.conf
+      sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/laravel.conf
+      sudo ln -s /etc/nginx/sites-available/laravel.conf /etc/nginx/sites-enabled/laravel.conf
+      sudo service nginx restart
+  fi
+
   if [ ! -f .env ]; then
       sudo /bin/ln -sf $deploy_directory/.env .env
   fi

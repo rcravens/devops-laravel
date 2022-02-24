@@ -36,28 +36,11 @@ foldername=$(date +%Y%m%d%H%M%S)
     echo 'after cloning'
     pwd
 
-    # initial setup
-    if [ "$is_laravel" = true ]; then
-      if [ ! -f $deploy_directory/.env ]; then
-          sudo cp $parent_path/.env $deploy_directory/.env
-          sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
-          echo 'about to generate key'
-          pwd
-          php artisan key:generate
-      fi
-      if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
-          sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
-          sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/laravel.conf
-          sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/laravel.conf
-          sudo ln -s /etc/nginx/sites-available/laravel.conf /etc/nginx/sites-enabled/laravel.conf
-          sudo service nginx restart
-      fi
-    fi
-
     # composer install
     title "Dependencies"
     sudo -u $username /usr/bin/composer install
     sudo -u $username /usr/bin/npm install
+
 
     # create symlinks
     title Activation
