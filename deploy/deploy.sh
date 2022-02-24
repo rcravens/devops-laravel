@@ -30,7 +30,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     echo  "folder=$deploy_directory/releases/$foldername"
 
     # git clone into this new directory
-    sudo git clone --depth 1 $repo $foldername
+    sudo -u $username git clone --depth 1 $repo $foldername
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
     cd $foldername
     echo 'after cloning'
