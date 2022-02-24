@@ -21,8 +21,6 @@ source ../config.sh
 foldername=$(date +%Y%m%d%H%M%S)
 
 {
-    sudo su vagrant
-
     # create the directory structure
     title "Deploying: $foldername"
     if [ ! -d $deploy_directory/releases ]; then
@@ -34,12 +32,13 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # git clone into this new directory
     sudo git clone --depth 1 $repo $foldername
+    sudo chown -R $username:$username $deploy_directory/releases/$foldername
 
     # composer install
     title "Dependencies"
     cd $foldername
-    /usr/bin/composer install
-    /usr/bin/npm install
+    sudo -u deploy /usr/bin/composer install
+    sudo -u deploy /usr/bin/npm install
 
     # create symlinks
     title Activation
@@ -54,8 +53,6 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # cleanup
     source /srv/code/web/scripts/clean_up.sh
-
-    exit
 } 2>&1
 
 # Return back to the original directory
