@@ -37,7 +37,7 @@ source ../config.sh
     echo  "folder=$deploy_directory/releases/$foldername"
 
     # git clone into this new directory
-    sudo -u $username git clone --depth 1 $repo $temp_directory_name
+    sudo -u $username git clone --depth 1 $repo $foldername
     cd $deploy_directory/releases/$foldername
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
 
