@@ -95,6 +95,57 @@ source ./installers/postfix.sh
 sudo systemctl enable supervisor.service
 sudo service supervisor start
 
+# One last upgrade check
+sudo apt-get upgrade -y
+
+# Clean Up
+sudo apt -y autoremove
+sudo apt -y clean
+sudo chown -R $username:$username /home/$username
+sudo chown -R $username:$username /usr/local/bin
+
+# Delete Linux source
+sudo dpkg --list \
+    | sudo awk '{ print $2 }' \
+    | sudo grep linux-source \
+    | sudo xargs apt-get -y purge;
+
+# delete docs packages
+sudo dpkg --list \
+    | sudo awk '{ print $2 }' \
+    | sudo grep -- '-doc$' \
+    | sudo xargs apt-get -y purge;
+
+# Delete obsolete networking
+sudo apt-get -y purge ppp pppconfig pppoeconf
+
+# Configure chronyd to fix clock-drift when VM-host sleeps/hibernates.
+sudo sed -i "s/^makestep.*/makestep 1 -1/" /etc/chrony/chrony.conf
+
+# Delete oddities
+sudo apt-get -y purge popularity-contest installation-report command-not-found friendly-recovery laptop-detect
+
+# Remove docs
+sudo rm -rf /usr/share/doc/*
+
+# Remove caches
+sudo find /var/cache -type f -exec rm -rf {} \;
+
+# delete any logs that have built up during the install
+sudo find /var/log/ -name *.log -exec rm -f {} \;
+
+# Disable sleep https://github.com/laravel/homestead/issues/1624
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+# What are you doing Ubuntu?
+# https://askubuntu.com/questions/1250974/user-root-cant-write-to-file-in-tmp-owned-by-someone-else-in-20-04-but-can-in
+sudo sysctl fs.protected_regular=0
+
+# Enable Swap Memory
+sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+sudo /sbin/mkswap /var/swap.1
+sudo /sbin/swapon /var/swap.1
+
 # Return back to the original directory
 cd $initial_working_directory
 
