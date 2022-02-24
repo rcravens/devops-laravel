@@ -17,6 +17,6 @@ Before running either provisioning or deployments, the application configuration
 * `app_domain` - The domain for the web application (e.g., `example.com`)
 * `is_laravel` - A boolean indicating the project is Laravel based. Acceptable values: `true`, `false`
 
-
 ### Provisioning
+Review, make changes for the desired configuration, and execute the `provision/provision_ubuntu_20_04.sh` script. This will 
 
