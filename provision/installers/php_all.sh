@@ -26,11 +26,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/5.6/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/5.6/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.remote_enable = 1" >> /etc/php/5.6/mods-available/xdebug.ini
-sudo echo "xdebug.remote_connect_back = 1" >> /etc/php/5.6/mods-available/xdebug.ini
-sudo echo "xdebug.remote_port = 9000" >> /etc/php/5.6/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/5.6/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/5.6/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.remote_enable = 1" >> /etc/php/5.6/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_connect_back = 1" >> /etc/php/5.6/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_port = 9000" >> /etc/php/5.6/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/5.6/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/5.6/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/5.6/fpm/php.ini
@@ -69,11 +69,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.0/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.0/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.remote_enable = 1" >> /etc/php/7.0/mods-available/xdebug.ini
-sudo echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/mods-available/xdebug.ini
-sudo echo "xdebug.remote_port = 9000" >> /etc/php/7.0/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.0/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.0/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.remote_enable = 1" >> /etc/php/7.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_port = 9000" >> /etc/php/7.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/7.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/7.0/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.0/fpm/php.ini
@@ -111,11 +111,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.1/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.1/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.remote_enable = 1" >> /etc/php/7.1/mods-available/xdebug.ini
-sudo echo "xdebug.remote_connect_back = 1" >> /etc/php/7.1/mods-available/xdebug.ini
-sudo echo "xdebug.remote_port = 9000" >> /etc/php/7.1/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.1/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.1/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.remote_enable = 1" >> /etc/php/7.1/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_connect_back = 1" >> /etc/php/7.1/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.remote_port = 9000" >> /etc/php/7.1/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/7.1/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/7.1/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.1/fpm/php.ini
@@ -153,11 +153,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.2/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.2/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.mode = debug" >> /etc/php/7.2/mods-available/xdebug.ini
-sudo echo "xdebug.discover_client_host = true" >> /etc/php/7.2/mods-available/xdebug.ini
-sudo echo "xdebug.client_port = 9003" >> /etc/php/7.2/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.2/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.2/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.mode = debug" >> /etc/php/7.2/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.discover_client_host = true" >> /etc/php/7.2/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.client_port = 9003" >> /etc/php/7.2/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/7.2/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/7.2/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.2/fpm/php.ini
@@ -196,11 +196,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.3/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.3/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.mode = debug" >> /etc/php/7.3/mods-available/xdebug.ini
-sudo echo "xdebug.discover_client_host = true" >> /etc/php/7.3/mods-available/xdebug.ini
-sudo echo "xdebug.client_port = 9003" >> /etc/php/7.3/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.3/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.3/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.mode = debug" >> /etc/php/7.3/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.discover_client_host = true" >> /etc/php/7.3/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.client_port = 9003" >> /etc/php/7.3/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/7.3/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/7.3/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.3/fpm/php.ini
@@ -238,11 +238,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.4/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.4/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.mode = debug" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo echo "xdebug.discover_client_host = true" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo echo "xdebug.client_port = 9003" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/7.4/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/7.4/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.mode = debug" >> /etc/php/7.4/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.discover_client_host = true" >> /etc/php/7.4/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.client_port = 9003" >> /etc/php/7.4/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/7.4/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/7.4/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.4/fpm/php.ini
@@ -280,11 +280,11 @@ sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/8.0/cli/php.ini
 sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/8.0/cli/php.ini
 
 # Configure Xdebug
-sudo echo "xdebug.mode = debug" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo echo "xdebug.discover_client_host = true" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo echo "xdebug.client_port = 9003" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo echo "xdebug.max_nesting_level = 512" >> /etc/php/8.0/mods-available/xdebug.ini
-sudo echo "opcache.revalidate_freq = 0" >> /etc/php/8.0/mods-available/opcache.ini
+sudo bash -c 'echo "xdebug.mode = debug" >> /etc/php/8.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.discover_client_host = true" >> /etc/php/8.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.client_port = 9003" >> /etc/php/8.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "xdebug.max_nesting_level = 512" >> /etc/php/8.0/mods-available/xdebug.ini'
+sudo bash -c 'echo "opcache.revalidate_freq = 0" >> /etc/php/8.0/mods-available/opcache.ini'
 
 # Configure php.ini for FPM
 sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.0/fpm/php.ini
