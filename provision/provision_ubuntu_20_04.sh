@@ -82,6 +82,8 @@ source ./installers/memcache.sh
 # Install beanstalk
 source ./installers/beanstalk.sh
 
+# Install mailhog
+source ./installers/mailhog.sh
 
 
 # Return back to the original directory
