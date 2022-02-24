@@ -37,7 +37,7 @@ mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRAN
 mysql --user="root" -e "FLUSH PRIVILEGES;"
 # mysql --user="root" -e "CREATE DATABASE homestead character set UTF8mb4 collate utf8mb4_bin;"
 
-sudo tee /home/vagrant/.my.cnf <<EOL
+sudo tee /home/$username/.my.cnf <<EOL
 [mysqld]
 character-set-server=utf8mb4
 collation-server=utf8mb4_bin

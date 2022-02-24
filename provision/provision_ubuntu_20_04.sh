@@ -71,7 +71,9 @@ source ./installers/node.sh
 source ./installers/sqlite.sh
 
 # Install mysql
-source ./installers/mysql.sh
+#source ./installers/mysql.sh
+
+
 
 # Return back to the original directory
 cd $initial_working_directory
