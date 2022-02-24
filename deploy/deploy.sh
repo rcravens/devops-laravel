@@ -38,7 +38,7 @@ foldername=$(date +%Y%m%d%H%M%S)
       if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
           sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
           sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/laravel.conf
-          sudo sed -i "s|/root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/laravel.conf
+          sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/laravel.conf
           sudo ln -s /etc/nginx/sites-available/laravel.conf /etc/nginx/sites-enabled/laravel.conf
           sudo service nginx restart
       fi
