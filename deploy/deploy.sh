@@ -16,7 +16,6 @@ cd "$parent_path"
 # Load the config file
 source ../config.sh
 
-
 # create a directory for git clone
 foldername=$(date +%Y%m%d%H%M%S)
 
@@ -42,17 +41,17 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # create symlinks
     title Activation
-    source activate.sh
+    source $parent_path/activate.sh
 
     # migrations
     title Migrations
     php artisan migrate --force
 
     # restart services
-    source restart.sh
+    source $parent_path/restart.sh
 
     # cleanup
-    source clean_up.sh
+    source $parent_path/clean_up.sh
 } 2>&1
 
 # Return back to the original directory
