@@ -33,7 +33,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     if [ "$is_laravel" = true ]; then
       if [ ! -f $deploy_directory/.env ]; then
           sudo cp $parent_path/.env $deploy_directory/.env
-          sudo sed -i "s/APP_URL=.*/APP_URL=http://$app_domain/" $deploy_directory/.env
+          sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
       fi
       if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
           sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
