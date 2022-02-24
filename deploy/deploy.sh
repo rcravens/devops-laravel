@@ -33,8 +33,9 @@ foldername=$(date +%Y%m%d%H%M%S)
     sudo -u $username git clone --depth 1 $repo $foldername
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
     cd $foldername
-    echo 'after cloning'
-    pwd
+
+    git_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/@\1/")
+    echo "git_hash=$git_hash"
 
     # composer install
     title "Dependencies"
@@ -42,7 +43,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     sudo -u $username /usr/bin/npm install
 
     # create symlinks
-    title Activation
+    title "Activation"
     is_new_dot_env=false
     if [ ! -f $deploy_directory/.env ]; then
       is_new_dot_env=true
@@ -64,9 +65,11 @@ foldername=$(date +%Y%m%d%H%M%S)
     fi
 
     # restart services
+    title "Restarting"
     source $parent_path/restart.sh
 
     # cleanup
+    title "Cleanup"
     source $parent_path/clean_up.sh
 } 2>&1
 
