@@ -85,6 +85,15 @@ source ./installers/beanstalk.sh
 # Install mailhog
 source ./installers/mailhog.sh
 
+# Install ngrok
+source ./installers/ngrok.sh
+
+# Install postfix
+source ./installers/postfix.sh
+
+# Configure Supervisor
+sudo systemctl enable supervisor.service
+sudo service supervisor start
 
 # Return back to the original directory
 cd $initial_working_directory
