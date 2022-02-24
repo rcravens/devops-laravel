@@ -74,7 +74,7 @@ source ../config.sh
         if grep -Fxq "GIT_HASH=" $deploy_directory/.env
         then
           echo "GIT_HASH= was found (new hash=$remote_hash) (foldername=$foldername)"
-          sudo -u $username sed -i "s|GIT_HASH=.*;|GIT_HASH=$foldername|" $deploy_directory/.env
+          sudo -u $username sed -i "s|GIT_HASH=.*|GIT_HASH=$foldername|" $deploy_directory/.env
         else
           echo 'GIT_HASH= was not found'
           sudo -u $username bash -c 'echo "GIT_HASH=$remote_hash" >> $deploy_directory/.env'
