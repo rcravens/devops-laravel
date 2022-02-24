@@ -29,7 +29,7 @@ source ../config.sh
     fi
 
     # create a directory for git clone
-    foldername=$local_hash
+    foldername=$remote_hash
     title "Deploying: $foldername"
 
     # create the directory structure
@@ -63,12 +63,19 @@ source ../config.sh
       if [ ! -f $deploy_directory/.env ]; then
           echo "NO .env FILE FOUND AT $deploy_directory/.env"
       else
-        title Migrations
+        title "Migrations"
         cd $deploy_directory/releases/$foldername
         if [ "$is_new_dot_env" = true ]; then
           sudo -u $username php artisan key:generate
         fi
         sudo -u $username php artisan migrate --force
+
+        # publish git hash into .env
+        if [ grep -Fxq "GIT_HASH=" $deploy_directory/.env ]; then
+          echo "GIT_HASH=$remote_hash" >> $deploy_directory/.env
+        else
+          sudo sed -i "s|GIT_HASH=.*;|GIT_HASH=$remote_hash|" $deploy_directory/.env
+        fi
       fi
     fi
 
