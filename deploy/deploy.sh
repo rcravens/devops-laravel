@@ -25,7 +25,7 @@ source ../config.sh
     echo "remote_hash=$remote_hash, local_hash=$local_hash"
 
     # create a directory for git clone
-    temp_directory_name=$(date +%Y%m%d%H%M%S)
+    foldername=$(date +%Y%m%d%H%M%S)
     title "Deploying: $deploy_directory"
 
     # create the directory structure
