@@ -1,46 +1,48 @@
 #!/bin/bash
 
-cd /srv/code/web/releases/$1
+# we are inside the dated releases directory
 
 # create symlinks
 
-if [ ! -f .env ]; then
-    /bin/ln -sf /srv/code/web/.env .env
+if [ "$is_laravel" = true ]; then
+  if [ ! -f .env ]; then
+      /bin/ln -sf $deploy_directory/.env .env
+  fi
+
+  if [ ! -d $deploy_directory/cache ]; then
+      sudo mkdir $deploy_directory/cache
+      sudo chown -R $username:$username $deploy_directory/cache
+  fi
+  if [ ! -d public/cache ]; then
+      sudo -u $username /bin/ln -sf $deploy_directory/cache public/cache
+  fi
+
+  if [ ! -d $deploy_directory/data ]; then
+      mkdir $deploy_directory/data
+      sudo chown -R $username:$username $deploy_directory/data
+  fi
+  if [ ! -d public/data ]; then
+      /bin/ln -sf $deploy_directory/data public/data
+  fi
+
+  if [ ! -d $deploy_directory/storage ]; then
+      sudo mkdir $deploy_directory/storage
+      sudo mkdir $deploy_directory/storage/backups
+      sudo mkdir $deploy_directory/storage/app
+      sudo mkdir $deploy_directory/storage/framework
+      sudo mkdir $deploy_directory/storage/framework/cache
+      sudo mkdir $deploy_directory/storage/framework/sessions
+      sudo mkdir $deploy_directory/storage/framework/views
+      sudo mkdir $deploy_directory/storage/logs
+      sudo /bin/chown -R $username:$username $deploy_directory/storage
+  fi
+
+  sudo /bin/rm -rf storage
+  sudo /bin/ln -sf $deploy_directory/storage storage
 fi
 
-if [ ! -d /srv/code/web/cache ]; then
-    mkdir /srv/code/web/cache
-    #chown -R rcravens:rcravens /srv/code/web/cache
-fi
-if [ ! -d public/cache ]; then
-    /bin/ln -sf /srv/code/web/cache public/cache
-fi
-
-if [ ! -d /srv/code/web/data ]; then
-    mkdir /srv/code/web/data
-    #/bin/chown -R rcravens:rcravens /srv/code/web/data
-fi
-if [ ! -d public/data ]; then
-    /bin/ln -sf /srv/code/web/data public/data
-fi
-
-if [ ! -d /srv/code/web/storage ]; then
-    mkdir /srv/code/web/storage
-    mkdir /srv/code/web/storage/backups
-    mkdir /srv/code/web/storage/app
-    mkdir /srv/code/web/storage/framework
-    mkdir /srv/code/web/storage/framework/cache
-    mkdir /srv/code/web/storage/framework/sessions
-    mkdir /srv/code/web/storage/framework/views
-    mkdir /srv/code/web/storage/logs
-    /bin/chown -R rcravens:rcravens /srv/code/web/storage
-fi
-
-/bin/rm -rf storage
-/bin/ln -sf /srv/code/web/storage storage
-
-cd /srv/code/web
-/usr/bin/unlink current
-/bin/ln -sf /srv/code/web/releases/$1 current
-#/bin/chown rcravens:rcravens /srv/code/web/current
+cd $deploy_directory
+sudo /usr/bin/unlink current
+sudo /bin/ln -sf $deploy_directory/releases/$foldername current
+sudo chown $username:$username $deploy_directory/current
 

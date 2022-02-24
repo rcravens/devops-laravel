@@ -37,22 +37,22 @@ foldername=$(date +%Y%m%d%H%M%S)
     # composer install
     title "Dependencies"
     cd $foldername
-    sudo -u deploy /usr/bin/composer install
-    sudo -u deploy /usr/bin/npm install
+    sudo -u $username /usr/bin/composer install
+    sudo -u $username /usr/bin/npm install
 
     # create symlinks
     title Activation
-    source /srv/code/web/scripts/activate.sh $foldername
+    source activate.sh
 
     # migrations
     title Migrations
-    source artisan migrate --force
+    php artisan migrate --force
 
     # restart services
-    source /srv/code/web/scripts/restart.sh
+    source restart.sh
 
     # cleanup
-    source /srv/code/web/scripts/clean_up.sh
+    source clean_up.sh
 } 2>&1
 
 # Return back to the original directory

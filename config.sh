@@ -11,3 +11,4 @@ db_root_password=secret
 # Deployment
 deploy_directory=/home/$username/web
 repo=https://github.com/rcravens/laravel.git
+is_laravel=true
