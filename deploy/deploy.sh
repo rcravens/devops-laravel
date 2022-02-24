@@ -26,9 +26,9 @@ source ../config.sh
 
     # create a directory for git clone
     temp_directory_name=$(date +%Y%m%d%H%M%S)
+    title "Deploying: $deploy_directory"
 
     # create the directory structure
-    title "Deploying: $temp_directory_name"
     if [ ! -d $deploy_directory/releases ]; then
         sudo mkdir -p $deploy_directory/releases
         sudo chown -R $username:$username $deploy_directory/releases
@@ -38,9 +38,8 @@ source ../config.sh
 
     # git clone into this new directory
     sudo -u $username git clone --depth 1 $repo $temp_directory_name
-    cd $foldername
+    cd $deploy_directory/releases/$foldername
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
-
 
     # composer install
     title "Dependencies"
