@@ -13,6 +13,10 @@ initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
+# Load the config file
+source ../config.sh
+
+
 # create a directory for git clone
 foldername=$(date +%Y%m%d%H%M%S)
 
