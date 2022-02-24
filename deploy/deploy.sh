@@ -29,11 +29,17 @@ foldername=$(date +%Y%m%d%H%M%S)
     cd $deploy_directory/releases
     echo  "folder=$deploy_directory/releases/$foldername"
 
+    # git clone into this new directory
+    sudo git clone --depth 1 $repo $foldername
+    sudo chown -R $username:$username $deploy_directory/releases/$foldername
+    cd $foldername
+
     # initial setup
     if [ "$is_laravel" = true ]; then
       if [ ! -f $deploy_directory/.env ]; then
           sudo cp $parent_path/.env $deploy_directory/.env
           sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
+          php artisan key:generate
       fi
       if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
           sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
@@ -44,13 +50,8 @@ foldername=$(date +%Y%m%d%H%M%S)
       fi
     fi
 
-    # git clone into this new directory
-    sudo git clone --depth 1 $repo $foldername
-    sudo chown -R $username:$username $deploy_directory/releases/$foldername
-
     # composer install
     title "Dependencies"
-    cd $foldername
     sudo -u $username /usr/bin/composer install
     sudo -u $username /usr/bin/npm install
 
