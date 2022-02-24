@@ -53,6 +53,7 @@ foldername=$(date +%Y%m%d%H%M%S)
       else
         title Migrations
         cd $deploy_directory/releases/$foldername
+        php artisan key:generate
         php artisan migrate --force
       fi
     fi
