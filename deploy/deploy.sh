@@ -77,7 +77,7 @@ source ../config.sh
           sudo -u $username sed -i "s|GIT_HASH=.*;|GIT_HASH=$remote_hash|" $deploy_directory/.env
         else
           echo 'GIT_HASH= was not found'
-          sudo bash -c 'echo "GIT_HASH=$remote_hash" >> $deploy_directory/.env'
+          sudo -u $username bash -c 'echo "GIT_HASH=$remote_hash" >> $deploy_directory/.env'
         fi
       fi
     fi
