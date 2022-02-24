@@ -16,12 +16,12 @@ cd "$parent_path"
 # Load the config file
 source ../config.sh
 
-# create a directory for git clone
-foldername=$(date +%Y%m%d%H%M%S)
-
 {
+    # create a directory for git clone
+    temp_directory_name=$(date +%Y%m%d%H%M%S)
+
     # create the directory structure
-    title "Deploying: $foldername"
+    title "Deploying: $temp_directory_name"
     if [ ! -d $deploy_directory/releases ]; then
         sudo mkdir -p $deploy_directory/releases
         sudo chown -R $username:$username $deploy_directory/releases
@@ -29,13 +29,16 @@ foldername=$(date +%Y%m%d%H%M%S)
     cd $deploy_directory/releases
     echo  "folder=$deploy_directory/releases/$foldername"
 
+    # git short hash of remote repo
+    remote_git_line=$(git ls-remote | head -n 1)
+    remote_hash=${remote_git_line:0:7}
     # git clone into this new directory
-    sudo -u $username git clone --depth 1 $repo $foldername
-    sudo chown -R $username:$username $deploy_directory/releases/$foldername
+    sudo -u $username git clone --depth 1 $repo $temp_directory_name
     cd $foldername
+    local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
+    echo "remote_hash=$remote_hash, local_hash=$local_hash"
+    sudo chown -R $username:$username $deploy_directory/releases/$foldername
 
-    git_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
-    echo "git_hash=$git_hash"
 
     # composer install
     title "Dependencies"
