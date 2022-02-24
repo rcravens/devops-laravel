@@ -23,12 +23,8 @@ foldername=$(date +%Y%m%d%H%M%S)
 {
     # create the directory structure
     title "Deploying: $foldername"
-    if [ ! -d $deploy_directory]; then
-      sudo mkdir $deploy_directory
-      sudo chown -R $username:$username $deploy_directory
-    fi
     if [ ! -d $deploy_directory/releases ]; then
-        sudo mkdir $deploy_directory/releases
+        sudo mkdir -p $deploy_directory/releases
         sudo chown -R $username:$username $deploy_directory/releases
     fi
     cd $deploy_directory/releases
@@ -49,13 +45,13 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # migrations
     title Migrations
-    /usr/bin/php artisan migrate --force
+    source artisan migrate --force
 
     # restart services
-    /bin/bash /srv/code/web/scripts/restart.sh
+    source /srv/code/web/scripts/restart.sh
 
     # cleanup
-    /bin/bash /srv/code/web/scripts/clean_up.sh
+    source /srv/code/web/scripts/clean_up.sh
 
 } 2>&1
 
