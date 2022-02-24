@@ -29,8 +29,8 @@ source ../config.sh
     fi
 
     # create a directory for git clone
-    foldername=$(date +%Y%m%d%H%M%S)
-    title "Deploying: $deploy_directory"
+    foldername=$local_hash
+    title "Deploying: $foldername"
 
     # create the directory structure
     if [ ! -d $deploy_directory/releases ]; then
