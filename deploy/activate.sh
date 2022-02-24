@@ -42,4 +42,4 @@ cd $deploy_directory
 sudo /usr/bin/unlink current
 sudo /bin/ln -sf $deploy_directory/releases/$foldername current
 
-sudo chown $username:$username $deploy_directory
+sudo chown -R $username:$username $deploy_directory

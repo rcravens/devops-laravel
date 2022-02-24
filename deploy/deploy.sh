@@ -45,7 +45,7 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # migrations
     title Migrations
-    pwd
+    cd $deploy_directory/releases/$foldername
     php artisan migrate --force
 
     # restart services
