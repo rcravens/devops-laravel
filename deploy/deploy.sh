@@ -73,7 +73,7 @@ source ../config.sh
         # publish git hash into .env
         if grep -Fxq "GIT_HASH=" $deploy_directory/.env
         then
-          echo 'GIT_HASH= was found'
+          echo 'GIT_HASH= was found (new hash=$remote_hash)'
           sudo -u $username sed -i "s|GIT_HASH=.*;|GIT_HASH=$remote_hash|" $deploy_directory/.env
         else
           echo 'GIT_HASH= was not found'
