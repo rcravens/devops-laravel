@@ -33,12 +33,16 @@ foldername=$(date +%Y%m%d%H%M%S)
     sudo git clone --depth 1 $repo $foldername
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
     cd $foldername
+    echo 'after cloning'
+    pwd
 
     # initial setup
     if [ "$is_laravel" = true ]; then
       if [ ! -f $deploy_directory/.env ]; then
           sudo cp $parent_path/.env $deploy_directory/.env
           sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
+          echo 'about to generate key'
+          pwd
           php artisan key:generate
       fi
       if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
