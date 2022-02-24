@@ -23,6 +23,10 @@ source ../config.sh
     remote_hash=${remote_git_line:0:7}
     local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
     echo "remote_hash=$remote_hash, local_hash=$local_hash"
+    if [ $remote_hash = $local_hash ]; then
+      echo "Nothing new to deploy."
+      exit 1
+    fi
 
     # create a directory for git clone
     foldername=$(date +%Y%m%d%H%M%S)
