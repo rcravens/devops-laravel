@@ -33,7 +33,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     echo  "folder=$deploy_directory/releases/$foldername"
 
     # git clone into this new directory
-    git clone --depth 1 $repo $foldername
+    sudo git clone --depth 1 $repo $foldername
 
     # composer install
     title "Dependencies"
