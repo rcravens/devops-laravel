@@ -71,7 +71,8 @@ source ../config.sh
         sudo -u $username php artisan migrate --force
 
         # publish git hash into .env
-        if [ grep -Fxq "GIT_HASH=" $deploy_directory/.env ]; then
+        if grep -Fxq "GIT_HASH=" $deploy_directory/.env
+        then
           echo "GIT_HASH=$remote_hash" >> $deploy_directory/.env
         else
           sudo sed -i "s|GIT_HASH=.*;|GIT_HASH=$remote_hash|" $deploy_directory/.env
