@@ -44,9 +44,15 @@ foldername=$(date +%Y%m%d%H%M%S)
     source $parent_path/activate.sh
 
     # migrations
-    title Migrations
-    cd $deploy_directory/releases/$foldername
-    php artisan migrate --force
+    if [ "$is_laravel" = true ]; then
+      if [ ! -f $deploy_directory/.env ]; then
+          echo "NO .env FILE FOUND"
+      else
+        title Migrations
+        cd $deploy_directory/releases/$foldername
+        php artisan migrate --force
+      fi
+    fi
 
     # restart services
     source $parent_path/restart.sh
