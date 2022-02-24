@@ -45,6 +45,7 @@ foldername=$(date +%Y%m%d%H%M%S)
 
     # migrations
     title Migrations
+    pwd
     php artisan migrate --force
 
     # restart services
