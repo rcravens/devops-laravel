@@ -46,7 +46,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     # migrations
     if [ "$is_laravel" = true ]; then
       if [ ! -f $deploy_directory/.env ]; then
-          echo "NO .env FILE FOUND"
+          echo "NO .env FILE FOUND AT $deploy_directory/.env"
       else
         title Migrations
         cd $deploy_directory/releases/$foldername
