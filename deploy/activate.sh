@@ -6,7 +6,7 @@
 
 if [ "$is_laravel" = true ]; then
   if [ ! -f .env ]; then
-      /bin/ln -sf $deploy_directory/.env .env
+      sudo /bin/ln -sf $deploy_directory/.env .env
   fi
 
   if [ ! -d $deploy_directory/cache ]; then
@@ -18,11 +18,11 @@ if [ "$is_laravel" = true ]; then
   fi
 
   if [ ! -d $deploy_directory/data ]; then
-      mkdir $deploy_directory/data
+      sudo mkdir $deploy_directory/data
       sudo chown -R $username:$username $deploy_directory/data
   fi
   if [ ! -d public/data ]; then
-      /bin/ln -sf $deploy_directory/data public/data
+      sudo /bin/ln -sf $deploy_directory/data public/data
   fi
 
   if [ ! -d $deploy_directory/storage ]; then
