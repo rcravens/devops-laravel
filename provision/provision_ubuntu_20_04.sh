@@ -73,6 +73,15 @@ source ./installers/sqlite.sh
 # Install mysql
 #source ./installers/mysql.sh
 
+# Install redis
+source ./installers/redis.sh
+
+# Install memcache
+source ./installers/memcache.sh
+
+# Install beanstalk
+source ./installers/beanstalk.sh
+
 
 
 # Return back to the original directory
