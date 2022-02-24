@@ -34,7 +34,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     sudo chown -R $username:$username $deploy_directory/releases/$foldername
     cd $foldername
 
-    git_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/@\1/")
+    git_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
     echo "git_hash=$git_hash"
 
     # composer install
