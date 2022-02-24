@@ -21,6 +21,8 @@ source ../config.sh
 foldername=$(date +%Y%m%d%H%M%S)
 
 {
+    sudo su vagrant
+
     # create the directory structure
     title "Deploying: $foldername"
     if [ ! -d $deploy_directory/releases ]; then
@@ -53,6 +55,7 @@ foldername=$(date +%Y%m%d%H%M%S)
     # cleanup
     source /srv/code/web/scripts/clean_up.sh
 
+    exit
 } 2>&1
 
 # Return back to the original directory
