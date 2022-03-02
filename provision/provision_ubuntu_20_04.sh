@@ -70,8 +70,9 @@ source ./installers/node.sh
 # Install sqlite
 source ./installers/sqlite.sh
 
-# Install mysql
-#source ./installers/mysql.sh
+# Install either mysql or mariadb (cannot install both)
+source ./installers/mysql.sh
+#source ./installers/mariadb.sh
 
 # Install redis
 source ./installers/redis.sh

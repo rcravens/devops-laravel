@@ -18,14 +18,16 @@ source ../config.sh
 
 {
     # git short hash of remote repo
-    cd $deploy_directory/current/
-    remote_git_line=$(git ls-remote | head -n 1)
-    remote_hash=${remote_git_line:0:7}
-    local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
-    echo "remote_hash=$remote_hash, local_hash=$local_hash"
-    if [ $remote_hash = $local_hash ]; then
-      echo "Nothing new to deploy."
-      exit 1
+    if [ -d $deploy_directory/current ]; then
+      cd $deploy_directory/current/
+      remote_git_line=$(git ls-remote | head -n 1)
+      remote_hash=${remote_git_line:0:7}
+      local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
+      echo "remote_hash=$remote_hash, local_hash=$local_hash"
+      if [ $remote_hash = $local_hash ]; then
+        echo "Nothing new to deploy."
+        exit 1
+      fi
     fi
 
     # create a directory for git clone
