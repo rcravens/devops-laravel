@@ -52,8 +52,10 @@ if [ "$is_laravel" = true ]; then
 fi
 
 cd $deploy_directory
-unlink current
-ln -sf $deploy_directory/releases/$foldername current
+if [ -f current ]; then
+  unlink current
+fi
+ln -sf $PWD current
 
 ## nginx conf
 #if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
