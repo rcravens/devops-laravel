@@ -79,13 +79,13 @@ if [ "$is_laravel" = true ]; then
    mkdir -p $deploy_directory/symlinks/public
   fi
   if [ ! -d $deploy_directory/symlinks/public/cache ]; then
-   cp public/cache $deploy_directory/symlinks/public/cache
+   cp -r public/cache $deploy_directory/symlinks/public/cache
   fi
   if [ ! -d $deploy_directory/symlinks/public/data ]; then
-   cp public/data $deploy_directory/symlinks/public/data
+   cp -r public/data $deploy_directory/symlinks/public/data
   fi
   if [ ! -d $deploy_directory/symlinks/storage ]; then
-    cp storage $deploy_directory/symlinks/storage
+    cp -r storage $deploy_directory/symlinks/storage
   fi
 fi
 INIT
