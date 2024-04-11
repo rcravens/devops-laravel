@@ -100,6 +100,20 @@ fi
 
 # Activate this releases
 source $parent_path/activate.sh
+
+
+# Cron configuration
+is_in_cron='php artisan schedule:run'
+cron_entry=$(crontab -l 2>&1)
+new_cron_entry="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
+echo "cron_entry=$cron_entry"
+echo "is_in_cron=$is_in_cron"
+echo "new_cron_entry=$new_cron_entry"
+if [[ "$cron_entry" != *"$is_in_cron"* ]]; then
+  echo "Creating crontab"
+  printf '%s\n' "$cron_entry" "$new_cron_entry" | crontab -
+fi
+
 INIT
 
 # Create nginx conf
@@ -121,15 +135,6 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo supervisorctl reread
     sudo supervisorctl update
     sudo supervisorctl start "horizon_$username"
-fi
-
-# Cron configuration
-is_in_cron='php artisan schedule:run'
-cron_entry=$(crontab -l 2>&1) || exit
-new_cron_entry="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
-
-if [[ "$cron_entry" != *"$is_in_cron"* ]]; then
-  printf '%s\n' "$cron_entry" "$new_cron_entry" | crontab -
 fi
 
 # Return back to the original directory
