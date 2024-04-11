@@ -14,7 +14,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # Load the config file
-source ../config.sh
+source $parent_path/../config.sh
 
 # Guard against overwriting and existing user
 if id "$username" >/dev/null 2>&1; then
@@ -64,7 +64,7 @@ git clone --depth 1 $repo $folder_name
 # Build the application
 cd $deploy_directory/releases/$folder_name
 echo "Building the application"
-source ./build.sh
+source $parent_path/build.sh
 
 # Create the initial symlinked repository
 if [ ! -d $deploy_directory/symlinks ]; then
@@ -88,6 +88,10 @@ if [ "$is_laravel" = true ]; then
     cp -r storage $deploy_directory/symlinks/storage
   fi
 fi
+
+# Activate this releases
+source $parent_path/activate.sh
+
 INIT
 
 # Return back to the original directory
