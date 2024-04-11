@@ -18,7 +18,7 @@ cd "$parent_path"
 # Load the config file
 source ../config.sh
 
-deploy_directory=/home/$username/code
+deploy_directory=/home/$username/deployments
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
@@ -35,16 +35,16 @@ if [ -d $deploy_directory/current ]; then
     exit 1
   fi
 fi
-#
-## create a directory for git clone
-#foldername=$remote_hash
-#title "Deploying: $foldername"
-#
-## create the directory structure
-#if [ ! -d $deploy_directory/releases ]; then
-#    sudo mkdir -p $deploy_directory/releases
-#    sudo chown -R $username:$username $deploy_directory/releases
-#fi
+
+# create a directory for git clone
+foldername=$remote_hash
+title "Deploying: $foldername"
+
+# create the directory structure
+if [ ! -d $deploy_directory/releases ]; then
+    sudo mkdir -p $deploy_directory/releases
+    sudo chown -R $username:$username $deploy_directory/releases
+fi
 #cd $deploy_directory/releases
 #echo  "folder=$deploy_directory/releases/$foldername"
 #
