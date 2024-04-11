@@ -102,13 +102,7 @@ fi
 source $parent_path/activate.sh
 
 # Cron configuration
-#match_str="php artisan schedule:run"
 (crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1") | crontab -
-#cron_entry=$(crontab -l 2>/dev/null)
-#if [[ $cron_entry != *"$match_str"* ]]; then
-#  echo "Creating crontab"
-#  echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1" | crontab -
-#fi
 
 INIT
 
