@@ -14,7 +14,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # Load the config file
-source $parent_path/../config.sh
+source ../config.sh
 
 # Guard against overwriting and existing user
 if id "$username" >/dev/null 2>&1; then
