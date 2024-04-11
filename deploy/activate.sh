@@ -23,9 +23,7 @@ if [ "$is_laravel" = true ]; then
   fi
 
   # sqlite
-  if [ ! -f .env ]; then
-    ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
-  fi
+  ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
 
   # public/cache
   if [ ! -d $deploy_directory/symlinks/public/cache ]; then
