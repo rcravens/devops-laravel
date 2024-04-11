@@ -3,6 +3,9 @@
 # we are inside the dated releases directory
 
 # create symlinks
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
+echo "pwd=$PWD"
 echo "deploy_director=$deploy_directory"
 echo "parent_path=$parent_path"
 #
