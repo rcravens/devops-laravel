@@ -25,7 +25,7 @@ if [ "$is_laravel" = true ]; then
       mkdir $deploy_directory/symlinks/public/cache
   fi
   if [ ! -d public/cache ]; then
-      ln -sf $deploy_directory/symlinks/publiccache public/cache
+      ln -sf $deploy_directory/symlinks/public/cache public/cache
   fi
 
   # public/data
@@ -51,11 +51,10 @@ if [ "$is_laravel" = true ]; then
   ln -sf $deploy_directory/symlinks/storage storage
 fi
 
-cd $deploy_directory
-if [ -f current ]; then
-  unlink current
+if [ -f $deploy_directory/current ]; then
+  unlink $deploy_directory/current
 fi
-ln -sf $PWD current
+ln -sf $PWD $deploy_directory/current
 
 ## nginx conf
 #if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
