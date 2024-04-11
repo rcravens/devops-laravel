@@ -19,7 +19,6 @@ source ../config.sh
 # Guard against overwriting and existing user
 if id "$username" >/dev/null 2>&1; then
   echo "This user already exists"
-  exit 0
 else
   # Create the deployment user
   sudo adduser --gecos "" --disabled-password $username
