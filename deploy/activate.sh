@@ -12,12 +12,11 @@ deploy_directory=/home/$username/deployments
 if [ "$is_laravel" = true ]; then
 
   # .env
-  if [ ! -f $deploy_directory/.env ]; then
+  if [ ! -f $deploy_directory/symlinks/.env ]; then
       echo "-----------------------MISSING .env---------------------------"
       echo "Create a .env file for the laravel application in the following location:"
       echo $deploy_directory/symlinks/.env
       echo "-----------------------MISSING .env---------------------------"
-      exit 1
   fi
   if [ ! -f .env ]; then
       ln -sf $deploy_directory/symlinks/.env .env
