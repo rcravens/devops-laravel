@@ -1,48 +1,38 @@
 #!/bin/bash
 
-# Run the following as root
-#[[ $(id -u) -eq 0 ]] || exec sudo /bin/bash -c "$(printf '%q ' "$BASH_SOURCE" "$@")"
-
 # Install MySQL
-sudo echo "mysql-server mysql-server/root_password password $db_root_password" | sudo debconf-set-selections
-sudo echo "mysql-server mysql-server/root_password_again password $db_root_password" | sudo debconf-set-selections
 sudo apt-get install -y mysql-server
 
-# Configure MySQL 8 Remote Access and Native Pluggable Authentication
-sudo bash -c 'cat > /etc/mysql/conf.d/mysqld.cnf << EOF
-[mysqld]
-bind-address = 0.0.0.0
-default_authentication_plugin = mysql_native_password
-EOF'
+# Set the root password
+sudo mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$db_root_password';"
 
-# Configure MySQL Password Lifetime
-sudo bash -c 'echo "default_password_lifetime = 0" >> /etc/mysql/mysql.conf.d/mysqld.cnf'
+# Automate the mysql_secure_installation process
+SECURE_MYSQL=$(expect -c "
 
-# Configure MySQL Remote Access
-sudo sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+set timeout 10
+spawn mysql_secure_installation
 
-sudo service mysql restart
+expect \"MySQL root user password:\"
+send \"$mysql_root_pword\r\"
 
-export MYSQL_PWD=$db_root_password
+expect \"Would you like to setup VALIDATE PASSWORD component?\"
+send \"n\r\"
 
-echo "db_root_password=$db_root_password"
-echo "MYSQL_PWD=$MYSQL_PWD"
+expect \"Change the password for root\"
+send \"n\r\"
 
-mysql --user="root" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$db_root_password';"
-mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
-mysql --user="root" -e "CREATE USER 'homestead'@'0.0.0.0' IDENTIFIED BY 'secret';"
-mysql --user="root" -e "CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';"
-mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'0.0.0.0' WITH GRANT OPTION;"
-mysql --user="root" -e "GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
-mysql --user="root" -e "FLUSH PRIVILEGES;"
-# mysql --user="root" -e "CREATE DATABASE homestead character set UTF8mb4 collate utf8mb4_bin;"
+expect \"Remove anonymous users\"
+send \"y\r\"
 
-sudo tee /home/$username/.my.cnf <<EOL
-[mysqld]
-character-set-server=utf8mb4
-collation-server=utf8mb4_bin
-EOL
+expect \"Disallow root login remotely\"
+send \"y\r\"
 
-sudo service mysql restart
+expect \"Remove test database and access to it?\"
+send \"y\r\"
 
-unset MYSQL_PWD
+expect \"Reload privilege tables now?\"
+send \"y\r\"
+
+expect eof
+")
+echo "$SECURE_MYSQL"

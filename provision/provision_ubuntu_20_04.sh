@@ -19,9 +19,8 @@ sudo apt upgrade -y
 
 # Install Some Basic Packages....TODO: FILTER THROUGH THESE
 sudo apt-get install -y software-properties-common curl gnupg debian-keyring debian-archive-keyring apt-transport-https \
-ca-certificates build-essential dos2unix gcc git git-lfs libmcrypt4 libpcre3-dev libpng-dev chrony unzip make pv \
-python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-completion zsh graphviz avahi-daemon tshark \
-zip unzip
+ca-certificates build-essential dos2unix gcc git git-lfs libmcrypt4 libpcre3-dev libpng-dev chrony make pv \
+python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-completion zsh zip unzip expect
 
 # Install Nginx
 source ./installers/nginx.sh
@@ -29,6 +28,22 @@ source ./installers/nginx.sh
 # Install PHP
 php_version=8.3
 source ./installers/php$php_version.sh
+
+# Install composer
+source ./installers/composer.sh
+
+# Install node
+source ./installers/node.sh
+
+# Install redis
+source ./installers/redis.sh
+
+# Install sqlite
+source ./installers/sqlite.sh
+
+# Install either mysql or mariadb (cannot install both)
+source ./installers/mysql.sh
+#source ./installers/mariadb.sh
 
 
 # Create deployment user
@@ -67,25 +82,10 @@ source ./installers/php$php_version.sh
 #sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.2
 #sudo update-alternatives --set php-config /usr/bin/php-config7.2
 
-# Install composer
-#source ./installers/composer.sh
-
 # Install apache
 #source ./installers/apache.sh
 
 
-# Install node
-#source ./installers/node.sh
-
-# Install sqlite
-#source ./installers/sqlite.sh
-
-# Install either mysql or mariadb (cannot install both)
-#source ./installers/mysql.sh
-#source ./installers/mariadb.sh
-
-# Install redis
-#source ./installers/redis.sh
 
 # Install memcache
 #source ./installers/memcache.sh
@@ -158,6 +158,6 @@ source ./installers/php$php_version.sh
 #sudo /sbin/swapon /var/swap.1
 
 # Return back to the original directory
-#cd $initial_working_directory
+cd $initial_working_directory
 
 

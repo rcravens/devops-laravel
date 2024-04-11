@@ -19,11 +19,21 @@ php8.3-snmp php8.3-soap php8.3-sqlite3 php8.3-sybase php8.3-tidy php8.3-xdebug p
 php8.3-zip php8.3-memcached php8.3-redis
 
 # Backup files we are about to modify
-sudo cp /etc/php/8.3/cli/php.ini /etc/php/8.3/cli/php.ini.bak
-sudo cp /etc/php/8.3/fpm/php.ini /etc/php/8.3/fpm/php.ini.bak
-sudo cp /etc/php/8.3/mods-available/xdebug.ini /etc/php/8.3/mods-available/xdebug.ini.bak
-sudo cp /etc/php/8.3/mods-available/opcache.ini /etc/php/8.3/mods-available/opcache.ini.bak
-sudo cp /etc/php/8.3/fpm/pool.d/www.conf /etc/php/8.3/fpm/pool.d/www.conf.bak
+if [ ! -f /etc/php/8.3/cli/php.ini.bak ]; then
+  sudo cp /etc/php/8.3/cli/php.ini /etc/php/8.3/cli/php.ini.bak
+fi
+if [ ! -f /etc/php/8.3/fpm/php.ini.bak ]; then
+  sudo cp /etc/php/8.3/fpm/php.ini /etc/php/8.3/fpm/php.ini.bak
+fi
+if [ ! -f /etc/php/8.3/mods-available/xdebug.ini.bak ]; then
+  sudo cp /etc/php/8.3/mods-available/xdebug.ini /etc/php/8.3/mods-available/xdebug.ini.bak
+fi
+if [ ! -f /etc/php/8.3/mods-available/opcache.ini.bak ]; then
+  sudo cp /etc/php/8.3/mods-available/opcache.ini /etc/php/8.3/mods-available/opcache.ini.bak
+fi
+if [ ! -f /etc/php/8.3/fpm/pool.d/www.conf.bak ]; then
+  sudo cp /etc/php/8.3/fpm/pool.d/www.conf /etc/php/8.3/fpm/pool.d/www.conf.bak
+fi
 
 # Configure php.ini for CLI
 #sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/8.3/cli/php.ini
