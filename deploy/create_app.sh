@@ -96,16 +96,37 @@ if [ "$is_laravel" = true ]; then
 fi
 
 # Activate this releases
-echo "-----just before the source----"
-echo "pwd=$PWD"
-echo "username=$username"
-echo "deploy_director=$deploy_directory"
-echo "parent_path=$parent_path"
-echo "is_laravel="$is_laravel
-echo "-------------------------------------"
 source $parent_path/activate.sh
-
 INIT
+
+# Create nginx conf
+if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
+    sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/$username.conf
+#    sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/$username.conf
+    sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
+    sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
+    sudo service nginx restart
+fi
+
+# Create supervisor conf
+if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
+    sudo cp $parent_path/horizon.conf /etc/supervisor/conf.d/$username.conf
+    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
+    sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
+    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/$username.conf
+    sudo supervisorctl reread
+    sudo supervisorctl update
+    sudo superviosrctl start horizon
+fi
+
+# Cron configuration
+is_in_cron='php artisan schedule:run'
+cron_entry=$(crontab -l 2>&1) || exit
+new_cron_entry="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
+
+if [[ "$cron_entry" != *"$is_in_cron"* ]]; then
+  printf '%s\n' "$cron_entry" "$new_cron_entry" | crontab -
+fi
 
 # Return back to the original directory
 cd $initial_working_directory || exit

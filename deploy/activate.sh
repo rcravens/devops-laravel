@@ -57,23 +57,3 @@ if [ -f $deploy_directory/current ]; then
   unlink $deploy_directory/current
 fi
 ln -sf $PWD $deploy_directory/current
-
-## nginx conf
-#if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
-#    sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
-#    sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/laravel.conf
-#    sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/laravel.conf
-#    sudo ln -s /etc/nginx/sites-available/laravel.conf /etc/nginx/sites-enabled/laravel.conf
-#    sudo service nginx restart
-#fi
-#
-## supervisor conf
-#if [ ! -f /etc/supervisor/conf.d/horizon.conf ]; then
-#    sudo cp $parent_path/horizon.conf /etc/supervisor/conf.d/horizon.conf
-#    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/horizon.conf
-#    sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/horizon.conf
-#    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/horizon.conf
-#    sudo supervisorctl reread
-#    sudo supervisorctl update
-#    sudo superviosrctl start horizon
-#fi

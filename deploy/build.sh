@@ -19,7 +19,7 @@ title "NPM install"
 npm install
 
 title "Migrations"
-php artisan migrate
+php artisan migrate --force
 
 title "Build Front End Assets"
 npm run build
