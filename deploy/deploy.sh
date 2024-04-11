@@ -42,8 +42,7 @@ title "Deploying: $foldername"
 
 # create the directory structure
 if [ ! -d $deploy_directory/releases ]; then
-    sudo mkdir -p $deploy_directory/releases
-    sudo chown -R $username:$username $deploy_directory/releases
+    mkdir -p $deploy_directory/releases
 fi
 #cd $deploy_directory/releases
 #echo  "folder=$deploy_directory/releases/$foldername"
