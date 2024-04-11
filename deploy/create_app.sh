@@ -59,7 +59,10 @@ cd $deploy_directory/releases
 pwd
 echo $deploy_directory
 echo $folder_name
-#git clone --depth 1 $repo $folder_name
+if [ -d $folder_name ]; then
+  rm -rf $folder_name
+fi
+git clone --depth 1 $repo $folder_name
 
 INIT
 
