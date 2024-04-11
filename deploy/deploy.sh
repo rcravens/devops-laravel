@@ -51,11 +51,13 @@ echo  "folder=$deploy_directory/releases/$foldername"
 git clone --depth 1 $repo $foldername
 cd $deploy_directory/releases/$foldername
 
-## composer install
-#title "Dependencies"
-#sudo -u $username /usr/bin/composer install
-#sudo -u $username /usr/bin/npm install
-#
+# composer install
+title "Composer install"
+composer install
+
+title "NPM install"
+npm install
+
 ## create symlinks
 #title "Activation"
 #is_new_dot_env=false
