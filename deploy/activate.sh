@@ -7,60 +7,55 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 source $parent_path/../config.sh
 
-#deploy_directory=$PWD
-echo "pwd=$PWD"
-echo "username=$username"
-echo "deploy_director=$deploy_directory"
-echo "parent_path=$parent_path"
-echo "is_laravel="$is_laravel
-#
-#if [ "$is_laravel" = true ]; then
-#
-#  # .env
+deploy_directory=$PWD
+
+
+if [ "$is_laravel" = true ]; then
+
+  # .env
 #  if [ ! -f $deploy_directory/.env ]; then
 #      sudo cp $parent_path/.env $deploy_directory/.env
 #      sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
 #  fi
-#
-#  if [ ! -f .env ]; then
-#      sudo /bin/ln -sf $deploy_directory/.env .env
-#  fi
-#
-#  if [ ! -d $deploy_directory/cache ]; then
-#      sudo mkdir $deploy_directory/cache
-#  fi
-#  if [ ! -d public/cache ]; then
-#      sudo /bin/ln -sf $deploy_directory/cache public/cache
-#  fi
-#
-#  if [ ! -d $deploy_directory/data ]; then
-#      sudo mkdir $deploy_directory/data
-#  fi
-#  if [ ! -d public/data ]; then
-#      sudo /bin/ln -sf $deploy_directory/data public/data
-#  fi
-#
-#  if [ ! -d $deploy_directory/storage ]; then
-#      sudo mkdir $deploy_directory/storage
-#      sudo mkdir $deploy_directory/storage/backups
-#      sudo mkdir $deploy_directory/storage/app
-#      sudo mkdir $deploy_directory/storage/framework
-#      sudo mkdir $deploy_directory/storage/framework/cache
-#      sudo mkdir $deploy_directory/storage/framework/sessions
-#      sudo mkdir $deploy_directory/storage/framework/views
-#      sudo mkdir $deploy_directory/storage/logs
-#  fi
-#
-#  sudo /bin/rm -rf storage
-#  sudo /bin/ln -sf $deploy_directory/storage storage
-#fi
-#
-#cd $deploy_directory
-#sudo /usr/bin/unlink current
-#sudo /bin/ln -sf $deploy_directory/releases/$foldername current
-#
-#sudo chown -R $username:$username $deploy_directory
-#
+  if [ ! -f .env ]; then
+      sudo /bin/ln -sf $deploy_directory/symlinks/.env .env
+  fi
+
+  # public/cache
+  if [ ! -d $deploy_directory/symlinks/public/cache ]; then
+      sudo mkdir $deploy_directory/symlinks/public/cache
+  fi
+  if [ ! -d public/cache ]; then
+      sudo /bin/ln -sf $deploy_directory/symlinks/publiccache public/cache
+  fi
+
+  # public/data
+  if [ ! -d $deploy_directory/symlinks/public/data ]; then
+      sudo mkdir $deploy_directory/symlinks/public/data
+  fi
+  if [ ! -d public/data ]; then
+      sudo /bin/ln -sf $deploy_directory/symlinks/public/data public/data
+  fi
+
+  # storage
+  if [ ! -d $deploy_directory/symlinks/storage ]; then
+      sudo mkdir $deploy_directory/symlinks/storage
+      sudo mkdir $deploy_directory/symlinks/storage/backups
+      sudo mkdir $deploy_directory/symlinks/storage/app
+      sudo mkdir $deploy_directory/symlinks/storage/framework
+      sudo mkdir $deploy_directory/symlinks/storage/framework/cache
+      sudo mkdir $deploy_directory/symlinks/storage/framework/sessions
+      sudo mkdir $deploy_directory/symlinks/storage/framework/views
+      sudo mkdir $deploy_directory/symlinks/storage/logs
+  fi
+  sudo /bin/rm -rf storage
+  sudo /bin/ln -sf $deploy_directory/symlinks/storage storage
+fi
+
+cd $deploy_directory
+unlink current
+ln -sf $deploy_directory/releases/$foldername current
+
 ## nginx conf
 #if [ ! -f /etc/nginx/sites-available/laravel.conf ]; then
 #    sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/laravel.conf
