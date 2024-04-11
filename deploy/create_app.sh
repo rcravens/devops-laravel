@@ -49,6 +49,8 @@ echo "--------------------------------------------------------------------------
 # End session
 exit
 EOF
+
+  sudo usermod -a -G $username www-data
 fi
 
 # Create the initial deployment
@@ -111,6 +113,7 @@ if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
     sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/$username.conf
 #    sudo sed -i "s/server_name;/server_name $app_domain;/" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
+    sudo sed -i "s|phpXXXX|php$php_version|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
     sudo service nginx restart
 fi
