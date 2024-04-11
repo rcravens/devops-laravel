@@ -18,38 +18,38 @@ if [ "$is_laravel" = true ]; then
 #      sudo sed -i "s|APP_URL=.*|APP_URL=http://$app_domain|" $deploy_directory/.env
 #  fi
   if [ ! -f .env ]; then
-      sudo /bin/ln -sf $deploy_directory/symlinks/.env .env
+      ln -sf $deploy_directory/symlinks/.env .env
   fi
 
   # public/cache
   if [ ! -d $deploy_directory/symlinks/public/cache ]; then
-      sudo mkdir $deploy_directory/symlinks/public/cache
+      mkdir $deploy_directory/symlinks/public/cache
   fi
   if [ ! -d public/cache ]; then
-      sudo /bin/ln -sf $deploy_directory/symlinks/publiccache public/cache
+      ln -sf $deploy_directory/symlinks/publiccache public/cache
   fi
 
   # public/data
   if [ ! -d $deploy_directory/symlinks/public/data ]; then
-      sudo mkdir $deploy_directory/symlinks/public/data
+      mkdir $deploy_directory/symlinks/public/data
   fi
   if [ ! -d public/data ]; then
-      sudo /bin/ln -sf $deploy_directory/symlinks/public/data public/data
+      ln -sf $deploy_directory/symlinks/public/data public/data
   fi
 
   # storage
   if [ ! -d $deploy_directory/symlinks/storage ]; then
-      sudo mkdir $deploy_directory/symlinks/storage
-      sudo mkdir $deploy_directory/symlinks/storage/backups
-      sudo mkdir $deploy_directory/symlinks/storage/app
-      sudo mkdir $deploy_directory/symlinks/storage/framework
-      sudo mkdir $deploy_directory/symlinks/storage/framework/cache
-      sudo mkdir $deploy_directory/symlinks/storage/framework/sessions
-      sudo mkdir $deploy_directory/symlinks/storage/framework/views
-      sudo mkdir $deploy_directory/symlinks/storage/logs
+      mkdir $deploy_directory/symlinks/storage
+      mkdir $deploy_directory/symlinks/storage/backups
+      mkdir $deploy_directory/symlinks/storage/app
+      mkdir $deploy_directory/symlinks/storage/framework
+      mkdir $deploy_directory/symlinks/storage/framework/cache
+      mkdir $deploy_directory/symlinks/storage/framework/sessions
+      mkdir $deploy_directory/symlinks/storage/framework/views
+      mkdir $deploy_directory/symlinks/storage/logs
   fi
-  sudo /bin/rm -rf storage
-  sudo /bin/ln -sf $deploy_directory/symlinks/storage storage
+  rm -rf storage
+  ln -sf $deploy_directory/symlinks/storage storage
 fi
 
 cd $deploy_directory
