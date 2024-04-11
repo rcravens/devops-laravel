@@ -22,6 +22,11 @@ if [ "$is_laravel" = true ]; then
       ln -sf $deploy_directory/symlinks/.env .env
   fi
 
+  # sqlite
+  if [ ! -f .env ]; then
+    ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
+  fi
+
   # public/cache
   if [ ! -d $deploy_directory/symlinks/public/cache ]; then
       mkdir $deploy_directory/symlinks/public/cache

@@ -93,6 +93,9 @@ if [ "$is_laravel" = true ]; then
   if [ ! -d $deploy_directory/symlinks/storage ]; then
     cp -r storage $deploy_directory/symlinks/storage
   fi
+  if [ ! -f $deploy_directory/symlinks/database.sqlite ]; then
+    cp -r database/database.sqlite $deploy_directory/symlinks/database.sqlite
+  fi
 fi
 
 # Activate this releases
