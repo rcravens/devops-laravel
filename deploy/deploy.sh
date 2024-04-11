@@ -16,6 +16,10 @@ cd "$parent_path"
 # Load the config file
 source ../config.sh
 
+deploy_directory=/home/$username/code
+echo $deploy_directory
+exit
+
 {
     # git short hash of remote repo
     if [ -d $deploy_directory/current ]; then
