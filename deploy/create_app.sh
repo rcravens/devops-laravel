@@ -56,14 +56,25 @@ if [ ! -d $deploy_directory/releases ]; then
     mkdir -p $deploy_directory/releases
 fi
 cd $deploy_directory/releases
-pwd
-echo $deploy_directory
-echo $folder_name
 if [ -d $folder_name ]; then
   rm -rf $folder_name
 fi
 git clone --depth 1 $repo $folder_name
 
+# Build the application
+cd $deploy_directory/releases/$folder_name
+echo "Building the application"
+source ./build.sh
+
+# Create the initial symlinked repository
+if [ ! -d $deploy_directory/symlinks ]; then
+  mkdir -p $deploy_directory/symlinks
+fi
+if [ "$is_laravel" = true ]; then
+
+  if [ ! -f $deploy_directory/symlinks/.env ]; then
+
+fi
 INIT
 
 # Return back to the original directory
