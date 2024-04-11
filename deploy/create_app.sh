@@ -19,7 +19,7 @@ source ../config.sh
 # Guard against overwriting and existing user
 if id "$username" >/dev/null 2>&1; then
   echo "This user already exists"
-  return 0
+  exit 0
 fi
 
 # Create the deployment user
