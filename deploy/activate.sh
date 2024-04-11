@@ -5,9 +5,11 @@
 # create symlinks
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
+deploy_directory=$PWD
 echo "pwd=$PWD"
 echo "deploy_director=$deploy_directory"
 echo "parent_path=$parent_path"
+echo "is_laravel="$is_laravel
 #
 #if [ "$is_laravel" = true ]; then
 #
