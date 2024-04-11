@@ -44,14 +44,13 @@ title "Deploying: $foldername"
 if [ ! -d $deploy_directory/releases ]; then
     mkdir -p $deploy_directory/releases
 fi
-#cd $deploy_directory/releases
-#echo  "folder=$deploy_directory/releases/$foldername"
-#
-## git clone into this new directory
-#sudo -u $username git clone --depth 1 $repo $foldername
-#cd $deploy_directory/releases/$foldername
-#sudo chown -R $username:$username $deploy_directory/releases/$foldername
-#
+cd $deploy_directory/releases
+echo  "folder=$deploy_directory/releases/$foldername"
+
+# git clone into this new directory
+git clone --depth 1 $repo $foldername
+cd $deploy_directory/releases/$foldername
+
 ## composer install
 #title "Dependencies"
 #sudo -u $username /usr/bin/composer install
