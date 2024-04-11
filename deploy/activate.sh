@@ -7,7 +7,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 source ../config.sh
 
-deploy_directory=$PWD
+#deploy_directory=$PWD
 echo "pwd=$PWD"
 echo "deploy_director=$deploy_directory"
 echo "parent_path=$parent_path"
