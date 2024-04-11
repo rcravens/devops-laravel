@@ -48,12 +48,12 @@ fi
 # Create the initial deployment
 deploy_directory=/home/$username/deployments
 if [ ! -d $deploy_directory ]; then
-  mkdir -p $deploy_directory
+  sudo -u laravel_demo mkdir -p $deploy_directory
 fi
 if [ ! -d $deploy_directory/releases ]; then
-    mkdir -p $deploy_directory/releases
+    sudo -u laravel_demo mkdir -p $deploy_directory/releases
 fi
-cd $deploy_directory/releases
+sudo -u laravel_demo cd $deploy_directory/releases
 foldername=initial
 sudo -u laravel_demo git clone --depth 1 $repo $foldername
 
