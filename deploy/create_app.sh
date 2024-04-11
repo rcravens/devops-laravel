@@ -46,16 +46,19 @@ EOF
 fi
 
 # Create the initial deployment
+ sudo su - $username <<INIT
 deploy_directory=/home/$username/deployments
 if [ ! -d $deploy_directory ]; then
-  sudo -u laravel_demo mkdir -p $deploy_directory
+  mkdir -p $deploy_directory
 fi
 if [ ! -d $deploy_directory/releases ]; then
-    sudo -u laravel_demo mkdir -p $deploy_directory/releases
+    mkdir -p $deploy_directory/releases
 fi
-sudo -u laravel_demo cd $deploy_directory/releases
+cd $deploy_directory/releases
 foldername=initial
-sudo -u laravel_demo git clone --depth 1 $repo $foldername
+git clone --depth 1 $repo $foldername
+
+INIT
 
 # Return back to the original directory
 cd $initial_working_directory || exit
