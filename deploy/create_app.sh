@@ -103,15 +103,13 @@ source $parent_path/activate.sh
 
 
 # Cron configuration
-is_in_cron='php artisan schedule:run'
-cron_entry=$(crontab -l 2>&1)
-new_cron_entry="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
+match_str='php artisan schedule:run'
+cron_entry=$(crontab -l 2>/dev/null)
 echo "cron_entry=$cron_entry"
-echo "is_in_cron=$is_in_cron"
-echo "new_cron_entry=$new_cron_entry"
-if [[ "$cron_entry" != *"$is_in_cron"* ]]; then
+echo "is_in_cron=$match_str"
+if [[ "$cron_entry" != *"$match_str"* ]]; then
   echo "Creating crontab"
-  printf '%s\n' "$cron_entry" "$new_cron_entry" | crontab -
+  echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1" | crontab -
 fi
 
 INIT
