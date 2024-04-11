@@ -12,11 +12,8 @@ SECURE_MYSQL=$(expect -c "
 set timeout 10
 spawn mysql_secure_installation
 
-expect \"MySQL root user password:\"
+expect \"Enter password for root user:\"
 send \"$mysql_root_pword\r\"
-
-expect \"Would you like to setup VALIDATE PASSWORD component?\"
-send \"n\r\"
 
 expect \"Change the password for root\"
 send \"n\r\"
