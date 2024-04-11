@@ -9,6 +9,7 @@ source ../config.sh
 
 #deploy_directory=$PWD
 echo "pwd=$PWD"
+echo "username=$username"
 echo "deploy_director=$deploy_directory"
 echo "parent_path=$parent_path"
 echo "is_laravel="$is_laravel
