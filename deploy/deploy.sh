@@ -16,7 +16,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # Load the config file
-source ../config.sh
+source $parent_path/../config.sh
 
 deploy_directory=/home/$username/deployments
 if [ ! -d $deploy_directory ]; then
@@ -51,12 +51,9 @@ echo  "folder=$deploy_directory/releases/$foldername"
 git clone --depth 1 $repo $foldername
 cd $deploy_directory/releases/$foldername
 
-# composer install
-title "Composer install"
-composer install
+# build the application
+source $parent_path/build.sh
 
-title "NPM install"
-npm install
 
 ## create symlinks
 #title "Activation"

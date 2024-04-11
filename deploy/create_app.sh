@@ -73,7 +73,20 @@ fi
 if [ "$is_laravel" = true ]; then
 
   if [ ! -f $deploy_directory/symlinks/.env ]; then
-
+    cp .env $deploy_directory/symlinks/.env
+  fi
+  if [ ! -d $deploy_directory/symlinks/public ]; then
+   mkdir -p $deploy_directory/symlinks/public
+  fi
+  if [ ! -d $deploy_directory/symlinks/public/cache ]; then
+   cp public/cache $deploy_directory/symlinks/public/cache
+  fi
+  if [ ! -d $deploy_directory/symlinks/public/data ]; then
+   cp public/data $deploy_directory/symlinks/public/data
+  fi
+  if [ ! -d $deploy_directory/symlinks/storage ]; then
+    cp storage $deploy_directory/symlinks/storage
+  fi
 fi
 INIT
 
