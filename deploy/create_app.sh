@@ -46,8 +46,8 @@ EOF
 fi
 
 # Create the initial deployment
- sudo su - $username <<INIT
 deploy_directory=/home/$username/deployments
+sudo su - $username <<INIT
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
