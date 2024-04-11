@@ -5,7 +5,7 @@
 # create symlinks
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-source ../config.sh
+source $parent_path/../config.sh
 
 #deploy_directory=$PWD
 echo "pwd=$PWD"
