@@ -8,6 +8,8 @@ function title {
     echo "-------------------------------------"
 }
 
+title "Deploying...."
+
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
