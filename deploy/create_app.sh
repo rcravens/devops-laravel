@@ -56,7 +56,10 @@ if [ ! -d $deploy_directory/releases ]; then
 fi
 cd $deploy_directory/releases
 foldername=initial
-git clone --depth 1 $repo $foldername
+pwd
+echo $deploy_directory
+echo $foldername
+#git clone --depth 1 $repo $foldername
 
 INIT
 
