@@ -90,6 +90,13 @@ if [ "$is_laravel" = true ]; then
 fi
 
 # Activate this releases
+echo "-----just before the source----"
+echo "pwd=$PWD"
+echo "username=$username"
+echo "deploy_director=$deploy_directory"
+echo "parent_path=$parent_path"
+echo "is_laravel="$is_laravel
+echo "-------------------------------------"
 source $parent_path/activate.sh
 
 INIT
