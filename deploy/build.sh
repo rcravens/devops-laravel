@@ -9,7 +9,7 @@ function title {
 }
 
 # Load the config file
-source ../config.sh
+#source ../config.sh
 
 # composer install
 title "Composer install"

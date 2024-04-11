@@ -7,8 +7,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 source $parent_path/../config.sh
 
-deploy_directory=$PWD
-
+deploy_directory=/home/$username/deployments
 
 if [ "$is_laravel" = true ]; then
 
