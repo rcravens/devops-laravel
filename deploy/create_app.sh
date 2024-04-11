@@ -47,6 +47,7 @@ fi
 
 # Create the initial deployment
 deploy_directory=/home/$username/deployments
+folder_name="initial"
 sudo su - $username <<INIT
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
@@ -55,11 +56,10 @@ if [ ! -d $deploy_directory/releases ]; then
     mkdir -p $deploy_directory/releases
 fi
 cd $deploy_directory/releases
-foldername=initial
 pwd
 echo $deploy_directory
-echo $foldername
-#git clone --depth 1 $repo $foldername
+echo $folder_name
+#git clone --depth 1 $repo $folder_name
 
 INIT
 
