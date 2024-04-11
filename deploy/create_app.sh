@@ -16,8 +16,13 @@ cd "$parent_path"
 # Load the config file
 source ../config.sh
 
+# Guard against overwriting and existing user
+if id "$username" >/dev/null 2>&1; then
+  echo "This user already exists"
+  return 0
+fi
+
 # Create the deployment user
-sudo userdel -r $username
 sudo adduser --gecos "" --disabled-password $username
 sudo chpasswd <<<"$username:$password"
 
@@ -44,4 +49,4 @@ exit
 EOF
 
 # Return back to the original directory
-cd $initial_working_directory
+cd $initial_working_directory || exit
