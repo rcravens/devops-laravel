@@ -20,15 +20,13 @@ source ../config.sh
 if id "$username" >/dev/null 2>&1; then
   echo "This user already exists"
   exit 0
-fi
+else
+  # Create the deployment user
+  sudo adduser --gecos "" --disabled-password $username
+  sudo chpasswd <<<"$username:$password"
 
-# Create the deployment user
-sudo adduser --gecos "" --disabled-password $username
-sudo chpasswd <<<"$username:$password"
-
-# Start a new session with this new user
-sudo su - $username <<EOF
-
+  # Start a new session with this new user
+  sudo su - $username <<EOF
 # Create the Github keys
 ssh-keygen -f ~/.ssh/github_rsa -t rsa -N ""
 cat <<EOT >> ~/.ssh/config
@@ -45,8 +43,20 @@ echo "--------------------------------------------------------------------------
 
 # End session
 exit
-
 EOF
+fi
+
+# Create the initial deployment
+deploy_directory=/home/$username/deployments
+if [ ! -d $deploy_directory ]; then
+  mkdir -p $deploy_directory
+fi
+if [ ! -d $deploy_directory/releases ]; then
+    mkdir -p $deploy_directory/releases
+fi
+cd $deploy_directory/releases
+foldername=initial
+sudo -u laravel_demo git clone --depth 1 $repo $foldername
 
 # Return back to the original directory
 cd $initial_working_directory || exit
