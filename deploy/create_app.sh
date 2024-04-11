@@ -101,12 +101,9 @@ fi
 # Activate this releases
 source $parent_path/activate.sh
 
-
 # Cron configuration
-match_str='php artisan schedule:run'
+match_str="php artisan schedule:run"
 cron_entry=$(crontab -l 2>/dev/null)
-echo "cron_entry=$cron_entry"
-echo "is_in_cron=$match_str"
 if [[ "$cron_entry" != *"$match_str"* ]]; then
   echo "Creating crontab"
   echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1" | crontab -
