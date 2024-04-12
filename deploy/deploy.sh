@@ -20,12 +20,13 @@ source $parent_path/../config.sh
 
 deploy_directory=/home/$username/deployments
 
+date_string=$(date +"%Y-%m-%d-%H-%M-%S")
+
 sudo su - $username <<DEPLOY
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
 
-date_string=$(date +"%Y-%m-%d-%H-%M-%S")
 echo "date_string=$date_string"
 
 # git short hash of remote repo
