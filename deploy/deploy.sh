@@ -11,7 +11,7 @@ function status {
   RED='\033[0;31m'
   NC='\033[0m'
   echo ""
-  echo "${RED}--------->${NC} $1"
+  echo -e "${RED}--------->${NC} $1"
 }
 
 # Save current directory and cd into script path
