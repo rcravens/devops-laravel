@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Assuming this file is being run as the deployment user
-
 function title {
     echo "-------------------------------------"
     echo ""
@@ -19,6 +17,15 @@ cd "$parent_path"
 
 # Load the config file
 source $parent_path/../config.sh
+
+# Assuming this file is being run as the deployment user
+current_user=$(whoami)
+if [ ! "$username" == "$current_user" ]; then
+  echo "it is not the expected user"
+else
+  echo "it is the expected user"
+fi
+
 
 deploy_directory=/home/$username/deployments
 
