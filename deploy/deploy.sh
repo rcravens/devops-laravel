@@ -71,7 +71,10 @@ source $parent_path/build.sh
 
 # Activate this version
 title "Activate"
-source $parent_path/activate.sh
+if [ -f $deploy_directory/current ]; then
+  unlink $deploy_directory/current
+fi
+ln -sf $deploy_directory/releases/$foldername $deploy_directory/current
 
 # restart services
 #title "Restarting"
