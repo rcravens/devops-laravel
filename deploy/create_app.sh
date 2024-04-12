@@ -58,7 +58,7 @@ deploy_directory=/home/$username/deployments
 folder_name="initial"
 
 # Only needed to delete this directory
-sudo chown $username:$username -R /home/$username/deployments/releases
+#sudo chown $username:$username -R /home/$username/deployments/releases
 
 sudo su - $username <<INIT
 if [ ! -d $deploy_directory ]; then
