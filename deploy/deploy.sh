@@ -55,7 +55,7 @@ cd $deploy_directory/releases/$foldername
 
 # Create symlinks for files that persist across deployments
 title "Create Symlinks"
-source $parent_path/create_symlinks.sh
+source $parent_path/deploy_symlinks.sh
 
 # Build the application
 title "Building"
