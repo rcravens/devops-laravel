@@ -25,7 +25,7 @@ remote_git_line='test'
 remote_hash='xxx'
 local_hash='yyy'
 
-sudo su $username
+sudo su - $username
 echo "here as the user"
 exit
 
