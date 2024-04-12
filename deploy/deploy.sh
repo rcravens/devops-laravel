@@ -33,7 +33,7 @@ echo "date_string=$date_string"
 # git short hash of remote repo
 if [ -d $deploy_directory/current ]; then
   cd $deploy_directory/current/
-  remote_git_line="$(git ls-remote | head -n 1)"
+  local remote_git_line=$(git ls-remote | head -n 1)
   echo "remote_git_line=$remote_git_line"
   echo $(git ls-remote | head -n 1)
   remote_hash=${remote_git_line:0:7}
