@@ -23,7 +23,7 @@ deploy_directory=/home/$username/deployments
 date_string=$(date +"%Y-%m-%d-%H-%M-%S")
 remote_hash='xxx'
 local_hash='yyy'
-sudo -u $username <<DEPLOY
+sudo su $username <<DEPLOY
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
