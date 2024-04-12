@@ -18,6 +18,16 @@ cd "$parent_path"
 # Load the config file
 source $parent_path/../config.sh
 
+# Assuming this file is being run as the deployment user
+current_user=$(whoami)
+if [ ! "$username" == "$current_user" ]; then
+  echo "Expected user: $username"
+  echo "Current user: $current_user"
+  echo "Try running like sudo -u $username deploy.sh"
+  exit 1
+fi
+
+
 deploy_directory=/home/$username/deployments
 
 date_string=$(date +"%Y-%m-%d-%H-%M-%S")
@@ -25,10 +35,6 @@ remote_git_line='test'
 remote_hash='xxx'
 local_hash='yyy'
 
-sudo -u $username $parent_path/test.sh
-echo "-------AFTER------"
-
-sudo -i -u $username << DEPLOY
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
@@ -84,7 +90,6 @@ echo  "folder=$deploy_directory/releases/$foldername"
 ## cleanup
 #title "Cleanup"
 #source $parent_path/clean_up.sh
-DEPLOY
 
 # Return back to the original directory
 cd $initial_working_directory
