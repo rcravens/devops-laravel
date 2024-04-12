@@ -1,11 +1,13 @@
 #!/bin/bash
 
-source ../helpers.sh
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
+
+# Load the helpers
+source $parent_path/../helpers.sh
 
 # Load the config file
 source $parent_path/../config.sh
