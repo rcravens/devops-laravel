@@ -41,8 +41,8 @@ if [ -d $deploy_directory/current ]; then
 fi
 
 # create a directory for git clone
-foldername=$date_string-$remote_hash
-title "Deploying: $foldername"
+foldername="$date_string-$remote_hash"
+echo "Deploying: $foldername"
 
 # create the directory structure
 if [ ! -d $deploy_directory/releases ]; then
@@ -52,19 +52,19 @@ cd $deploy_directory/releases
 echo  "folder=$deploy_directory/releases/$foldername"
 
 # git clone into this new directory
-git clone --depth 1 $repo $foldername
-cd $deploy_directory/releases/$foldername
+#git clone --depth 1 $repo $foldername
+#cd $deploy_directory/releases/$foldername
 
 # create symlinks
-title "Create symlinks"
-source $parent_path/create_symlinks.sh
+#title "Create symlinks"
+#source $parent_path/create_symlinks.sh
 
 # build the application
-source $parent_path/build.sh
+#source $parent_path/build.sh
 
 # Activate this version
-title "Activate"
-source $parent_path/activate.sh
+#title "Activate"
+#source $parent_path/activate.sh
 
 
 ## restart services
