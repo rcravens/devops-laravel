@@ -96,6 +96,15 @@ title "Clean Up"
 sudo apt -y autoremove
 sudo apt -y clean
 
+# Create Swap Space
+title "Create Swap Space"
+total_ram=$(free -m | grep Mem: | awk '{print $2}')
+sudo fallocate -l ${total_ram}M /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+
 title "Status Report"
 status "Nginx Version: $(nginx -v)"
 status "PHP VERSION: $(php -r 'echo PHP_VERSION;')"
@@ -106,6 +115,7 @@ status "Redis Version: $(redis-cli -v)"
 status "SQLite Version: $(sqlite3 --version)"
 status "MySQL Version: $(mysql -V)"
 status "Certbot Version: $(certbot --version)"
+status "Swap Space: $(swapon --show)"
 
 # Return back to the original directory
 cd $initial_working_directory
