@@ -1,10 +1,9 @@
 #!/bin/bash
 
-
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-cd "$parent_path"
+cd $parent_path
 
 # Load the helpers
 source $parent_path/../helpers.sh
@@ -23,8 +22,6 @@ fi
 
 
 title "Starting Deployment: $username"
-
-error "This is a test error"
 
 # Initialize the deployment directory structure
 deploy_directory=/home/$username/deployments

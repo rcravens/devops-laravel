@@ -14,7 +14,6 @@ function status {
   echo -e "${LIGHTBLUE}--------->$ $1${NC}"
 }
 function error {
-
   echo ""
   echo -e "${RED}$1${NC}"
   echo ""

@@ -1,36 +1,27 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
-
-
-function title {
-    echo "-------------------------------------"
-    echo ""
-    echo "$1"
-    echo ""
-    echo "-------------------------------------"
-}
-
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
+# Load the helpers
+source $parent_path/../helpers.sh
+
 # Load the config file
-source ../config.sh
+source $parent_path/../config.sh
 
 # Guard against overwriting and existing user
 if id "$username" >/dev/null 2>&1; then
-  echo "This user already exists"
+  error "This user already exists. Username: $username"
 else
   # Create the deployment user
+  title "Create Deployment User: $username"
   sudo adduser --gecos "" --disabled-password $username
   sudo chpasswd <<<"$username:$password"
 
   # Start a new session with this new user
+  title "Creating Github Deployment Keys"
   sudo su - $username <<EOF
 # Create the Github keys
 ssh-keygen -f ~/.ssh/github_rsa -t rsa -N ""
@@ -42,9 +33,9 @@ EOT
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/*
 
-echo "----------------------COPY PUB KEY TO GITHUB DEPLOYMENT KEYS---------------------"
+error "----------------------COPY PUB KEY TO GITHUB DEPLOYMENT KEYS---------------------"
 cat < ~/.ssh/github_rsa.pub
-echo "---------------------------------------------------------------------------------"
+error "---------------------------------------------------------------------------------"
 
 # End session
 exit
@@ -52,6 +43,11 @@ EOF
 
   sudo usermod -a -G $username www-data
 fi
+
+title "Creating Initial Deployment"
+sudo -u $username $parent_path/deploy.sh
+
+exit 0
 
 # Create the initial deployment
 deploy_directory=/home/$username/deployments
