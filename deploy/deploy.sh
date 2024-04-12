@@ -71,10 +71,11 @@ source $parent_path/build.sh
 title "Activate"
 echo "$deploy_directory/current"
 if [[ -h $deploy_directory/current ]]; then
-  echo "unlinking..."
+  current_link=$(readlink -f $deploy_directory/current)
+  echo "---------> Unlinking current deployment: $current_link"
   unlink $deploy_directory/current
 fi
-echo "$deploy_directory/releases/$foldername"
+echo "---------> Linking: $deploy_directory/releases/$foldername"
 ln -sf $deploy_directory/releases/$foldername $deploy_directory/current
 
 # Cleanup Old Deployments

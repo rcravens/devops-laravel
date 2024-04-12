@@ -12,14 +12,14 @@ function title {
 #source ../config.sh
 
 # composer install
-title "Composer install"
+echo "---------> Composer Install"
 composer install
 
-title "NPM install"
+echo "---------> NPM Install"
 npm install
 
-title "Migrations"
+echo "---------> Migrations"
 php artisan migrate --force
 
-title "Build Front End Assets"
+echo "---------> Build Front End Assets"
 npm run build
