@@ -7,6 +7,10 @@ function title {
     echo ""
     echo "-------------------------------------"
 }
+function status {
+  echo ""
+  echo "---------> $1"
+}
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
@@ -43,16 +47,16 @@ if [ -d $deploy_directory/current ]; then
   remote_git_line=$(git ls-remote | head -n 1)
   remote_hash=${remote_git_line:0:7}
   local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
-  echo "remote_hash=$remote_hash, local_hash=$local_hash"
+  status "remote_hash=$remote_hash, local_hash=$local_hash"
   if [ $remote_hash = $local_hash ]; then
-    echo "No code changes detected...but deploying anyway!"
+    status "No code changes detected...but deploying anyway!"
   fi
 fi
 
 # Create the directory name
 foldername="$date_string-$remote_hash"
-echo "Folder Name: $foldername"
-echo "Deployment Directory: $deploy_directory/releases/$foldername"
+status "Folder Name: $foldername"
+status "Deployment Directory: $deploy_directory/releases/$foldername"
 
 # Git clone into this new directory
 cd $deploy_directory/releases
@@ -69,13 +73,12 @@ source $parent_path/build.sh
 
 # Activate this version
 title "Activate"
-echo "$deploy_directory/current"
 if [[ -h $deploy_directory/current ]]; then
   current_link=$(readlink $deploy_directory/current)
-  echo "---------> Unlinking: $current_link"
+  status "Unlinking: $current_link"
   unlink $deploy_directory/current
 fi
-echo "--------->   Linking: $deploy_directory/releases/$foldername"
+status "  Linking: $deploy_directory/releases/$foldername"
 ln -sf $deploy_directory/releases/$foldername $deploy_directory/current
 
 # Cleanup Old Deployments
