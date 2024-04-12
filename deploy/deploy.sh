@@ -25,7 +25,7 @@ remote_git_line='test'
 remote_hash='xxx'
 local_hash='yyy'
 
-sudo -u $username test.sh
+sudo -u $username $parent_path/test.sh
 echo "-------AFTER------"
 
 sudo -i -u $username << DEPLOY
