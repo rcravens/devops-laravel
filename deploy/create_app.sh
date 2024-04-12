@@ -52,7 +52,7 @@ sudo -u $username $parent_path/deploy.sh
 title "Creating Initial Symlinked Data"
 echo "username: $username"
 echo "parent_path (after deploy.sh): $parent_path"
-sudo -u $username $parent_path/initialize_symlinks.sh
+sudo -u $username $parent_path/initialize_symlink_data.sh
 
 #sudo su - $username <<INIT
 ## Cron configuration
