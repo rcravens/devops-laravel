@@ -12,7 +12,7 @@ function title {
 }
 function status {
   echo ""
-  echo -e "${CYAN}--------->$ $1${NC}"
+  echo -e "${CYAN}---------> $1${NC}"
 }
 function error {
   echo ""

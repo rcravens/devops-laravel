@@ -9,6 +9,8 @@ source $parent_path/../helpers.sh
 # Load the config file
 source $parent_path/../config.sh
 
+status "deployment directory: $(deploy_directory)"
+
 cd $deploy_directory/current/
 
 # Create the initial symlinked repository
