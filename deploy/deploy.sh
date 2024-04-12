@@ -59,7 +59,18 @@ source $parent_path/create_symlinks.sh
 
 # Build the application
 title "Building"
-source $parent_path/build.sh
+
+status "Composer Install"
+composer install
+
+status "NPM Install"
+npm install
+
+status "Migrations"
+php artisan migrate --force
+
+status "Build Front End Assets"
+npm run build
 
 # Activate this version
 title "Activate"

@@ -32,44 +32,35 @@ python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-comple
 # Install Nginx
 title "Install Nginx"
 source ./installers/nginx.sh
-status "$(nginx -v)"
 
 # Install PHP
 title "Install PHP Version: $php_version"
 source ./installers/php$php_version.sh
-status "PHP VERSION: $(php -r 'echo PHP_VERSION;')"
 
 # Install composer
 title "Install Composer"
 source ./installers/composer.sh
-status "$(composer -V)"
 
 # Install node
 title "Install Node and NPM"
 source ./installers/node.sh
-status "Node Version: $(node -v)"
-status "NPM Version: $(npm -v)"
 
 # Install redis
 title "Install Redis"
 source ./installers/redis.sh
-status "Redis Version: $(redis-cli -v)"
 
 # Install sqlite
 title "Install SQLite"
 source ./installers/sqlite.sh
-status "SQLite Version: $(sqlite3 --version)"
 
 # Install either mysql or mariadb (cannot install both)
 title "Install MySQL"
 source ./installers/mysql.sh
-status "MySQL Version: $(mysql -V)"
 #source ./installers/mariadb.sh
 
 # Install certbot
 title "Install Certbot (LetsEncrypt)"
 source ./installers/certbot.sh
-status "Certbot Version: $(certbot --version)"
 
 # Force Locale
 #echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
@@ -105,7 +96,19 @@ title "Clean Up"
 sudo apt -y autoremove
 sudo apt -y clean
 
+title "Status Report"
+status "Nginx Version: $(nginx -v)"
+status "PHP VERSION: $(php -r 'echo PHP_VERSION;')"
+status "Composer Version: $(composer -V)"
+status "Node Version: $(node -v)"
+status "NPM Version: $(npm -v)"
+status "Redis Version: $(redis-cli -v)"
+status "SQLite Version: $(sqlite3 --version)"
+status "MySQL Version: $(mysql -V)"
+status "Certbot Version: $(certbot --version)"
+
 # Return back to the original directory
 cd $initial_working_directory
+
 
 
