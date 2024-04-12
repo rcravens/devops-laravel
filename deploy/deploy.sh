@@ -24,7 +24,6 @@ fi
 title "Starting Deployment: $username"
 
 # Initialize the deployment directory structure
-deploy_directory=/home/$username/deployments
 if [ ! -d $deploy_directory/releases ]; then
     mkdir -p $deploy_directory/releases
 fi

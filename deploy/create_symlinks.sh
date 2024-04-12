@@ -47,16 +47,6 @@ if [ "$is_laravel" = true ]; then
   fi
 
   # storage
-  if [ ! -d $deploy_directory/symlinks/storage ]; then
-      mkdir $deploy_directory/symlinks/storage
-      mkdir $deploy_directory/symlinks/storage/backups
-      mkdir $deploy_directory/symlinks/storage/app
-      mkdir $deploy_directory/symlinks/storage/framework
-      mkdir $deploy_directory/symlinks/storage/framework/cache
-      mkdir $deploy_directory/symlinks/storage/framework/sessions
-      mkdir $deploy_directory/symlinks/storage/framework/views
-      mkdir $deploy_directory/symlinks/storage/logs
-  fi
   if [ -d $deploy_directory/symlinks/storage ]; then
     if [ -d storage ]; then
       rm -rf storage

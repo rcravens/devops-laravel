@@ -48,6 +48,7 @@ fi
 title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
 
+title "Creating Initial Symlinked Data"
 sudo su - $username <<INIT
 # Create the initial symlinked repository
 if [ ! -d $deploy_directory/symlinks ]; then
