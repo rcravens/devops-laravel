@@ -6,6 +6,8 @@ fi
 
 echo "date_string=$date_string"
 
+whoami
+
 # git short hash of remote repo
 if [ -d $deploy_directory/current ]; then
   cd $deploy_directory/current/
