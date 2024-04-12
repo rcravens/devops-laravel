@@ -13,6 +13,13 @@ function status {
   echo ""
   echo -e "${RED}--------->${NC} $1"
 }
+function error {
+  RED='\033[0;31m'
+  NC='\033[0m'
+  echo ""
+  echo -e "${RED}$1${NC}"
+  echo ""
+}
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
@@ -25,14 +32,16 @@ source $parent_path/../config.sh
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
 if [ ! "$username" == "$current_user" ]; then
-  echo "Expected user: $username"
-  echo "Current user: $current_user"
-  echo "Try running like sudo -u $username deploy.sh"
+  error "Expected user: $username"
+  error "Current user: $current_user"
+  error "Try running like sudo -u $username deploy.sh"
   exit 1
 fi
 
 
 title "Starting Deployment: $username"
+
+error "This is a test error"
 
 # Initialize the deployment directory structure
 deploy_directory=/home/$username/deployments
