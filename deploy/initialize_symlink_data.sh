@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "here we are: $username"
-
 # Save current directory and cd into script path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
@@ -10,8 +8,6 @@ source $parent_path/../helpers.sh
 
 # Load the config file
 source $parent_path/../config.sh
-
-status "deployment directory: $(deploy_directory)"
 
 cd $deploy_directory/current/
 
