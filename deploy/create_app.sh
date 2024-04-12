@@ -88,6 +88,7 @@ if [ "$is_laravel" = true ]; then
 fi
 
 # Activate the newly created symlink sources
+title "Recreating Symlinks"
 source $parent_path/create_symlinks.sh
 
 # Cron configuration
