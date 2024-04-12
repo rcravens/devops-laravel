@@ -83,7 +83,7 @@ test()
   #title "Cleanup"
   #source $parent_path/clean_up.sh
 }
-sudo su $username build.sh
+sudo su $username test.sh
 
 # Return back to the original directory
 cd $initial_working_directory
