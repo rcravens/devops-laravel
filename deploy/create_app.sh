@@ -58,7 +58,7 @@ deploy_directory=/home/$username/deployments
 folder_name="initial"
 
 # Only needed to delete this directory
-#sudo chown $username:$username -R /home/$username/deployments/releases
+sudo chown $username:$username -R /home/$username/deployments/releases
 
 sudo su - $username <<INIT
 if [ ! -d $deploy_directory ]; then
@@ -72,11 +72,6 @@ if [ -d $folder_name ]; then
   rm -rf $folder_name
 fi
 git clone --depth 1 $repo $folder_name
-
-# Build the application
-cd $deploy_directory/releases/$folder_name
-echo "Building the application"
-source $parent_path/build.sh
 
 # Create the initial symlinked repository
 if [ ! -d $deploy_directory/symlinks ]; then
@@ -104,7 +99,17 @@ if [ "$is_laravel" = true ]; then
   fi
 fi
 
+cd $deploy_directory/releases/$folder_name
+
 # Activate this releases
+source $parent_path/create_symlinks.sh
+
+# Build the application
+echo "Building the application"
+source $parent_path/build.sh
+
+# Activate this new version
+echo "Activate the new version"
 source $parent_path/activate.sh
 
 # Cron configuration
