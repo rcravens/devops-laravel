@@ -35,6 +35,7 @@ if [ -d $deploy_directory/current ]; then
   cd $deploy_directory/current/
   remote_git_line=$(git ls-remote | head -n 1)
   echo "remote_git_line=$remote_git_line"
+  echo $(git ls-remote | head -n 1)
   remote_hash=${remote_git_line:0:7}
   local_hash=$(git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/\1/")
   echo "remote_hash=$remote_hash, local_hash=$local_hash"
