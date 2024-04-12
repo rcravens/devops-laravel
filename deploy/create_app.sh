@@ -56,12 +56,16 @@ fi
 # Create the initial deployment
 deploy_directory=/home/$username/deployments
 folder_name="initial"
+
+# Only needed to delete this directory
+sudo chown $username:$username -R /home/$username/deployments/releases
+
 sudo su - $username <<INIT
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
 if [ ! -d $deploy_directory/releases ]; then
-    mkdir -p $deploy_directory/releases
+  mkdir -p $deploy_directory/releases
 fi
 cd $deploy_directory/releases
 if [ -d $folder_name ]; then
