@@ -17,9 +17,8 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/$username.conf
-#    sudo supervisorctl reread
-#    sudo supervisorctl update
-#    sudo supervisorctl start "horizon_$username"
+    sudo supervisorctl reread
+    sudo supervisorctl update
 fi
 
 # Return back to the original directory
