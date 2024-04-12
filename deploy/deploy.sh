@@ -71,9 +71,12 @@ source $parent_path/build.sh
 
 # Activate this version
 title "Activate"
+echo "$deploy_directory/current"
 if [ -f $deploy_directory/current ]; then
+  echo "unlinking..."
   unlink $deploy_directory/current
 fi
+echo "$deploy_directory/releases/$foldername"
 ln -sf $deploy_directory/releases/$foldername $deploy_directory/current
 
 # restart services
