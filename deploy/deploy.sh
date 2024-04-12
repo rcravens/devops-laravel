@@ -8,8 +8,10 @@ function title {
     echo "-------------------------------------"
 }
 function status {
+  RED='\033[0;31m'
+  NC='\033[0m'
   echo ""
-  echo "---------> $1"
+  echo "${RED}--------->${NC} $1"
 }
 
 # Save current directory and cd into script path
