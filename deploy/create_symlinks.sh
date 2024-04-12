@@ -1,13 +1,6 @@
 #!/bin/bash
 
-# we are inside the dated releases directory
-
-# create symlinks
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-
-source $parent_path/../config.sh
-
-deploy_directory=/home/$username/deployments
+# Assumption: We are inside the dated releases directory
 
 if [ "$is_laravel" = true ]; then
 
@@ -20,12 +13,12 @@ if [ "$is_laravel" = true ]; then
   fi
   if [ ! -f .env ]; then
       ln -sf $deploy_directory/symlinks/.env .env
-      echo "---------> .env symlink created"
+      status ".env symlink created"
   fi
 
   # sqlite
   ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
-  echo "---------> database.sqlite symlink created"
+  status "database.sqlite symlink created"
 
   # public/cache
   if [ ! -d $deploy_directory/symlinks/public/cache ]; then
@@ -33,7 +26,7 @@ if [ "$is_laravel" = true ]; then
   fi
   if [ ! -d public/cache ]; then
       ln -sf $deploy_directory/symlinks/public/cache public/cache
-      echo "---------> public/cache symlink created"
+      status "public/cache symlink created"
   fi
 
   # public/data
@@ -42,7 +35,7 @@ if [ "$is_laravel" = true ]; then
   fi
   if [ ! -d public/data ]; then
       ln -sf $deploy_directory/symlinks/public/data public/data
-      echo "---------> public/data symlink created"
+      status "public/data symlink created"
   fi
 
   # storage
@@ -58,5 +51,5 @@ if [ "$is_laravel" = true ]; then
   fi
   rm -rf storage
   ln -sf $deploy_directory/symlinks/storage storage
-  echo "---------> storage symlink created"
+  status "storage symlink created"
 fi
