@@ -1,21 +1,19 @@
 #!/bin/bash
-
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
 function title {
-    echo "-------------------------------------"
-    echo ""
-    echo "$1"
-    echo ""
-    echo "-------------------------------------"
+    echo -e "${YELLOW}-------------------------------------${NC}"
+    echo -e "${YELLOW}$1${NC}"
+    echo -e "${YELLOW}-------------------------------------${NC}"
 }
 function status {
-  BLUE='\033[0;34m'
-  NC='\033[0m'
   echo ""
   echo -e "${BLUE}--------->$ $1${NC}"
 }
 function error {
-  RED='\033[0;31m'
-  NC='\033[0m'
+
   echo ""
   echo -e "${RED}$1${NC}"
   echo ""
