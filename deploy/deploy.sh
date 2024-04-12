@@ -8,8 +8,6 @@ function title {
     echo "-------------------------------------"
 }
 
-title "Deploying...."
-
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
@@ -28,14 +26,18 @@ if [ ! "$username" == "$current_user" ]; then
 fi
 
 
-deploy_directory=/home/$username/deployments
+title "Starting Deployment: $username"
 
-date_string=$(date +"%Y-%m-%d-%H-%M-%S")
-if [ ! -d $deploy_directory ]; then
-  mkdir -p $deploy_directory
+# Initialize the deployment directory structure
+deploy_directory=/home/$username/deployments
+if [ ! -d $deploy_directory/releases ]; then
+    mkdir -p $deploy_directory/releases
 fi
 
-# git short hash of remote repo
+# Deployments will be prefixed with the current timestamp
+date_string=$(date +"%Y-%m-%d-%H-%M-%S")
+
+# Deployments are post fixed with the shortened git hash
 if [ -d $deploy_directory/current ]; then
   cd $deploy_directory/current/
   remote_git_line=$(git ls-remote | head -n 1)
@@ -47,26 +49,22 @@ if [ -d $deploy_directory/current ]; then
   fi
 fi
 
-# create a directory for git clone
+# Create the directory name
 foldername="$date_string-$remote_hash"
-echo "Deploying: $foldername"
+echo "Folder Name: $foldername"
+echo "Deployment Directory: $deploy_directory/releases/$foldername"
 
-# create the directory structure
-if [ ! -d $deploy_directory/releases ]; then
-    mkdir -p $deploy_directory/releases
-fi
+# Git clone into this new directory
 cd $deploy_directory/releases
-echo  "folder=$deploy_directory/releases/$foldername"
-
-# git clone into this new directory
 git clone --depth 1 $repo $foldername
 cd $deploy_directory/releases/$foldername
 
-# create symlinks
-title "Create symlinks"
+# Create symlinks for files that persist across deployments
+title "Create Symlinks"
 source $parent_path/create_symlinks.sh
 
-# build the application
+# Build the application
+title "Building"
 source $parent_path/build.sh
 
 # Activate this version
@@ -79,13 +77,10 @@ fi
 echo "$deploy_directory/releases/$foldername"
 ln -sf $deploy_directory/releases/$foldername $deploy_directory/current
 
-# restart services
-#title "Restarting"
-#source $parent_path/restart.sh
-
-# cleanup
-title "Cleanup"
-source $parent_path/clean_up.sh
+# Cleanup Old Deployments
+max_to_keep=6
+title "Cleanup (keeping the most recent $max_to_keep deployments)"
+ls -dt $deploy_directory/releases/* | tail -n +$max_to_keep | xargs rm -rf
 
 # Return back to the original directory
 cd $initial_working_directory
