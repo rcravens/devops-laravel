@@ -26,6 +26,7 @@ if [ ! -d $deploy_directory ]; then
 fi
 
 date_string=$(date +"%Y-%m-%d-%H-%M-%S")
+echo "date_string=$date_string"
 
 # git short hash of remote repo
 if [ -d $deploy_directory/current ]; then
