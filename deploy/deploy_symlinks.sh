@@ -1,6 +1,15 @@
 #!/bin/bash
 
-# Assumption: We are inside the dated releases directory
+# Save current directory and cd into script path
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
+# Load the helpers
+source $parent_path/../helpers.sh
+
+# Load the config file
+source $parent_path/../config.sh
+
+cd $deploy_directory/current/
 
 if [ "$is_laravel" = true ]; then
 
