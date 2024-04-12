@@ -25,7 +25,7 @@ remote_git_line='test'
 remote_hash='xxx'
 local_hash='yyy'
 
-sudo su -p - $username << DEPLOY
+sudo -i -u $username << DEPLOY
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
