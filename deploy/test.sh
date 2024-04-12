@@ -6,7 +6,7 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # Load the config file
-source config.sh
+source ../config.sh
 
 deploy_directory=/home/$username/deployments
 
