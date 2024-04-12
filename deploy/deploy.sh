@@ -8,10 +8,10 @@ function title {
     echo "-------------------------------------"
 }
 function status {
-  RED='\033[0;31m'
+  BLUE='\033[0;34'
   NC='\033[0m'
   echo ""
-  echo -e "${RED}--------->${NC} $1"
+  echo -e "${BLUE}--------->$ $1${NC}"
 }
 function error {
   RED='\033[0;31m'
