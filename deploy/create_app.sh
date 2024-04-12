@@ -50,6 +50,9 @@ sudo -u $username $parent_path/deploy.sh
 
 title "Creating Initial Symlinked Data"
 sudo su - $username <<INIT
+
+cd $deploy_directory/current/
+
 # Create the initial symlinked repository
 if [ ! -d $deploy_directory/symlinks ]; then
   mkdir -p $deploy_directory/symlinks
@@ -83,8 +86,6 @@ if [ "$is_laravel" = true ]; then
     cp -r database/database.sqlite $deploy_directory/symlinks/database.sqlite
   fi
 fi
-
-cd $deploy_directory/current/
 
 # Activate the newly created symlink sources
 source $parent_path/create_symlinks.sh
