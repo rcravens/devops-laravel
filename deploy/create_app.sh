@@ -69,6 +69,14 @@ if [ "$is_laravel" = true ]; then
   fi
   if [ ! -d $deploy_directory/symlinks/storage ]; then
     cp -r storage $deploy_directory/symlinks/storage
+    mkdir -p $deploy_directory/symlinks/storage
+    mkdir -p $deploy_directory/symlinks/storage/backups
+    mkdir -p $deploy_directory/symlinks/storage/app
+    mkdir -p $deploy_directory/symlinks/storage/framework
+    mkdir -p $deploy_directory/symlinks/storage/framework/cache
+    mkdir -p $deploy_directory/symlinks/storage/framework/sessions
+    mkdir -p $deploy_directory/symlinks/storage/framework/views
+    mkdir -p $deploy_directory/symlinks/storage/logs
   fi
   if [ ! -f $deploy_directory/symlinks/database.sqlite ]; then
     cp -r database/database.sqlite $deploy_directory/symlinks/database.sqlite

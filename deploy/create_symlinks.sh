@@ -11,31 +11,39 @@ if [ "$is_laravel" = true ]; then
       error $deploy_directory/symlinks/.env
       error "-----------------------MISSING .env---------------------------"
   fi
-  if [ ! -f .env ]; then
-      ln -sf $deploy_directory/symlinks/.env .env
-      status ".env symlink created"
+  if [ -f $deploy_directory/symlinks/.env ]; then
+    if [ -f .env ]; then
+      rm .env
+    fi
+    ln -sf $deploy_directory/symlinks/.env .env
+    status ".env symlink created"
   fi
 
   # sqlite
-  ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
-  status "database.sqlite symlink created"
+  if [ -f $deploy_directory/symlinks/database.sqlite ]; then
+    if [ -f database/database.sqlite ]; then
+      rm database/database.sqlite
+    fi
+    ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
+    status "database.sqlite symlink created"
+  fi
 
   # public/cache
-  if [ ! -d $deploy_directory/symlinks/public/cache ]; then
-      mkdir $deploy_directory/symlinks/public/cache
-  fi
-  if [ ! -d public/cache ]; then
+  if [ -d $deploy_directory/symlinks/public/cache ]; then
+    if [ -d public/cache ]; then
+      rm -rf public/cache
+    fi
       ln -sf $deploy_directory/symlinks/public/cache public/cache
       status "public/cache symlink created"
   fi
 
   # public/data
-  if [ ! -d $deploy_directory/symlinks/public/data ]; then
-      mkdir $deploy_directory/symlinks/public/data
-  fi
-  if [ ! -d public/data ]; then
-      ln -sf $deploy_directory/symlinks/public/data public/data
-      status "public/data symlink created"
+  if [ -d $deploy_directory/symlinks/public/data ]; then
+    if [ -d public/data ]; then
+      rm -rf public/data
+    fi
+    ln -sf $deploy_directory/symlinks/public/data public/data
+    status "public/data symlink created"
   fi
 
   # storage
@@ -49,7 +57,11 @@ if [ "$is_laravel" = true ]; then
       mkdir $deploy_directory/symlinks/storage/framework/views
       mkdir $deploy_directory/symlinks/storage/logs
   fi
-  rm -rf storage
-  ln -sf $deploy_directory/symlinks/storage storage
-  status "storage symlink created"
+  if [ -d $deploy_directory/symlinks/storage ]; then
+    if [ -d storage ]; then
+      rm -rf storage
+    fi
+    ln -sf $deploy_directory/symlinks/storage storage
+    status "storage symlink created"
+  fi
 fi
