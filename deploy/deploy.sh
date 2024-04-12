@@ -24,7 +24,7 @@ date_string=$(date +"%Y-%m-%d-%H-%M-%S")
 remote_hash='xxx'
 local_hash='yyy'
 
-sudo -i -u $username <<DEPLOY
+sudo -i -u $username << "DEPLOY"
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
