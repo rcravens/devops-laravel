@@ -26,6 +26,7 @@ remote_hash='xxx'
 local_hash='yyy'
 
 sudo su - $username << DEPLOY
+{
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
@@ -81,6 +82,7 @@ echo  "folder=$deploy_directory/releases/$foldername"
 ## cleanup
 #title "Cleanup"
 #source $parent_path/clean_up.sh
+}
 DEPLOY
 
 # Return back to the original directory
