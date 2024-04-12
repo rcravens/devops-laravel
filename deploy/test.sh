@@ -1,17 +1,42 @@
 #!/bin/bash
 
+# Assuming this file is being run as the deployment user
+
+function title {
+    echo "-------------------------------------"
+    echo ""
+    echo "$1"
+    echo ""
+    echo "-------------------------------------"
+}
+
+title "Deploying...."
+
+# Save current directory and cd into script path
+initial_working_directory=$(pwd)
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path"
+
+# Load the config file
+source $parent_path/../config.sh
+
+deploy_directory=/home/$username/deployments
+
+date_string=$(date +"%Y-%m-%d-%H-%M-%S")
+remote_git_line='test'
+remote_hash='xxx'
+local_hash='yyy'
+
 if [ ! -d $deploy_directory ]; then
   mkdir -p $deploy_directory
 fi
 
 echo "date_string=$date_string"
 
-whoami
-
 # git short hash of remote repo
 if [ -d $deploy_directory/current ]; then
   cd $deploy_directory/current/
-  export remote_git_line=$(git ls-remote | head -n 1)
+  remote_git_line=$(git ls-remote | head -n 1)
   echo "remote_git_line=$remote_git_line"
   echo $(git ls-remote | head -n 1)
   remote_hash=${remote_git_line:0:7}
@@ -57,3 +82,6 @@ echo  "folder=$deploy_directory/releases/$foldername"
 ## cleanup
 #title "Cleanup"
 #source $parent_path/clean_up.sh
+
+# Return back to the original directory
+cd $initial_working_directory
