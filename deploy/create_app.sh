@@ -12,11 +12,11 @@ source $parent_path/../helpers.sh
 source $parent_path/../config.sh
 
 # Guard against overwriting and existing user
+title "Create Deployment User: $username"
 if id "$username" >/dev/null 2>&1; then
   error "This user already exists. Username: $username"
 else
   # Create the deployment user
-  title "Create Deployment User: $username"
   sudo adduser --gecos "" --disabled-password $username
   sudo chpasswd <<<"$username:$password"
 
@@ -41,34 +41,14 @@ error "-------------------------------------------------------------------------
 exit
 EOF
 
+  title "Adding www-data to user group: $username"
   sudo usermod -a -G $username www-data
 fi
 
 title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
 
-exit 0
-
-# Create the initial deployment
-deploy_directory=/home/$username/deployments
-folder_name="initial"
-
-# Only needed to delete this directory
-sudo chown $username:$username -R /home/$username/deployments/releases
-
 sudo su - $username <<INIT
-if [ ! -d $deploy_directory ]; then
-  mkdir -p $deploy_directory
-fi
-if [ ! -d $deploy_directory/releases ]; then
-  mkdir -p $deploy_directory/releases
-fi
-cd $deploy_directory/releases
-if [ -d $folder_name ]; then
-  rm -rf $folder_name
-fi
-git clone --depth 1 $repo $folder_name
-
 # Create the initial symlinked repository
 if [ ! -d $deploy_directory/symlinks ]; then
   mkdir -p $deploy_directory/symlinks
@@ -95,22 +75,13 @@ if [ "$is_laravel" = true ]; then
   fi
 fi
 
-cd $deploy_directory/releases/$folder_name
+cd $deploy_directory/current/
 
-# Activate this releases
+# Activate the newly created symlink sources
 source $parent_path/create_symlinks.sh
-
-# Build the application
-echo "Building the application"
-source $parent_path/build.sh
-
-# Activate this new version
-echo "Activate the new version"
-source $parent_path/activate.sh
 
 # Cron configuration
 #(crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1") | crontab -
-
 INIT
 
 # Create nginx conf
