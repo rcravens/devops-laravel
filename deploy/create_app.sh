@@ -49,6 +49,8 @@ title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
 
 title "Creating Initial Symlinked Data"
+echo "username: $username"
+echo "parent_path: $parent_path"
 sudo -u $username $parent_path/initialize_symlinks.sh
 
 #sudo su - $username <<INIT
