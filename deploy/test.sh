@@ -21,9 +21,10 @@ source $parent_path/../config.sh
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
 if [ ! "$username" == "$current_user" ]; then
-  echo "it is not the expected user"
-else
-  echo "it is the expected user"
+  echo "Expected user: $username"
+  echo "Current user: $current_user"
+  echo "Try running like sudo -u $username deploy.sh"
+  exit 1
 fi
 
 
