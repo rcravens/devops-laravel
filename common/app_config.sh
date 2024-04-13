@@ -9,6 +9,8 @@ if [[ ! -f $app_config_file ]]; then
   existing_apps=$(ls $common_path/../apps/ | sed -e 's|\.[^.]*$||')
   error "Try one of these applications:"
   echo "$existing_apps"
+  echo ""
+  echo ""
   exit 1
 fi
 source $app_config_file
