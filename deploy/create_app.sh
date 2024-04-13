@@ -76,6 +76,7 @@ if grep -q "$alias_str" /home/$username/.bash_aliases; then
   echo "Alias Already Exists: /home/$username/.bash_aliases"
 else
   echo "$alias_str" >> /home/$username/.bash_aliases
+  source /home/$username/.bashrc
   echo "Alias Created: /home/$username/.bash_aliases"
 fi
 EOF
