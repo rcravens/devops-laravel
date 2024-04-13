@@ -20,34 +20,41 @@ done
 
 # Enter deployment user password
 read -s -p "Deployment user password: " password
+echo
 
 # Confirm the password
 read -s -p "Confirm deployment user password: " confirm_password
-if [ "$password"!= "$confirm_password" ]; then
+echo
+if [[ "$password" != "$confirm_password" ]]; then
   echo "Passwords do not match."
   exit 1
 fi
 
 # Enter the deployment user MySQL password
 read -s -p "Deployment user MySQL password: " mysql_password
+echo
 
 # Confirm the MySQL password
 read -s -p "Confirm deployment user MySQL password: " confirm_mysql_password
-if [ "$mysql_password"!= "$confirm_mysql_password" ]; then
+echo
+if [[ "$mysql_password" != "$confirm_mysql_password" ]]; then
   echo "Passwords do not match."
   exit 1
 fi
 
 # Enter the application port number
 read -s -p "Application port number (e.g., 8000): " application_port
+echo
 
 # Enter the git repo url
 read -s -p "Git repo url: " git_repo_url
+echo
 
 php_version="8.3"
 
 # Prompt the user if the app is Laravel application
 read -p "Is this a Laravel app?  (y or Y for Yes): " yes_or_no
+echo
 
 # Check if the input is valid
 is_laravel=0
@@ -57,6 +64,7 @@ fi
 
 # Public SSH Key for Remote Access As Deployment User
 read -s -p "Public SSH Key for Remote Access As Deployment User: " public_ssh_key
+echo
 
 
 # Return back to the original directory
