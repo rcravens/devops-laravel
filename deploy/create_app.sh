@@ -6,10 +6,7 @@ my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$my_path"
 
 # Load the config file
-echo "before--->$my_path"
 source $my_path/../config.sh
-echo "after--->$my_path"
-exit 0
 
 # Guard against overwriting and existing user
 title "Create Deployment User: $username"
