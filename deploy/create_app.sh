@@ -60,6 +60,9 @@ else
   echo "Key Installed: /home/$username/.ssh/authorized_keys"
 fi
 EOF
+status "You should now be able to SSH in using this user. Something like:"
+public_ip_address=$(curl -s ifconfig.me)
+status "ssh -i path/to/key $username@$public_ip_address"
 
 
 # Create mysql database and user
@@ -98,7 +101,13 @@ title "Creating Initial Symlinked Data"
 sudo -u $username $parent_path/initialize_symlink_data.sh
 
 title "Creating Crontab for User: $username"
-sudo -u $username crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1" | sudo crontab -u $username -
+cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
+if [ $(sudo -u laravel_demo crontab -l | wc -c) -eq 0 ]; then
+  sudo -u $username echo "$cron_expression" | sudo crontab -u $username -
+  status "Created crontab: $cron_expression"
+else
+  status "Found crontabs"
+fi
 
 # Create nginx conf
 title "Creating Nginx Conf"
