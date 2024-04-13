@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Expecting one argument that is the app name to create
+my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 if [ $# -eq 0 ]; then
-  echo "No app specified, go with the current user"
-  existing_apps=$(ls $root_path/apps/ | sed -e 's|\.[^.]*$||')
+  echo "No app specified!"
+  existing_apps=$(ls $my_path/../apps/ | sed -e 's|\.[^.]*$||')
   echo "Try one of these applications:"
   echo "$existing_apps"
   exit 1
