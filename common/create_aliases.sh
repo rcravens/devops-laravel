@@ -11,12 +11,12 @@ declare -a aliases=(
 
 for alias_str in "${aliases[@]}"
 do
-   echo "$i"
+   echo "$alias_str"
    if grep -q "$alias_str" ~/.bash_aliases; then
-    echo "Alias Already Exists: /home/$username/.bash_aliases"
+    echo "Alias Already Exists: $alias_str"
   else
     echo "$alias_str" >> ~/.bash_aliases
     source ~/.bashrc
-    echo "Alias Created: /home/$username/.bash_aliases"
+    echo "Alias Created: $alias_str"
   fi
 done
