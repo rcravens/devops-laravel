@@ -81,7 +81,7 @@ status "ssh -i path/to/key $username@$public_ip_address"
 
 # Add a deployment alias for this user
 title "Adding a deployment for user: $username"
-alias_str="alias deploy='/usr/local/bin/deploy/deploy/deploy.sh'"
+alias_str="alias deploy='/usr/local/bin/devops/deploy/deploy.sh'"
 sudo su - $username <<EOF
 if [ ! -f /home/$username/.bash_aliases ]; then
     touch /home/$username/.bash_aliases
