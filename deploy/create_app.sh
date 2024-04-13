@@ -5,9 +5,6 @@ initial_working_directory=$(pwd)
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$my_path"
 
-# Load the helpers
-source $my_path/../helpers.sh
-
 # Load the config file
 echo "before--->$my_path"
 source $my_path/../config.sh
