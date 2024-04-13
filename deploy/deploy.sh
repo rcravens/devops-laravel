@@ -13,7 +13,7 @@ current_user=$(whoami)
 if [ ! "$username" == "$current_user" ]; then
   error "Expected user: $username"
   error "Current user: $current_user"
-  error "Try running like sudo -u $username deploy.sh"
+  error "Try running like sudo -u app_name deploy.sh"
   exit 1
 fi
 
