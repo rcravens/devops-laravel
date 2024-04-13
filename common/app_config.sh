@@ -8,7 +8,7 @@ if [[ ! -f $app_config_file ]]; then
   error "Configuration file not found: $app_config_file"
   existing_apps=$(ls $common_path/../apps/ | sed -e 's|\.[^.]*$||')
   error "Try one of these applications:"
-  status "$existing_apps"
+  echo "$existing_apps"
   exit 1
 fi
 source $app_config_file
