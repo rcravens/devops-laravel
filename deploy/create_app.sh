@@ -16,7 +16,6 @@ initial_working_directory=$(pwd)
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$my_path"
 
-
 # Load the helpers
 source $my_path/../common/helpers.sh
 
@@ -25,13 +24,6 @@ source $my_path/../config.sh
 
 # Load the application config file
 source $my_path/../common/app_config.sh
-ret_code=$?
-echo "return code=$ret_code"
-
-echo "username=$username"
-echo "deploy_directory=$deploy_directory"
-error "here we are!"
-exit 1
 
 # Guard against overwriting and existing user
 title "Create Deployment User: $username"
