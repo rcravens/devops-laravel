@@ -11,10 +11,6 @@ cd $my_path
 # Load common
 source $my_path/../common/load_common.sh
 
-echo "username=$username"
-exit
-
-
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
 if [ ! "$username" == "$current_user" ]; then
