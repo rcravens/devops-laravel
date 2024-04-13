@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash
 
 if [ ! -f ~/.bash_aliases ]; then
     touch ~/.bash_aliases
@@ -7,7 +7,6 @@ fi
 declare -a aliases=(
 "alias create_app='/usr/local/bin/devops/deploy/create_app.sh'"
 "alias delete_app='/usr/local/bin/devops/deploy/delete_app.sh'"
-"alias test='echo \"This is another test\"'"
                 )
 need_to_resource=0
 for alias_str in "${aliases[@]}"
@@ -23,5 +22,5 @@ done
 
 if [ $need_to_resource -eq 1 ]; then
   source ~/.bashrc
-  echo "Resourced .bashrc"
+  echo "To use the new aliases, you may need to run: source ~/.bashrc"
 fi
