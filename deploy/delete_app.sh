@@ -91,7 +91,13 @@ then
 
 
   title "Removing www-data from $app_name group"
-  sudo deluser www-data $app_name
+  if getent group $app_name | grep -qw "www-data"; then
+    sudo deluser www-data $app_name
+    status "Removed www-data from $app_name group"
+  else
+    status "www-data not part of the group"
+  fi
+
 exit
   title "Deleting User and All Files user=$app_name"
   sudo deluser $app_name --remove-all-files
