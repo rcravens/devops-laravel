@@ -40,10 +40,13 @@ then
   sudo rm /etc/nginx/sites-enabled/$username.conf
   sudo rm /etc/nginx/sites-available/$app_name.conf
   sudo service nginx reload
+  status "deleted"
 
-exit
+  title "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
+  sudo rm /etc/php/$php_version/fpm/pool.d/$app_name
+  sudo service php$php_version-fpm restart
+  exit
 
-  status "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
   status "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
 
   title "Deleting Application Cron"
