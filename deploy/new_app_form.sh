@@ -64,15 +64,15 @@ fi
 read -p "Public SSH Key for Remote Access As Deployment User: " public_ssh_key
 echo
 
-cp $my_path/_app.sh $my_path/../apps/$username.sh
-sed -i "s|username=UNAME|username=$username|" $my_path/../apps/$username.sh
-sed -i "s|password=PWORD|password=$password|" $my_path/../apps/$username.sh
-sed -i "s|db_password=DB_PWORD|db_password=$mysql_password|" $my_path/../apps/$username.sh
-sed -i "s|app_port=PORT|app_port=$port|" $my_path/../apps/$username.sh
-sed -i "s|repo=REPO_URL|repo=$repo|" $my_path/../apps/$username.sh
-sed -i "s|php_version=PHP_VERSION|php_version=$php_version|" $my_path/../apps/$username.sh
-sed -i "s|is_laravel=IS_LARAVEL|is_laravel=$is_laravel|" $my_path/../apps/$username.sh
-sed -i "s|public_ssh_key=PUB_SSH_KEY|public_ssh_key=$public_ssh_key|" $my_path/../apps/$username.sh
+sudo cp $my_path/_app.sh $my_path/../apps/$username.sh
+sudo sed -i "s|username=UNAME|username=$username|" $my_path/../apps/$username.sh
+sudo sed -i "s|password=PWORD|password=$password|" $my_path/../apps/$username.sh
+sudo sed -i "s|db_password=DB_PWORD|db_password=$mysql_password|" $my_path/../apps/$username.sh
+sudo sed -i "s|app_port=PORT|app_port=$port|" $my_path/../apps/$username.sh
+sudo sed -i "s|repo=REPO_URL|repo=$repo|" $my_path/../apps/$username.sh
+sudo sed -i "s|php_version=PHP_VERSION|php_version=$php_version|" $my_path/../apps/$username.sh
+sudo sed -i "s|is_laravel=IS_LARAVEL|is_laravel=$is_laravel|" $my_path/../apps/$username.sh
+sudo sed -i "s|public_ssh_key=PUB_SSH_KEY|public_ssh_key=\"$public_ssh_key\"|" $my_path/../apps/$username.sh
 
 
 # Return back to the original directory
