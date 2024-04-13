@@ -9,6 +9,7 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+# Application to create is argument #1
 app_name="$1"
 
 # Save current directory and cd into script path

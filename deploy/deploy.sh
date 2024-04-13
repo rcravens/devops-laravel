@@ -11,6 +11,9 @@ source $my_path/../common/helpers.sh
 # Load the config file
 source $my_path/../config.sh
 
+# Application to deploy is same as current username
+app_name=$(whoami)
+
 # Load the application config file
 source $my_path/../common/app_config.sh
 
