@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "root_path=$root_path"
+echo "common_path=$common_path"
+
 # Expecting an app_name variable
 if [[ ! -v app_name ]]; then
   error "Variable app_name is not set"
