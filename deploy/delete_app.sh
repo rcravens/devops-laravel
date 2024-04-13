@@ -36,6 +36,16 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   title "Deleting..."
 
+  title "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
+  sudo rm /etc/nginx/sites-enabled/$username.conf
+  sudo rm /etc/nginx/sites-available/$app_name.conf
+  sudo service nginx reload
+
+exit
+
+  status "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
+  status "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
+
   title "Deleting Application Cron"
   sudo -u $app_name crontab -r
   status "deleted"
@@ -50,9 +60,6 @@ then
   status "User: $app_name"
   status "MySQL User: $app_name"
   status "MySQL Database: $app_name"
-  status "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
-  status "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
-  status "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
 
   # Reverse this: sudo usermod -a -G $username www-data
 
