@@ -29,7 +29,8 @@ status "MySQL User: $app_name"
 status "MySQL Database: $app_name"
 status "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
 status "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
-status "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
+status "Supervisor Conf: /etc/supervisor/conf.d/$app_name.conf"
+status "App Config: $root_path/apps/$app_name.sh"
 read -p "Are you sure you continue? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -118,6 +119,14 @@ SQL
     status "Deleted: /home/$app_name"
   else
     status "Does not exists: /home/$app_name"
+  fi
+
+  title "Deleting Application Config: $root_path/apps/$app_name.sh"
+  if [ -f $root_path/apps/$app_name.sh ]; then
+    sudo rm $root_path/apps/$app_name.sh
+    status "Deleted: $root_path/apps/$app_name.sh"
+  else
+    status "Does not exists: $root_path/apps/$app_name.sh"
   fi
 fi
 
