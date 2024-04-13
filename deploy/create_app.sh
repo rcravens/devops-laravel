@@ -47,8 +47,8 @@ fi
 
 # Create mysql database and user
 title "Updating MySQL"
-status "Creating MySQL Database: $username"
-status "Creating MySQL User: $username"
+status "MySQL Database: $username"
+status "MySQL User: $username"
 mysql -u root -p$db_root_password <<SQL
 CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$db_password';
@@ -75,7 +75,7 @@ title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
 
 title "Generating Application Key"
-sudo -u $username php artisan key:generate
+sudo -u $username php $deploy_directory/current/artisan key:generate
 
 title "Creating Initial Symlinked Data"
 sudo -u $username $parent_path/initialize_symlink_data.sh
