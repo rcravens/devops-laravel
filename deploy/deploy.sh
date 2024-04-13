@@ -2,14 +2,11 @@
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-cd $parent_path
+my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd $my_path
 
-# Load the helpers
-source $parent_path/../helpers.sh
-
-# Load the config file
-source $parent_path/../config.sh
+# Load the app config file
+source $my_path/../config.sh
 
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
@@ -55,7 +52,7 @@ cd $deploy_directory/releases/$foldername
 
 # Create symlinks for files that persist across deployments
 title "Create Symlinks"
-source $parent_path/deploy_symlinks.sh
+source $my_path/deploy_symlinks.sh
 
 # Build the application
 title "Building"

@@ -2,14 +2,17 @@
 
 # Save current directory and cd into script path
 initial_working_directory=$(pwd)
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-cd "$parent_path"
+my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$my_path"
 
 # Load the helpers
-source $parent_path/../helpers.sh
+source $my_path/../helpers.sh
 
 # Load the config file
-source $parent_path/../config.sh
+echo "before--->$my_path"
+source $my_path/../config.sh
+echo "after--->$my_path"
+exit 0
 
 # Guard against overwriting and existing user
 title "Create Deployment User: $username"
@@ -80,7 +83,7 @@ else
   echo "Alias Created: /home/$username/.bash_aliases"
 fi
 EOF
-status "You should now be able to deploy running: sudo -u $username deploy"
+status "You should now be able to deploy running 'deploy' while logged in as $username"
 
 
 # Create mysql database and user
@@ -99,7 +102,7 @@ if [ ! -d $deploy_directory/symlinks ]; then
   sudo -u $username mkdir -p $deploy_directory/symlinks
 fi
 if [ ! -f $deploy_directory/symlinks/.env ]; then
-  sudo -u $username cp $parent_path/_laravel.env $deploy_directory/symlinks/.env
+  sudo -u $username cp $my_path/_laravel.env $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
@@ -110,13 +113,13 @@ else
 fi
 
 title "Creating Initial Deployment"
-sudo -u $username $parent_path/deploy.sh
+sudo -u $username $my_path/deploy.sh
 
 title "Generating Application Key"
 sudo -u $username php $deploy_directory/current/artisan key:generate
 
 title "Creating Initial Symlinked Data"
-sudo -u $username $parent_path/initialize_symlink_data.sh
+sudo -u $username $my_path/initialize_symlink_data.sh
 
 title "Creating Crontab for User: $username"
 cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
@@ -130,7 +133,7 @@ fi
 # Create nginx conf
 title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
-    sudo cp $parent_path/_nginx.conf /etc/nginx/sites-available/$username.conf
+    sudo cp $my_path/_nginx.conf /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|phpXXXX|php$php_version|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
@@ -158,7 +161,7 @@ fi
 # Create supervisor conf
 title "Creating Supervisor Conf"
 if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
-    sudo cp $parent_path/_supervisor.conf /etc/supervisor/conf.d/$username.conf
+    sudo cp $my_path/_supervisor.conf /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
