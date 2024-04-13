@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Assumption: We are in the deployed directory
-status "Current Directory: $PWD"
-
-
 # Save current directory and cd into script path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
@@ -13,6 +9,8 @@ source $parent_path/../helpers.sh
 # Load the config file
 source $parent_path/../config.sh
 
+# Assumption: We are in the deployed directory
+status "Current Directory: $PWD"
 
 if [ "$is_laravel" = true ]; then
 
