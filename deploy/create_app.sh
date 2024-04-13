@@ -58,6 +58,7 @@ sudo -u $username $parent_path/initialize_symlink_data.sh
 
 # Activate the newly created symlink sources
 title "Recreating Symlinks"
+cd $deploy_directory/current/
 sudo -u $username $parent_path/deploy_symlinks.sh
 
 # Create nginx conf

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Assumption: We are in the deployed directory
+
+
 # Save current directory and cd into script path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
@@ -9,7 +12,6 @@ source $parent_path/../helpers.sh
 # Load the config file
 source $parent_path/../config.sh
 
-cd $deploy_directory/current/
 
 if [ "$is_laravel" = true ]; then
 
@@ -18,6 +20,7 @@ if [ "$is_laravel" = true ]; then
       error "-----------------------MISSING .env---------------------------"
       error "Create a .env file for the laravel application in the following location:"
       error $deploy_directory/symlinks/.env
+      error "Then perform a new deployment using the deploy.sh script"
       error "-----------------------MISSING .env---------------------------"
   fi
   if [ -f $deploy_directory/symlinks/.env ]; then
