@@ -44,3 +44,7 @@ if [ "$is_laravel" = true ]; then
     cp -r database/database.sqlite $deploy_directory/symlinks/database.sqlite
   fi
 fi
+
+# Activate the newly created symlink sources
+title "Recreating Symlinks"
+source $parent_path/deploy_symlinks.sh

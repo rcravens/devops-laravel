@@ -56,11 +56,6 @@ sudo -u $username $parent_path/initialize_symlink_data.sh
 ##(crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1") | crontab -
 #INIT
 
-# Activate the newly created symlink sources
-title "Recreating Symlinks"
-cd $deploy_directory/current/
-sudo -u $username $parent_path/deploy_symlinks.sh
-
 # Create nginx conf
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
     sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/$username.conf
