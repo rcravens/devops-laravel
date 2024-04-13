@@ -34,31 +34,57 @@ read -p "Are you sure you continue? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  title "Deleting..."
 
   title "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
   if [ -f /etc/nginx/sites-enabled/$username.conf ]; then
     sudo rm /etc/nginx/sites-enabled/$username.conf
+    status "Deleted: /etc/nginx/sites-enabled/$username.conf"
+  else
+    status "Does not exists: /etc/nginx/sites-enabled/$username.conf"
   fi
   if [ -f /etc/nginx/sites-available/$app_name.conf ]; then
     sudo rm /etc/nginx/sites-available/$app_name.conf
+    status "Deleted: /etc/nginx/sites-available/$app_name.conf"
+  else
+    status "Does not exists: /etc/nginx/sites-available/$app_name.conf"
   fi
   sudo service nginx reload
-  status "deleted"
+  status "Nginx reloaded"
+
 
   title "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
   if [ -f /etc/php/$php_version/fpm/pool.d/$app_name.conf ]; then
     sudo rm /etc/php/$php_version/fpm/pool.d/$app_name.conf
+    status "Deleted: /etc/php/$php_version/fpm/pool.d/$app"
+    sudo service php$php_version-fpm restart
+    status "PHP FPM reloaded"
+  else
+    status "Does not exists: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
   fi
-  sudo service php$php_version-fpm restart
-  exit
 
-  status "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
+
+  title "Supervisor Conf: /etc/supervisor/conf.d/$username.conf"
+  if [ -f /etc/supervisor/conf.d/$username.conf ]; then
+    sudo rm /etc/supervisor/conf.d/$username.conf
+    status "Deleted: /etc/supervisor/conf.d/$username.conf"
+    sudo supervisorctl reread
+    sudo supervisorctl update
+    status "Supervisor reloaded"
+  else
+    status "Does not exists: /etc/supervisor/conf.d/$username.conf"
+  fi
+
 
   title "Deleting Application Cron"
-  sudo -u $app_name crontab -r
-  status "deleted"
+  cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
+  if [ $(sudo -u $username crontab -l | wc -c) -eq 0 ]; then
+    status "Crontab does not exist"
+  else
+    sudo -u $app_name crontab -r
+    status "Crontab deleted"
+  fi
 
+exit
   title "Removing www-data from $app_name group"
   sudo deluser www-data $app_name
 
