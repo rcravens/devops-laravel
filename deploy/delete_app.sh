@@ -113,6 +113,12 @@ SQL
   else
     status "User $app_name does not exist."
   fi
+  if [[ -d /home/$app_name ]]; then
+    sudo rm -rf /home/$app_name
+    status "Deleted: /home/$app_name"
+  else
+    status "Does not exists: /home/$app_name"
+  fi
 fi
 
 # Return back to the original directory
