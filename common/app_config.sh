@@ -2,6 +2,12 @@
 
 common_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
+# Expecting an app_name variable
+if [[ ! -v app_name ]]; then
+  error "Variable app_name is not set"
+  exit 1
+fi
+
 # Load the application configuration file
 app_config_file=$common_path/../apps/$app_name.sh
 if [[ ! -f $app_config_file ]]; then
