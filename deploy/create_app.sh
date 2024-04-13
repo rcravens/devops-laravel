@@ -20,7 +20,7 @@ else
   sudo adduser --gecos "" --disabled-password $username
   sudo chpasswd <<<"$username:$password"
 
-  # Start a new session with this new user
+  # Create the Github Deployment Keys
   title "Creating Github Deployment Keys"
   sudo su - $username <<EOF
 # Create the Github keys
@@ -44,6 +44,21 @@ EOF
   title "Adding www-data to user group: $username"
   sudo usermod -a -G $username www-data
 fi
+
+
+# Add the SSH public key to this users authorized_keys
+title "Adding SSH public key to authorized_keys for user: $username"
+if [ ! -f /home/$username/.ssh/authorized_keys ]; then
+    sudo -u $username touch /home/$username/.ssh/authorized_keys
+    sudo -u $username chmod 600 /home/$username/.ssh/authorized_keys
+fi
+if grep -q "$public_ssh_key" /home/$username/.ssh/authorized_keys; then
+  status "Key Already Installed: /home/$username/.ssh/authorized_keys"
+else
+  echo "$public_ssh_key" >> /home/$username/.ssh/authorized_keys
+  status "Key Installed: /home/$username/.ssh/authorized_keys"
+fi
+
 
 # Create mysql database and user
 title "Updating MySQL"
