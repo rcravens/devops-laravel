@@ -22,7 +22,7 @@ source $root_path/helpers.sh
 app_config_file=$root_path/apps/$app_name.sh
 if [[ ! -f $app_config_file ]]; then
   error "Configuration file not found: $app_config_file"
-  existing_apps=$(ls apps/ | sed -e 's|\.[^.]*$||')
+  existing_apps=$(ls $root_path/apps/ | sed -e 's|\.[^.]*$||')
   error "Try one of these applications:"
   status "$existing_apps"
   exit 1
