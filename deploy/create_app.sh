@@ -52,10 +52,10 @@ if [ ! -f /home/$username/.ssh/authorized_keys ]; then
     sudo -u $username touch /home/$username/.ssh/authorized_keys
     sudo -u $username chmod 600 /home/$username/.ssh/authorized_keys
 fi
-if grep -q "$public_ssh_key" /home/$username/.ssh/authorized_keys; then
+if sudo -u $username grep -q "$public_ssh_key" /home/$username/.ssh/authorized_keys; then
   status "Key Already Installed: /home/$username/.ssh/authorized_keys"
 else
-  echo "$public_ssh_key" >> /home/$username/.ssh/authorized_keys
+  sudo -u $username echo "$public_ssh_key" >> /home/$username/.ssh/authorized_keys
   status "Key Installed: /home/$username/.ssh/authorized_keys"
 fi
 
