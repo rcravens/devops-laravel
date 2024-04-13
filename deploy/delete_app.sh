@@ -41,7 +41,7 @@ then
   status "deleted"
 
   title "Removing www-data from $app_name group"
-  deluser www-data $app_name
+  sudo deluser www-data $app_name
 
   exit
 
