@@ -88,10 +88,10 @@ title "Cleanup (keeping the most recent $max_to_keep deployments)"
 ls -dt $deploy_directory/releases/* | tail -n +$max_to_keep | xargs rm -rf
 
 # publish git hash into .env
-title "Updating GIT_HASH in the .env"
+title "Updating APP_VERSION in the .env"
 if [ -f $deploy_directory/symlinks/.env ]; then
-  echo "remote_hash=$remote_hash"
-  sed -i "s|GIT_HASH=.*|GIT_HASH=$remote_hash|" $deploy_directory/symlinks/.env
+  echo "app_version=$foldername"
+  sed -i "s|APP_VERSION=.*|APP_VERSION=$foldername|" $deploy_directory/symlinks/.env
 fi
 
 # Return back to the original directory
