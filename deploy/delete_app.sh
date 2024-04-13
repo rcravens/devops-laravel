@@ -37,13 +37,19 @@ then
   title "Deleting..."
 
   title "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
-  sudo rm /etc/nginx/sites-enabled/$username.conf
-  sudo rm /etc/nginx/sites-available/$app_name.conf
+  if [ ! -f /etc/nginx/sites-enabled/$username.conf ]; then
+    sudo rm /etc/nginx/sites-enabled/$username.conf
+  fi
+  if [ ! -f /etc/nginx/sites-available/$app_name.conf ]; then
+    sudo rm /etc/nginx/sites-available/$app_name.conf
+  fi
   sudo service nginx reload
   status "deleted"
 
   title "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
-  sudo rm /etc/php/$php_version/fpm/pool.d/$app_name
+  if [ ! -f /etc/php/$php_version/fpm/pool.d/$app_name.conf ]; then
+    sudo rm /etc/php/$php_version/fpm/pool.d/$app_name.conf
+  fi
   sudo service php$php_version-fpm restart
   exit
 
