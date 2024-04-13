@@ -43,9 +43,10 @@ then
   title "Removing www-data from $app_name group"
   sudo deluser www-data $app_name
 
-  exit
+  title "Deleting User and All Files user=$app_name"
+  sudo deluser $app_name --remove-all-files
 
-  title "Directory and All Files: /home/$app_name/*"
+  exit
   status "User: $app_name"
   status "MySQL User: $app_name"
   status "MySQL Database: $app_name"
