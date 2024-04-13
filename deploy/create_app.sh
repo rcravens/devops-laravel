@@ -65,11 +65,17 @@ if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
+
+  status "Created .env file: $deploy_directory/symlinks/.env"
+else
+  status "Found .env file: $deploy_directory/symlinks/.env"
 fi
-exit 0
 
 title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
+
+title "Generating Application Key"
+sudo -u $username php artisan key:generate
 
 title "Creating Initial Symlinked Data"
 sudo -u $username $parent_path/initialize_symlink_data.sh
