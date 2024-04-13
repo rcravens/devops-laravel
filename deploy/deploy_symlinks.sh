@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Assumption: We are in the deployed directory
+status "Current Directory: $PWD"
 
 
 # Save current directory and cd into script path
