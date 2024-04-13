@@ -97,5 +97,13 @@ else
   status "Already exists: /etc/supervisor/conf.d/$username.conf"
 fi
 
+# Create mysql database and user
+title "Creating MySQL Database: $username"
+mysql -u root -p$db_root_password -e "CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+title "Creating MySQL User: $username"
+mysql -u root -p$db_root_password -e "CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$password';"
+msyql -u root -p$db_root_password -e "GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';"
+mysql -u root -p$db_root_password -e "FLUSH PRIVILEGES;"
+
 # Return back to the original directory
 cd $initial_working_directory || exit

@@ -5,6 +5,7 @@
 # Deployment user
 username=laravel_demo
 password=secret
+db_password=secret
 
 # Database
 db_root_password=secret
