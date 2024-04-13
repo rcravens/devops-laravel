@@ -1,1 +1,0 @@
-deploy:deploy::deploy::/home/deploy:/bin/bash
