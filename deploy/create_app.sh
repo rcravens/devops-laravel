@@ -45,6 +45,17 @@ EOF
   sudo usermod -a -G $username www-data
 fi
 
+# Create mysql database and user
+title "Updating MySQL"
+status "Creating MySQL Database: $username"
+status "Creating MySQL User: $username"
+mysql -u root -p$db_root_password <<SQL
+CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$password';
+GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
+FLUSH PRIVILEGES;
+SQL
+
 title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
 
@@ -96,17 +107,6 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
 else
   status "Already exists: /etc/supervisor/conf.d/$username.conf"
 fi
-
-# Create mysql database and user
-title "Creating MySQL Database: $username"
-#mysql -u root -p$db_root_password -e "CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-title "Creating MySQL User: $username"
-mysql -u root -p$db_root_password <<SQL
-CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$password';
-GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
-FLUSH PRIVILEGES;
-SQL
 
 # Return back to the original directory
 cd $initial_working_directory || exit
