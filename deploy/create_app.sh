@@ -51,10 +51,22 @@ status "Creating MySQL Database: $username"
 status "Creating MySQL User: $username"
 mysql -u root -p$db_root_password <<SQL
 CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$password';
+CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$db_password';
 GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
 FLUSH PRIVILEGES;
 SQL
+
+title "Creating Laravel .env File"
+if [ ! -d $deploy_directory/symlinks ]; then
+  mkdir -p $deploy_directory/symlinks
+fi
+if [ ! -f $deploy_directory/symlinks/.env ]; then
+  sudo -u $username cp $parent_path/_laravel.env $deploy_directory/symlinks/.env
+  sudo -u $username sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
+  sudo -u $username sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
+  sudo -u $username sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
+fi
+exit 0
 
 title "Creating Initial Deployment"
 sudo -u $username $parent_path/deploy.sh
@@ -68,7 +80,7 @@ sudo -u $username crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/c
 # Create nginx conf
 title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
-    sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/$username.conf
+    sudo cp $parent_path/_nginx.conf /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|phpXXXX|php$php_version|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
@@ -96,7 +108,7 @@ fi
 # Create supervisor conf
 title "Creating Supervisor Conf"
 if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
-    sudo cp $parent_path/horizon.conf /etc/supervisor/conf.d/$username.conf
+    sudo cp $parent_path/_supervisor.conf /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
