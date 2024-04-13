@@ -51,19 +51,23 @@ sudo -u $username $parent_path/deploy.sh
 title "Creating Initial Symlinked Data"
 sudo -u $username $parent_path/initialize_symlink_data.sh
 
-#sudo su - $username <<INIT
-## Cron configuration
-##(crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1") | crontab -
-#INIT
+title "Creating Crontab for User: $username"
+sudo -u $username crontab -l 2>/dev/null; echo "* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1" | sudo crontab -u $username -
 
 # Create nginx conf
+title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
     sudo cp $parent_path/laravel.conf /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|phpXXXX|php$php_version|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
     sudo service nginx reload
+    status "Created: /etc/nginx/sites-available/$username.conf"
+else
+  status "Already exists: /etc/nginx/sites-available/$username.conf"
 fi
+
+title "Creating PHP-FPM Pool Conf"
 if [ ! -f /etc/php/$php_version/fpm/pool.d/$username.conf ]; then
     sudo cp /etc/php/$php_version/fpm/pool.d/www.conf /etc/php/$php_version/fpm/pool.d/$username.conf
     sudo sed -i "s|\[www\]|[$username]|" /etc/php/$php_version/fpm/pool.d/$username.conf
@@ -73,9 +77,13 @@ if [ ! -f /etc/php/$php_version/fpm/pool.d/$username.conf ]; then
     sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/$php_version/fpm/pool.d/$username.conf
     sudo sed -i "s|listen =.*|listen = /run/php/php$php_version-$username-fpm.sock|" /etc/php/$php_version/fpm/pool.d/$username.conf
     sudo service php$php_version-fpm restart
+    status "Created: /etc/php/$php_version/fpm/pool.d/$username"
+else
+  status "Already existsL /etc/php/$php_version/fpm/pool.d/$username.conf"
 fi
 
 # Create supervisor conf
+title "Creating Supervisor Conf"
 if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo cp $parent_path/horizon.conf /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
@@ -84,6 +92,9 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
     sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/horizon.log|" /etc/supervisor/conf.d/$username.conf
     sudo supervisorctl reread
     sudo supervisorctl update
+    status "Created: /etc/supervisor/conf.d/$username.conf"
+else
+  status "Already exists: /etc/supervisor/conf.d/$username.conf"
 fi
 
 # Return back to the original directory
