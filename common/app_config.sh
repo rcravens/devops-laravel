@@ -1,7 +1,6 @@
 #!/bin/bash
 
 common_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-exit
 
 # Load the application configuration file
 app_config_file=$common_path/../apps/$app_name.sh
