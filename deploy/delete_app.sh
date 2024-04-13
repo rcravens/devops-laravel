@@ -106,28 +106,13 @@ FLUSH PRIVILEGES;
 SQL
   status "Dropped $app_name user and $app_name database from MySQL"
 
-exit
   title "Deleting User and All Files user=$app_name"
-  sudo deluser $app_name --remove-all-files
-
-  exit
-  status "User: $app_name"
-  status "MySQL User: $app_name"
-  status "MySQL Database: $app_name"
-
-
-
-  # Drop database and db user
-  title "Updating MySQL"
-  #status "MySQL Database: $username"
-  #status "MySQL User: $username"
-  #mysql -u root -p$db_root_password <<SQL
-  #CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-  #CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$db_password';
-  #GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
-  #FLUSH PRIVILEGES;
-  #SQL
-
+  if id "$username" >/dev/null 2>&1; then
+    sudo deluser $app_name --remove-all-files
+    status "User $app_name has been deleted."
+  else
+    status "User $app_name does not exist."
+  fi
 fi
 
 # Return back to the original directory
