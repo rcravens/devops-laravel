@@ -1,0 +1,35 @@
+{
+  "Resources": {
+    "HostedZone": {
+      "UpdateReplacePolicy": "Retain",
+      "Type": "AWS::Route53::HostedZone",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "VPCs": [],
+        "HostedZoneConfig": {
+          "Comment": ""
+        },
+        "Name": "nexlr.com."
+      }
+    },
+    "DnsRecordSet": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "HostedZone"
+        },
+        "Name": "laraveldemo.nexlr.com",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "EC2Instance",
+              "DomainName"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
