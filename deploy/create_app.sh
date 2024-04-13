@@ -58,7 +58,7 @@ SQL
 
 title "Creating Laravel .env File"
 if [ ! -d $deploy_directory/symlinks ]; then
-  mkdir -p $deploy_directory/symlinks
+  sudo -u $username mkdir -p $deploy_directory/symlinks
 fi
 if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username cp $parent_path/_laravel.env $deploy_directory/symlinks/.env
