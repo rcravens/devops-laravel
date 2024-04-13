@@ -67,11 +67,11 @@ status "ssh -i path/to/key $username@$public_ip_address"
 
 # Add a deployment alias for this user
 title "Adding a deployment for user: $username"
+alias_str="alias deploy='/usr/local/bin/deploy/deploy/deploy.sh'"
 sudo su - $username <<EOF
 if [ ! -f /home/$username/.bash_aliases ]; then
     touch /home/$username/.bash_aliases
 fi
-alias_str="alias deploy='/usr/local/bin/deploy/deploy/deploy.sh'"
 if grep -q "$alias_str" /home/$username/.bash_aliases; then
   echo "Alias Already Exists: /home/$username/.bash_aliases"
 else
@@ -80,7 +80,7 @@ else
   echo "Alias Created: /home/$username/.bash_aliases"
 fi
 EOF
-status "You should now be able to deploy running: sudo su $username deploy"
+status "You should now be able to deploy running: sudo -u $username deploy"
 
 
 # Create mysql database and user
