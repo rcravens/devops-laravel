@@ -36,20 +36,25 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
 
   title "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
+  restart_nginx=0
   if [ -f /etc/nginx/sites-enabled/$username.conf ]; then
     sudo rm /etc/nginx/sites-enabled/$username.conf
     status "Deleted: /etc/nginx/sites-enabled/$username.conf"
+    restart_nginx=1
   else
     status "Does not exists: /etc/nginx/sites-enabled/$username.conf"
   fi
   if [ -f /etc/nginx/sites-available/$app_name.conf ]; then
     sudo rm /etc/nginx/sites-available/$app_name.conf
     status "Deleted: /etc/nginx/sites-available/$app_name.conf"
+    restart_nginx=1
   else
     status "Does not exists: /etc/nginx/sites-available/$app_name.conf"
   fi
-  sudo service nginx reload
-  status "Nginx reloaded"
+  if [ $restart_nginx -eq 1 ]; then
+    sudo service nginx reload
+    status "Nginx reloaded"
+  fi
 
 
   title "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
@@ -84,10 +89,10 @@ then
     status "Crontab deleted"
   fi
 
-exit
+
   title "Removing www-data from $app_name group"
   sudo deluser www-data $app_name
-
+exit
   title "Deleting User and All Files user=$app_name"
   sudo deluser $app_name --remove-all-files
 
