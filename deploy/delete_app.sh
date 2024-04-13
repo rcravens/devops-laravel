@@ -98,6 +98,14 @@ then
     status "www-data not part of the group"
   fi
 
+  title "Dropping $app_name user and $app_name database from MySQL"
+  mysql -u root -p$db_root_password <<SQL
+DROP DATABASE IF EXISTS $app_name;
+DROP USER IF EXISTS '$username'@'localhost';
+FLUSH PRIVILEGES;
+SQL
+  status "Dropped $app_name user and $app_name database from MySQL"
+
 exit
   title "Deleting User and All Files user=$app_name"
   sudo deluser $app_name --remove-all-files
@@ -107,11 +115,7 @@ exit
   status "MySQL User: $app_name"
   status "MySQL Database: $app_name"
 
-  # Reverse this: sudo usermod -a -G $username www-data
 
-  # Delete user directory
-
-  # Delete user
 
   # Drop database and db user
   title "Updating MySQL"
@@ -124,11 +128,6 @@ exit
   #FLUSH PRIVILEGES;
   #SQL
 
-  # Delete nginx conf
-
-  # Delete PHP-FPM Pool Conf
-
-  # Delete supervisor conf
 fi
 
 # Return back to the original directory
