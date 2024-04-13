@@ -21,10 +21,6 @@ cd "$my_path"
 # Load common
 source $my_path/../common/load_common.sh
 
-echo "root_path=$root_path"
-echo "username=$username"
-exit
-
 # Guard against overwriting and existing user
 title "Create Deployment User: $username"
 if id "$username" >/dev/null 2>&1; then
@@ -124,13 +120,13 @@ else
 fi
 
 title "Creating Initial Deployment"
-sudo -u $username $my_path/deploy.sh
+sudo -u $username $root_path/deploy/deploy.sh
 
 title "Generating Application Key"
 sudo -u $username php $deploy_directory/current/artisan key:generate
 
 title "Creating Initial Symlinked Data"
-sudo -u $username $my_path/initialize_symlink_data.sh
+sudo -u $username $root_path/deploy/initialize_symlink_data.sh
 
 title "Creating Crontab for User: $username"
 cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
@@ -144,7 +140,7 @@ fi
 # Create nginx conf
 title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
-    sudo cp $my_path/_nginx.conf /etc/nginx/sites-available/$username.conf
+    sudo cp $root_path/deploy/_nginx.conf /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|listen PORT;|listen $app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|listen \[::\]:PORT;|listen [::]:$app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
@@ -174,7 +170,7 @@ fi
 # Create supervisor conf
 title "Creating Supervisor Conf"
 if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
-    sudo cp $my_path/_supervisor.conf /etc/supervisor/conf.d/$username.conf
+    sudo cp $root_path/deploy/_supervisor.conf /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|program:|program:horizon_$username|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|command=|command=php $deploy_directory/current/artisan horizon|" /etc/supervisor/conf.d/$username.conf
     sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username.conf
