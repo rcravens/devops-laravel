@@ -5,8 +5,17 @@ initial_working_directory=$(pwd)
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd $my_path
 
-# Load the app config file
+# Load the helpers
+source $my_path/../common/helpers.sh
+
+# Load the config file
 source $my_path/../config.sh
+
+# Load the application config file
+source $my_path/../common/app_config.sh
+
+echo "here we are"
+exit
 
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
