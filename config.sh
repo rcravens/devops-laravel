@@ -13,13 +13,13 @@ else
   app_name="$1"
 fi
 
-my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+root_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Load the helpers
-source $my_path/helpers.sh
+source $root_path/helpers.sh
 
 # Load the application configuration file
-app_config_file=$my_path/apps/$app_name.sh
+app_config_file=$root_path/apps/$app_name.sh
 if [[ ! -f $app_config_file ]]; then
   error "Configuration file not found: $app_config_file"
 fi
