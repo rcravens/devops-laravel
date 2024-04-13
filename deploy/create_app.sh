@@ -48,16 +48,18 @@ fi
 
 # Add the SSH public key to this users authorized_keys
 title "Adding SSH public key to authorized_keys for user: $username"
+sudo su - $username <<EOF
 if [ ! -f /home/$username/.ssh/authorized_keys ]; then
-    sudo -u $username touch /home/$username/.ssh/authorized_keys
-    sudo -u $username chmod 600 /home/$username/.ssh/authorized_keys
+    touch /home/$username/.ssh/authorized_keys
+    chmod 600 /home/$username/.ssh/authorized_keys
 fi
-if sudo -u $username grep -q "$public_ssh_key" /home/$username/.ssh/authorized_keys; then
-  status "Key Already Installed: /home/$username/.ssh/authorized_keys"
+if grep -q "$public_ssh_key" /home/$username/.ssh/authorized_keys; then
+  echo "Key Already Installed: /home/$username/.ssh/authorized_keys"
 else
-  sudo -u $username echo "$public_ssh_key" >> /home/$username/.ssh/authorized_keys
-  status "Key Installed: /home/$username/.ssh/authorized_keys"
+  echo "$public_ssh_key" >> /home/$username/.ssh/authorized_keys
+  echo "Key Installed: /home/$username/.ssh/authorized_keys"
 fi
+EOF
 
 
 # Create mysql database and user
