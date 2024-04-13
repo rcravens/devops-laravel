@@ -130,7 +130,7 @@ sudo -u $username $root_path/deploy/initialize_symlink_data.sh
 
 title "Creating Crontab for User: $username"
 cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"
-if [ $(sudo -u laravel_demo crontab -l | wc -c) -eq 0 ]; then
+if [ $(sudo -u $username crontab -l | wc -c) -eq 0 ]; then
   sudo -u $username echo "$cron_expression" | sudo crontab -u $username -
   status "Created crontab: $cron_expression"
 else
