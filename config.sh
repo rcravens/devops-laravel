@@ -4,6 +4,7 @@
 db_root_password=secret
 
 
+echo "varxxx=$varxxx"
 
 # Add in the application specific configuration
 if [ $# -eq 0 ]; then
@@ -16,7 +17,7 @@ fi
 root_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Load the helpers
-source $root_path/helpers.sh
+source $root_path/common/helpers.sh
 
 # Load the application configuration file
 app_config_file=$root_path/apps/$app_name.sh

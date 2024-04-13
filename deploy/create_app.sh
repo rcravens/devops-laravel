@@ -5,8 +5,13 @@ initial_working_directory=$(pwd)
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$my_path"
 
+varxxx="my test var"
+
 # Load the config file
 source $my_path/../config.sh
+
+error "here we are!"
+exit 1
 
 # Guard against overwriting and existing user
 title "Create Deployment User: $username"

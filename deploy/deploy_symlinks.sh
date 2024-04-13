@@ -4,7 +4,7 @@
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Load the helpers
-source $parent_path/../helpers.sh
+source $parent_path/../common/helpers.sh
 
 # Load the config file
 source $parent_path/../config.sh
