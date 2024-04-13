@@ -128,6 +128,8 @@ fi
 title "Creating Nginx Conf"
 if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
     sudo cp $my_path/_nginx.conf /etc/nginx/sites-available/$username.conf
+    sudo sed -i "s|listen PORT;|root listen $app_port;|" /etc/nginx/sites-available/$username.conf
+    sudo sed -i "s|listen [::]:PORT;|listen [::]:$app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|phpXXXX|php$php_version|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf

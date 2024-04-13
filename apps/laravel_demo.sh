@@ -8,9 +8,9 @@ password=secret
 db_password=secret
 
 # Deployment
+app_port=80
 repo=https://github.com/rcravens/laravel_demo.git
 php_version=8.3
-app_domain=laravel-cravens.centralus.cloudapp.azure.com
 is_laravel=true
 
 # Public SSH Key for Remote Access As Deployment User
