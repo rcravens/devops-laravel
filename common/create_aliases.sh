@@ -9,7 +9,7 @@ declare -a aliases=(
 "alias create_app='/usr/local/bin/devops/deploy/create_app.sh'"
                 )
 
-for i in "${arr[@]}"
+for i in "${aliases[@]}"
 do
    echo "$i"
    # or do whatever with individual element of the array
