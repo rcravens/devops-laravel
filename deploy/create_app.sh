@@ -101,7 +101,7 @@ fi
 title "Creating MySQL Database: $username"
 #mysql -u root -p$db_root_password -e "CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 title "Creating MySQL User: $username"
-mysql -u root -p$db_root_password -e <<SQL
+mysql -u root -p$db_root_password <<SQL
 CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$password';
 GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
