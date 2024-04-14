@@ -53,12 +53,8 @@ cd $deploy_directory/releases
 git clone --depth 1 $repo $foldername
 cd $deploy_directory/releases/$foldername
 
-# Create symlinks for files that persist across deployments
-title "Create Symlinks"
-source $my_path/deploy_symlinks.sh
-
 # Build the application
-source $my_path/builders/laravel.sh
+source $my_path/builders/laravel/build.sh
 
 # Activate this version
 title "Activate"
