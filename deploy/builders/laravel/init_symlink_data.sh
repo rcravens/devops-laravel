@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "From init_symlink.sh, PWD=$PWD"
+
 # Save current directory and cd into script path
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
