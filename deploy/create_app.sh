@@ -53,6 +53,12 @@ EOF
 
   title "Adding www-data to user group: $username"
   sudo usermod -a -G $username www-data
+
+  title "Next Steps"
+  echo "1. Install the above deployment key into your Git repo"
+  echo "2. Re run the following: create_app $username"
+
+  exit
 fi
 
 
