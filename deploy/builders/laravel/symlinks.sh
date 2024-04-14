@@ -3,6 +3,10 @@
 # Assumption: We are in the deployed directory
 echo "Current Directory: $PWD"
 
+echo "app_type=$app_type"
+echo "deploy_directory=$deploy_directory"
+
+
 if [ "$app_type" = "laravel" ]; then
 
   # .env
