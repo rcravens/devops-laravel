@@ -111,8 +111,9 @@ FLUSH PRIVILEGES;
 SQL
 
 title "Creating Laravel .env File"
+sudo su - $username <<EOF
 if [ ! -d $deploy_directory/symlinks ]; then
-  sudo -u $username mkdir -p $deploy_directory/symlinks
+  mkdir -p $deploy_directory/symlinks
 fi
 echo "TESTING: $deploy_directory/symlinks/.env"
 
@@ -121,6 +122,7 @@ if [ ! -f $deploy_directory/symlinks/.env ]; then
 else
   status "Found"
 fi
+EOF
 
 exit
 if [ ! -f $deploy_directory/symlinks/.env ]; then
