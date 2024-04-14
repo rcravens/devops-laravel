@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "root_directory=$root_directory"
+
 # Save current directory and cd into script path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
