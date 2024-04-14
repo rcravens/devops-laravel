@@ -5,9 +5,10 @@ if [ ! -f ~/.bash_aliases ]; then
 fi
 
 declare -a aliases=(
+"alias list_apps='/usr/local/bin/devops/deploy/list_apps.sh'"
+"alias new_config='/usr/local/bin/devops/deploy/new_app_form.sh'"
 "alias create_app='/usr/local/bin/devops/deploy/create_app.sh'"
 "alias delete_app='/usr/local/bin/devops/deploy/delete_app.sh'"
-"alias new_config='/usr/local/bin/devops/deploy/new_app_form.sh'"
                 )
 need_to_resource=0
 for alias_str in "${aliases[@]}"
