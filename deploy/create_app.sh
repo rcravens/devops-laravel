@@ -43,9 +43,9 @@ EOT
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/*
 
-error "----------------------COPY PUB KEY TO GITHUB DEPLOYMENT KEYS---------------------"
+echo "----------------------COPY PUB KEY TO GITHUB DEPLOYMENT KEYS---------------------"
 cat < ~/.ssh/github_rsa.pub
-error "---------------------------------------------------------------------------------"
+echo "---------------------------------------------------------------------------------"
 
 # End session
 exit
