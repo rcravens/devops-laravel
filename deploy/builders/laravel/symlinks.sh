@@ -3,7 +3,7 @@
 # Assumption: We are in the deployed directory
 echo "Current Directory: $PWD"
 
-if [ "$is_laravel" = true ]; then
+if [ "$app_type" = "laravel" ]; then
 
   # .env
   if [ ! -f $deploy_directory/symlinks/.env ]; then

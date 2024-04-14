@@ -15,7 +15,7 @@ cd $deploy_directory/current/
 if [ ! -d $deploy_directory/symlinks ]; then
   mkdir -p $deploy_directory/symlinks
 fi
-if [ "$is_laravel" = true ]; then
+if [ "$app_type" = "laravel" ]; then
 
   if [ ! -f $deploy_directory/symlinks/.env ]; then
     cp .env $deploy_directory/symlinks/.env
