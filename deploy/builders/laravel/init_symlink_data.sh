@@ -1,15 +1,13 @@
 #!/bin/bash
 
-# Assumption: We are in the deployed directory
-echo "Current Directory: $PWD"
-symlink_directory="$PWD/../../"
-echo "Symlink directory: $symlink_directory"
-
 # Save current directory and cd into script path
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Load common
-source $my_path/../common/load_common.sh
+source $my_path/../../../common/load_common.sh
+
+symlink_directory=$deploy_directory/symlinks
+echo "symlink_directory=$symlink_directory"
 
 # Create the initial symlinked repository
 if [ ! -d $symlink_directory ]; then
