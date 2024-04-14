@@ -262,7 +262,7 @@
               "",
               [
                 "#!/bin/bash -ex\n",
-                "git clone https://github.com/rcravens/devops-laravel.git /usr/local/bin/deploy\n",
+                "git clone https://github.com/rcravens/devops-laravel.git /usr/local/bin/devops\n",
                 "source /usr/local/bin/devops/common/create_aliases.sh\n"
               ]
             ]
