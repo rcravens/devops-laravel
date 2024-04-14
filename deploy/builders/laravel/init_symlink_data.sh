@@ -8,12 +8,8 @@ echo "Symlink directory: $symlink_directory"
 # Save current directory and cd into script path
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-# Load the helpers
-source $my_path/../../../common/helpers.sh
-
-# Load the config file
-source $my_path/../../../config.sh
-
+# Load common
+source $my_path/../common/load_common.sh
 
 # Create the initial symlinked repository
 if [ ! -d $symlink_directory ]; then
