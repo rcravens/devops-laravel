@@ -114,6 +114,7 @@ title "Creating Laravel .env File"
 if [ ! -d $deploy_directory/symlinks ]; then
   sudo -u $username mkdir -p $deploy_directory/symlinks
 fi
+echo "TESTING: $deploy_directory/symlinks/.env"
 exit
 if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username cp $my_path/_laravel.env $deploy_directory/symlinks/.env
