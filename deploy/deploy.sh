@@ -58,19 +58,7 @@ title "Create Symlinks"
 source $my_path/deploy_symlinks.sh
 
 # Build the application
-title "Building"
-
-status "Composer Install"
-composer install
-
-status "NPM Install"
-npm install
-
-status "Migrations"
-php artisan migrate --force
-
-status "Build Front End Assets"
-npm run build
+source $my_path/builders/laravel.sh
 
 # Activate this version
 title "Activate"
