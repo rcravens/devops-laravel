@@ -8,7 +8,7 @@ title "Existing Applications"
 # Ensure the apps directory exists
 
 if [[ ! -d $my_path/../apps ]]; then
-  mkdir $my_path/../apps
+  sudo mkdir $my_path/../apps
 fi
 
 existing_apps=$(ls $my_path/../apps/ | sed -e 's|\.[^.]*$||')
