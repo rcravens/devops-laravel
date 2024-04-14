@@ -31,9 +31,9 @@ status "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
 status "PHP FPM Pool: /etc/php/$php_version/fpm/pool.d/$app_name.conf"
 status "Supervisor Conf: /etc/supervisor/conf.d/$app_name.conf"
 status "App Config: $root_path/apps/$app_name.sh"
-read -p "Are you sure you continue? " -n 1 -r
+read -p "Are you sure you continue? " response
 echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $response =~ ^[Yy]$ ]]
 then
 
   title "Nginx Configuration: /etc/nginx/sites-available/$app_name.conf"
