@@ -79,7 +79,7 @@ if [ -f $my_path/../apps/$username.sh ]; then
   echo ""
   echo "Next Steps:"
   status "1. Review the config file"
-  status "2. Create the application by executing: create_app $username"
+  status "2. Create the application by executing: appCreate $username"
 else
   error "Failed to create a new application config file."
 fi
