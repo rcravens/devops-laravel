@@ -48,16 +48,8 @@ read -p "Application port number (e.g., 8000): " application_port
 # Enter the git repo url
 read -p "Git repo url: " git_repo_url
 
-php_version="8.3"
-
 # Prompt the user if the app is Laravel application
-read -p "Is this a Laravel app?  (y or Y for Yes): " yes_or_no
-
-# Check if the input is valid
-is_laravel=false
-if [[ $yes_or_no == "y" ]] || [[ $yes_or_no == "Y" ]]; then
-  is_laravel=true
-fi
+app_type="laravel"
 
 # Public SSH Key for Remote Access As Deployment User
 read -p "Public SSH Key for Remote Access As Deployment User: " public_ssh_key
@@ -74,10 +66,9 @@ sudo cp $my_path/_app.sh $my_path/../apps/$username.sh
 sudo sed -i "s|username=UNAME|username=$username|" $my_path/../apps/$username.sh
 sudo sed -i "s|password=PWORD|password=$password|" $my_path/../apps/$username.sh
 sudo sed -i "s|db_password=DB_PWORD|db_password=$mysql_password|" $my_path/../apps/$username.sh
+sudo sed -i "s|app_type=APP_TYPE|app_type=$app_type|" $my_path/../apps/$username.sh
 sudo sed -i "s|app_port=PORT|app_port=$application_port|" $my_path/../apps/$username.sh
 sudo sed -i "s|repo=REPO_URL|repo=$git_repo_url|" $my_path/../apps/$username.sh
-sudo sed -i "s|php_version=PHP_VERSION|php_version=$php_version|" $my_path/../apps/$username.sh
-sudo sed -i "s|is_laravel=IS_LARAVEL|is_laravel=$is_laravel|" $my_path/../apps/$username.sh
 sudo sed -i "s|public_ssh_key=PUB_SSH_KEY|public_ssh_key=\"$public_ssh_key\"|" $my_path/../apps/$username.sh
 
 title "Status"
