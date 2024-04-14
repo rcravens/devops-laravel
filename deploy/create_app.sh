@@ -114,6 +114,7 @@ title "Creating Laravel .env File"
 if [ ! -d $deploy_directory/symlinks ]; then
   sudo -u $username mkdir -p $deploy_directory/symlinks
 fi
+exit
 if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username cp $my_path/_laravel.env $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
@@ -132,10 +133,9 @@ sudo -u $username $root_path/deploy/deploy.sh
 title "Generating Application Key"
 sudo -u $username php $deploy_directory/current/artisan key:generate
 
-echo "XXXXX: $root_path/deploy/$app_type/init_symlink_data.sh"
-if [[ -f $root_path/deploy/$app_type/init_symlink_data.sh ]]; then
+if [[ -f $root_path/deploy/builders/$app_type/init_symlink_data.sh ]]; then
   title "Creating Initial Symlinked Data"
-  sudo -u $username $root_path/deploy/$app_type/init_symlink_data.sh
+  sudo -u $username $root_path/deploy/builders/$app_type/init_symlink_data.sh
 fi
 
 title "Creating Crontab for User: $username"
