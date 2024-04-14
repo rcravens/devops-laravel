@@ -18,6 +18,7 @@ if [ ! -d $symlink_directory ]; then
 fi
 if [ "$app_type" = "laravel" ]; then
 
+  status ".env"
   if [ ! -f $symlink_directory/.env ]; then
     echo "Looking: .env"
     if [ -f .env ]; then
@@ -34,7 +35,7 @@ if [ "$app_type" = "laravel" ]; then
    mkdir -p $symlink_directory/public
   fi
 
-
+  status "public/cache"
   if [ ! -d $symlink_directory/public/cache ]; then
     echo "Looking: public/cache"
     if [ -d public/cache ]; then
@@ -47,6 +48,7 @@ if [ "$app_type" = "laravel" ]; then
     echo "Data exists: public/cache"
   fi
 
+  status "public/data"
   if [ ! -d $symlink_directory/public/data ]; then
     echo "Looking: public/data"
     if [ -d public/data ]; then
@@ -59,6 +61,7 @@ if [ "$app_type" = "laravel" ]; then
     echo "Data exists: public/data"
   fi
 
+  status "storage"
   if [ ! -d $symlink_directory/storage ]; then
     echo "Looking: storage"
     if [ -d storage ]; then
@@ -79,6 +82,7 @@ if [ "$app_type" = "laravel" ]; then
     echo "Data exists: storage"
   fi
 
+  status "database.sqlite"
   if [ ! -f $symlink_directory/database.sqlite ]; then
     echo "Looking: database.sqlite"
     if [ -f database/databaser.sqlite ]; then
