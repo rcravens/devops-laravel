@@ -11,6 +11,9 @@ app_name=$(whoami)
 # Load common
 source $my_path/../../../common/load_common.sh
 
+# Get into the current release
+cd $deploy_directory/current/
+
 symlink_directory=$deploy_directory/symlinks
 echo "symlink_directory=$symlink_directory"
 
