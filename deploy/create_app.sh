@@ -118,9 +118,9 @@ fi
 echo "TESTING: $deploy_directory/symlinks/.env"
 
 if [ ! -f $deploy_directory/symlinks/.env ]; then
-   status "Not found"
+  echo "Not found"
 else
-  status "Found"
+  echo "Found"
 fi
 EOF
 
