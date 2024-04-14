@@ -6,13 +6,13 @@ symlink_directory="$PWD/../../"
 echo "Symlink directory: $symlink_directory"
 
 # Save current directory and cd into script path
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Load the helpers
-source $parent_path/../../../common/helpers.sh
+source $my_path/../../../common/helpers.sh
 
 # Load the config file
-source $parent_path/../../../config.sh
+source $my_path/../../../config.sh
 
 
 # Create the initial symlinked repository
@@ -51,4 +51,4 @@ fi
 
 # Activate the newly created symlink sources
 title "Recreating Symlinks"
-source $parent_path/init_symlinks.sh
+source $my_path/symlinks.sh
