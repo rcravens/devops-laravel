@@ -115,6 +115,13 @@ if [ ! -d $deploy_directory/symlinks ]; then
   sudo -u $username mkdir -p $deploy_directory/symlinks
 fi
 echo "TESTING: $deploy_directory/symlinks/.env"
+
+if [ ! -f $deploy_directory/symlinks/.env ]; then
+   status "Not found"
+else
+  status "Found"
+fi
+
 exit
 if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username cp $my_path/_laravel.env $deploy_directory/symlinks/.env
