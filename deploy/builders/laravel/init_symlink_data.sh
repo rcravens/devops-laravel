@@ -24,7 +24,7 @@ if [ "$app_type" = "laravel" ]; then
   if [ ! -d $symlink_directory/public ]; then
    mkdir -p $symlink_directory/public
   fi
-  if [ ! -d $symlink_directory/public/cache ]; then
+  if [[ ( ! -d $symlink_directory/public/cache ) && ( -d public/cache) ]]; then
    cp -r public/cache $symlink_directory/public/cache
   fi
   if [ ! -d $symlink_directory/public/data ]; then
