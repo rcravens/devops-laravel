@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Save current directory and cd into script path
-#parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-
-# Load the helpers
-#source $parent_path/../common/helpers.sh
-
-# Load the config file
-#source $parent_path/../config.sh
-
 # Assumption: We are in the deployed directory
 status "Current Directory: $PWD"
 
@@ -27,7 +18,7 @@ if [ "$is_laravel" = true ]; then
       rm .env
     fi
     ln -sf $deploy_directory/symlinks/.env .env
-    status ".env symlink created"
+    echo ".env symlink created"
   fi
 
   # sqlite
@@ -36,7 +27,7 @@ if [ "$is_laravel" = true ]; then
       rm database/database.sqlite
     fi
     ln -sf $deploy_directory/symlinks/database.sqlite database/database.sqlite
-    status "database.sqlite symlink created"
+    echo "database.sqlite symlink created"
   fi
 
   # public/cache
@@ -45,7 +36,7 @@ if [ "$is_laravel" = true ]; then
       rm -rf public/cache
     fi
       ln -sf $deploy_directory/symlinks/public/cache public/cache
-      status "public/cache symlink created"
+      echo "public/cache symlink created"
   fi
 
   # public/data
@@ -54,7 +45,7 @@ if [ "$is_laravel" = true ]; then
       rm -rf public/data
     fi
     ln -sf $deploy_directory/symlinks/public/data public/data
-    status "public/data symlink created"
+    echo "public/data symlink created"
   fi
 
   # storage
@@ -63,6 +54,6 @@ if [ "$is_laravel" = true ]; then
       rm -rf storage
     fi
     ln -sf $deploy_directory/symlinks/storage storage
-    status "storage symlink created"
+    echo "storage symlink created"
   fi
 fi
