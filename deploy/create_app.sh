@@ -54,9 +54,28 @@ EOF
   title "Adding www-data to user group: $username"
   sudo usermod -a -G $username www-data
 
+  title "Creating Laravel .env File"
+  sudo su - $username <<EOF
+if [ ! -d $deploy_directory/symlinks ]; then
+  mkdir -p $deploy_directory/symlinks
+fi
+if [ ! -f $deploy_directory/symlinks/.env ]; then
+  cp $my_path/_laravel.env $deploy_directory/symlinks/.env
+  sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
+  sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
+  sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
+  sed -i "s|HORIZON_PREFIX=.*|HORIZON_PREFIX=$username|" $deploy_directory/symlinks/.env
+
+  echo "Created .env file: $deploy_directory/symlinks/.env"
+else
+  echo "Found .env file: $deploy_directory/symlinks/.env"
+fi
+EOF
+
   title "Next Steps"
-  echo "1. Install the above deployment key into your Git repo"
-  echo "2. Re run the following: create_app $username"
+  echo "1. Install the above deployment key into your Git repo."
+  echo "2. Review the created .env ($deploy_directory/symlinks/.env) and make desired changes."
+  echo "3. Re run the following: create_app $username"
 
   exit
 fi
@@ -110,23 +129,6 @@ GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 
-title "Creating Laravel .env File"
-sudo su - $username <<EOF
-if [ ! -d $deploy_directory/symlinks ]; then
-  mkdir -p $deploy_directory/symlinks
-fi
-if [ ! -f $deploy_directory/symlinks/.env ]; then
-  cp $my_path/_laravel.env $deploy_directory/symlinks/.env
-  sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
-  sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
-  sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
-  sed -i "s|HORIZON_PREFIX=.*|HORIZON_PREFIX=$username|" $deploy_directory/symlinks/.env
-
-  echo "Created .env file: $deploy_directory/symlinks/.env"
-else
-  echo "Found .env file: $deploy_directory/symlinks/.env"
-fi
-EOF
 
 title "Creating Initial Deployment"
 sudo -u $username $root_path/deploy/deploy.sh

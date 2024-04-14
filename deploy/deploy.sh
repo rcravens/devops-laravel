@@ -56,6 +56,13 @@ cd $deploy_directory/releases/$foldername
 # Build the application
 source $my_path/builders/$app_type/build.sh
 
+# publish git hash into .env
+title "Updating APP_VERSION in the .env"
+if [ -f $deploy_directory/symlinks/.env ]; then
+  echo "app_version=$foldername"
+  sed -i "s|APP_VERSION=.*|APP_VERSION=$foldername|" $deploy_directory/symlinks/.env
+fi
+
 # Activate this version
 title "Activate"
 if [[ -h $deploy_directory/current ]]; then
@@ -71,12 +78,6 @@ max_to_keep=6
 title "Cleanup (keeping the most recent $max_to_keep deployments)"
 ls -dt $deploy_directory/releases/* | tail -n +$max_to_keep | xargs rm -rf
 
-# publish git hash into .env
-title "Updating APP_VERSION in the .env"
-if [ -f $deploy_directory/symlinks/.env ]; then
-  echo "app_version=$foldername"
-  sed -i "s|APP_VERSION=.*|APP_VERSION=$foldername|" $deploy_directory/symlinks/.env
-fi
 
 # Return back to the original directory
 cd $initial_working_directory
