@@ -62,6 +62,14 @@ fi
 # Public SSH Key for Remote Access As Deployment User
 read -p "Public SSH Key for Remote Access As Deployment User: " public_ssh_key
 
+# Ensure the apps directory exists
+if [[ ! -d $my_path/../apps ]]; then
+  mkdir $my_path/../apps
+fi
+
+cd $my_path/../apps
+
+# Create the new app config
 sudo cp $my_path/_app.sh $my_path/../apps/$username.sh
 sudo sed -i "s|username=UNAME|username=$username|" $my_path/../apps/$username.sh
 sudo sed -i "s|password=PWORD|password=$password|" $my_path/../apps/$username.sh
