@@ -132,8 +132,10 @@ sudo -u $username $root_path/deploy/deploy.sh
 title "Generating Application Key"
 sudo -u $username php $deploy_directory/current/artisan key:generate
 
-title "Creating Initial Symlinked Data"
-sudo -u $username $root_path/deploy/initialize_symlink_data.sh
+if [[ -f $root_path/deploy/$app_type/init_symlink_data.sh ]]; then
+  title "Creating Initial Symlinked Data"
+  sudo -u $username $root_path/deploy/$app_type/init_symlink_data.sh
+fi
 
 title "Creating Crontab for User: $username"
 cron_expression="* * * * * cd $deploy_directory/current/ && php artisan schedule:run >> $deploy_directory/current/storage/logs/cron.log 2>&1"

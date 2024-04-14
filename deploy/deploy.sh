@@ -54,7 +54,7 @@ git clone --depth 1 $repo $foldername
 cd $deploy_directory/releases/$foldername
 
 # Build the application
-source $my_path/builders/laravel/build.sh
+source $my_path/builders/$app_type/build.sh
 
 # Activate this version
 title "Activate"

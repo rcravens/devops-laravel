@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Assumption: We are in the deployed directory
-status "Current Directory: $PWD"
+echo "Current Directory: $PWD"
 
 if [ "$is_laravel" = true ]; then
 
