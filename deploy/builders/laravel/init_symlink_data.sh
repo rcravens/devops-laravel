@@ -3,6 +3,9 @@
 # Save current directory and cd into script path
 my_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
+# Assumption: This is part of a deployment and is being run under the deployment user
+app_name=$(whoami)
+
 # Load common
 source $my_path/../../../common/load_common.sh
 
