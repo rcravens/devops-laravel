@@ -113,6 +113,7 @@ if [ ! -f $deploy_directory/symlinks/.env ]; then
   sudo -u $username sed -i "s|DB_DATABASE=.*|DB_DATABASE=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_USERNAME=.*|DB_USERNAME=$username|" $deploy_directory/symlinks/.env
   sudo -u $username sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=$db_password|" $deploy_directory/symlinks/.env
+  sudo -u $username sed -i "s|HORIZON_PREFIX=.*|HORIZON_PREFIX=$username|" $deploy_directory/symlinks/.env
 
   status "Created .env file: $deploy_directory/symlinks/.env"
 else
