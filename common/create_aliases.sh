@@ -7,6 +7,7 @@ fi
 declare -a aliases=(
 "alias create_app='/usr/local/bin/devops/deploy/create_app.sh'"
 "alias delete_app='/usr/local/bin/devops/deploy/delete_app.sh'"
+"alias new_config='/usr/local/bin/devops/deploy/new_app_form.sh'"
                 )
 need_to_resource=0
 for alias_str in "${aliases[@]}"
