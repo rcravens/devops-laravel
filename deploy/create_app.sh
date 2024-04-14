@@ -75,7 +75,7 @@ EOF
   title "Next Steps"
   echo "1. Install the above deployment key into your Git repo."
   echo "2. Review the created .env ($deploy_directory/symlinks/.env) and make desired changes."
-  echo "3. Re run the following: create_app $username"
+  echo "3. Re run the following: appCreate $username"
 
   exit
 fi
