@@ -57,6 +57,8 @@ if [ -f $deploy_directory/build*.zip ]; then
   # Create version string based on archive name
   file=(build*.zip)
   version_str=$(echo "$files" | cut -f 1 -d '.')
+  echo "file=$file"
+  echo "version_str=$version_str"
 
   # Unzip the archive
   mkdir $foldername
