@@ -55,7 +55,7 @@ if [ -f $deploy_directory/build*.zip ]; then
   status "Deploying from an archive..."
 
   # Create version string based on archive name
-  file=(build*.zip)
+  file=$(ls ./ | grep "^build.*zip$" | head -1)
   version_str=$(echo "$file" | cut -f 1 -d '.')
   echo "file=$file"
   echo "version_str=$version_str"
