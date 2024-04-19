@@ -48,9 +48,19 @@ foldername="$date_string-$remote_hash"
 status "Folder Name: $foldername"
 status "Deployment Directory: $deploy_directory/releases/$foldername"
 
-# Git clone into this new directory
 cd $deploy_directory/releases
-git clone --depth 1 $repo $foldername
+if [ -f $deploy_directory/build*.zip ]; then
+  # Deploy from an archive
+  status "Deploying from an archive..."
+  mkdir $foldername
+  cd $foldername
+  unzip -q $deploy_directory/build*.zip
+  rm $deploy_directory/build*.zip
+else
+  # Git clone into this new directory
+  status "Deploying from a git repository..."
+  git clone --depth 1 $repo $foldername
+fi
 cd $deploy_directory/releases/$foldername
 
 # Build the application
