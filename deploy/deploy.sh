@@ -45,6 +45,7 @@ fi
 
 # Create the directory name
 foldername="$date_string-$remote_hash"
+version_str=$foldername
 status "Folder Name: $foldername"
 status "Deployment Directory: $deploy_directory/releases/$foldername"
 
@@ -52,10 +53,18 @@ cd $deploy_directory/releases
 if [ -f $deploy_directory/build*.zip ]; then
   # Deploy from an archive
   status "Deploying from an archive..."
+
+  # Create version string based on archive name
+  file=(build*.zip)
+  version_str=$(echo "$files" | cut -f 1 -d '.')
+
+  # Unzip the archive
   mkdir $foldername
   cd $foldername
   unzip -q $deploy_directory/build*.zip
   touch "archived_deployed.lock"
+
+  # Delete the original
   # rm $deploy_directory/build*.zip
 else
   # Git clone into this new directory
@@ -70,8 +79,8 @@ source $my_path/builders/$app_type/build.sh
 # publish git hash into .env
 title "Updating APP_VERSION in the .env"
 if [ -f $deploy_directory/symlinks/.env ]; then
-  echo "app_version=$foldername"
-  sed -i "s|APP_VERSION=.*|APP_VERSION=$foldername|" $deploy_directory/symlinks/.env
+  echo "app_version=$version_str"
+  sed -i "s|APP_VERSION=.*|APP_VERSION=$version_str|" $deploy_directory/symlinks/.env
 fi
 
 # Activate this version
