@@ -73,7 +73,11 @@ else
   status "Deploying from a git repository..."
   git clone --depth 1 $repo $foldername
 fi
+
 cd $deploy_directory/releases/$foldername
+
+# Allow the group (www-data) to write to the hash files
+chmod 660 hash*
 
 # Build the application
 source $my_path/builders/$app_type/build.sh
