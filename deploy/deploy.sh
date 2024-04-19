@@ -67,7 +67,7 @@ if [ -f $deploy_directory/build*.zip ]; then
   touch "archived_deployed.lock"
 
   # Delete the original
-  # rm $deploy_directory/build*.zip
+  rm $deploy_directory/build*.zip
 else
   # Git clone into this new directory
   status "Deploying from a git repository..."
