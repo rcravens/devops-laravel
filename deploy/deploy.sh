@@ -55,7 +55,7 @@ if [ -f $deploy_directory/build*.zip ]; then
   mkdir $foldername
   cd $foldername
   unzip -q $deploy_directory/build*.zip
-  rm $deploy_directory/build*.zip
+  # rm $deploy_directory/build*.zip
 else
   # Git clone into this new directory
   status "Deploying from a git repository..."
