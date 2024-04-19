@@ -55,6 +55,7 @@ if [ -f $deploy_directory/build*.zip ]; then
   mkdir $foldername
   cd $foldername
   unzip -q $deploy_directory/build*.zip
+  touch "archived_deployed.lock"
   # rm $deploy_directory/build*.zip
 else
   # Git clone into this new directory
