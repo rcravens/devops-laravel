@@ -1,11 +1,15 @@
-# Devops Helpers for Quickly Deploying Laravel Applications
+# Devops Platform for Quickly Deploying Laravel Applications
 
-There are two functions provided by this package:
+There are two features provided by this platform:
 
-1. Provisioning - Provision an Ubuntu 20.04 server with the necessary packages to run Laravel applications.
-2. Deployment - Zero downtime deployment from a git based repository.
+1. Server Provisioning - Provision an Ubuntu server with the necessary packages to run Laravel applications.
+2. Application Management - Deploy multiple laravel applications to a single server and have **Zero Downtime Deployments** from a git based repository.
 
-First clone this repo into the Ubuntu server where the Laravel application will be hosted.
+### Getting Started
+There are two approaches to getting started:
+1. Use the provided Amazon AWS CloudFormation stack to create your infrastructure in AWS.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7xOpxpdLcfI?si=dQ1hvlgV-6gqkYxg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+First clone this repo into the Ubuntu server where the Laravel application will be hosted. 
 
 ### 1. Configuration
 Before running either provisioning or deployments, the application configuration should be updated. Update the data in the `config.sh` file:
