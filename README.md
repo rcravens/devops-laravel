@@ -8,8 +8,9 @@ There are two features provided by this platform:
 ### Getting Started
 There are two approaches to getting started:
 1. Use the provided Amazon AWS CloudFormation stack to create your infrastructure in AWS.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7xOpxpdLcfI?si=dQ1hvlgV-6gqkYxg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-First clone this repo into the Ubuntu server where the Laravel application will be hosted. 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/7xOpxpdLcfI/0.jpg)](https://www.youtube.com/watch?v=7xOpxpdLcfI)
+
+2.First clone this repo into the Ubuntu server where the Laravel application will be hosted. 
 
 ### 1. Configuration
 Before running either provisioning or deployments, the application configuration should be updated. Update the data in the `config.sh` file:
