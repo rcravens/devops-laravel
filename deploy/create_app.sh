@@ -203,9 +203,9 @@ if [ ! -f "$pulse_conf_file" ]; then
     sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" "$pulse_conf_file"
     sudo supervisorctl reread
     sudo supervisorctl update
-    status "Created: /etc/supervisor/conf.d/$username_pulse.conf"
+    status "Created: $pulse_conf_file"
 else
-  status "Already exists: /etc/supervisor/conf.d/$username_pulse.conf"
+  status "Already exists: $pulse_conf_file"
 fi
 
 # Return back to the original directory
