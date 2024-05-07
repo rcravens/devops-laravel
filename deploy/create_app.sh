@@ -194,12 +194,13 @@ if [ ! -f /etc/supervisor/conf.d/$username.conf ]; then
 else
   status "Already exists: /etc/supervisor/conf.d/$username.conf"
 fi
-if [ ! -f /etc/supervisor/conf.d/$username_pulse.conf ]; then
-    sudo cp $root_path/deploy/_supervisor.conf /etc/supervisor/conf.d/$username_pulse.conf
-    sudo sed -i "s|program:|program:pulse_$username|" /etc/supervisor/conf.d/$username_pulse.conf
-    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan pulse:check|" /etc/supervisor/conf.d/$username_pulse.conf
-    sudo sed -i "s|user=|user=$username|" /etc/supervisor/conf.d/$username_pulse.conf
-    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" /etc/supervisor/conf.d/$username_pulse.conf
+pulse_conf_file="/etc/supervisor/conf.d/${username}_pulse.conf"
+if [ ! -f "$pulse_conf_file" ]; then
+    sudo cp $root_path/deploy/_supervisor.conf "$pulse_conf_file"
+    sudo sed -i "s|program:|program:pulse_$username|" "$pulse_conf_file"
+    sudo sed -i "s|command=|command=php $deploy_directory/current/artisan pulse:check|" "$pulse_conf_file"
+    sudo sed -i "s|user=|user=$username|" "$pulse_conf_file"
+    sudo sed -i "s|stdout_logfile=|stdout_logfile=$deploy_directory/current/storage/logs/pulse.log|" "$pulse_conf_file"
     sudo supervisorctl reread
     sudo supervisorctl update
     status "Created: /etc/supervisor/conf.d/$username_pulse.conf"
