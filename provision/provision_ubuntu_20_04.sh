@@ -29,38 +29,69 @@ sudo apt-get install -y software-properties-common curl gnupg debian-keyring deb
 ca-certificates build-essential dos2unix gcc git git-lfs libmcrypt4 libpcre3-dev libpng-dev chrony make pv \
 python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-completion zsh zip unzip expect
 
+# Create Swap Space
+if [ $swap_space -eq 1 ]; then
+  title "Create Swap Space"
+  if [ -f /swapfile ]; then
+    status "swapfile already exists"
+  else
+    total_ram=$(free -m | grep Mem: | awk '{print $2}')
+    sudo fallocate -l ${total_ram}M /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    status "swapfile created"
+  fi
+fi
+
 # Install Nginx
-title "Install Nginx"
-source ./installers/nginx.sh
+if [ $nginx -eq 1 ]; then
+  title "Install Nginx"
+  source ./installers/nginx.sh
+fi
 
-# Install PHP
-title "Install PHP Version: $php_version"
-source ./installers/php$php_version.sh
+if [ $php -eq 1 ]; then
+  # Install PHP
+  title "Install PHP Version: $php_version"
+  source ./installers/php$php_version.sh
+fi
 
-# Install composer
-title "Install Composer"
-source ./installers/composer.sh
+if [ $composer -eq 1 ]; then
+  # Install composer
+  title "Install Composer"
+  source ./installers/composer.sh
+fi
 
-# Install node
-title "Install Node and NPM"
-source ./installers/node.sh
+if [ $node_and_npm -eq 1 ]; then
+  # Install node
+  title "Install Node and NPM"
+  source ./installers/node.sh
+fi
 
-# Install redis
-title "Install Redis"
-source ./installers/redis.sh
+if [ $redis -eq 1 ]; then
+  title "Install Redis"
+  source ./installers/redis.sh
+fi
 
-# Install sqlite
-title "Install SQLite"
-source ./installers/sqlite.sh
+if [ $sqlite -eq 1 ]; then
+  title "Install SQLite"
+  source ./installers/sqlite.sh
+fi
 
-# Install either mysql or mariadb (cannot install both)
-title "Install MySQL"
-source ./installers/mysql.sh
-#source ./installers/mariadb.sh
+if [ $mysql -eq 1 ]; then
+  title "Install MySQL"
+  source ./installers/mysql.sh
+fi
 
-# Install certbot
-title "Install Certbot (LetsEncrypt)"
-source ./installers/certbot.sh
+if [ $mariadb -eq 1 ]; then
+  title "Install MariaDB"
+  source ./installers/mariadb.sh
+fi
+
+if [ $certbot -eq 1 ]; then
+  title "Install Certbot (LetsEncrypt)"
+  source ./installers/certbot.sh
+fi
 
 # Force Locale
 #echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
@@ -69,23 +100,35 @@ source ./installers/certbot.sh
 # Set My Timezone
 #sudo ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
-# Install apache
-#source ./installers/apache.sh
+if [ $apache -eq 1 ]; then
+  title "Install apache"
+  source ./installers/apache.sh
+fi
 
-# Install memcache
-#source ./installers/memcache.sh
+if [ $memcache -eq 1 ]; then
+  title "Install memcache"
+  source ./installers/memcache.sh
+fi
 
-# Install beanstalk
-#source ./installers/beanstalk.sh
+if [ $beanstalk -eq 1 ]; then
+  title "Install beanstalk"
+  source ./installers/beanstalk.sh
+fi
 
-# Install mailhog
-#source ./installers/mailhog.sh
+if [ $mailhog -eq 1 ]; then
+  title "Install mailhog"
+  source ./installers/mailhog.sh
+fi
 
-# Install ngrok
-#source ./installers/ngrok.sh
+if [ $ngrok -eq 1 ]; then
+  title "Install ngrok"
+  source ./installers/ngrok.sh
+fi
 
-# Install postfix
-#source ./installers/postfix.sh
+if [ $postfix -eq 1 ]; then
+  title "Install postfix"
+  source ./installers/postfix.sh
+fi
 
 # One last upgrade check
 title "One Last Upgrade Check"
@@ -96,13 +139,6 @@ title "Clean Up"
 sudo apt -y autoremove
 sudo apt -y clean
 
-# Create Swap Space
-title "Create Swap Space"
-total_ram=$(free -m | grep Mem: | awk '{print $2}')
-sudo fallocate -l ${total_ram}M /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
 
 
 title "Status Report"
