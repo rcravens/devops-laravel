@@ -11,7 +11,7 @@ installs:
   database:
     mysql: yes
     mariadb: no
-    db_root_password: secret
+    root_password: secret
   certbot: yes
   apache: no
   memcache: no

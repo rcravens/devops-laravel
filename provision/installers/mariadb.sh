@@ -18,8 +18,8 @@ sudo rm -rf /etc/mysql
 sudo curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
 
 sudo echo "mariadb-server mysql-server/data-dir select ''" | sudo debconf-set-selections
-sudo echo "mariadb-server mysql-server/root_password password $installs_database_db_root_password" | sudo debconf-set-selections
-sudo echo "mariadb-server mysql-server/root_password_again password $installs_database_db_root_password" | sudo debconf-set-selections
+sudo echo "mariadb-server mysql-server/root_password password $installs_database_root_password" | sudo debconf-set-selections
+sudo echo "mariadb-server mysql-server/root_password_again password $installs_database_root_password" | sudo debconf-set-selections
 
 sudo mkdir  /etc/mysql
 sudo touch /etc/mysql/debian.cnf
@@ -37,9 +37,9 @@ ignore-db-dir = lost+found
 #general_log_file=/var/log/mysql/mariadb.log
 EOF'
 
-export MYSQL_PWD=$installs_database_db_root_password
+export MYSQL_PWD=$installs_database_root_password
 
-sudo mysql --user="root" -e "GRANT ALL ON *.* TO root@'0.0.0.0' IDENTIFIED BY '$installs_database_db_root_password' WITH GRANT OPTION;"
+sudo mysql --user="root" -e "GRANT ALL ON *.* TO root@'0.0.0.0' IDENTIFIED BY '$installs_database_root_password' WITH GRANT OPTION;"
 sudo service mysql restart
 
 sudo mysql_upgrade --user="root" --verbose --force
