@@ -1,5 +1,5 @@
 installs:
-  swap_space: n
+  swapspace: n
   nginx: yes
   php:
     install: yes

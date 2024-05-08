@@ -32,7 +32,7 @@ python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-comple
 
 # Create Swap Space
 title "Create Swap Space"
-case $installs_swap_space in
+case $installs_swapspace in
   [yY][eE][sS]|[yY])
     if [ -f /swapfile ]; then
       status "swapfile already exists"
