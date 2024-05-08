@@ -4,7 +4,7 @@ installs:
   php:
     install: yes
     composer: yes
-    version: 8.3   # version (e.g., 8.3)
+    version: 8.3
   node_and_npm: yes
   redis: yes
   sqlite: yes
