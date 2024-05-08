@@ -13,12 +13,12 @@ installs:
     mariadb: no
     db_root_password: secret
   certbot: yes
-  apache: yes
-  memcache: yes
-  beanstalk: yes
-  mailhog: yes
-  ngrok: yes
-  postfix: yes
+  apache: no
+  memcache: no
+  beanstalk: no
+  mailhog: no
+  ngrok: no
+  postfix: no
 
 
 
