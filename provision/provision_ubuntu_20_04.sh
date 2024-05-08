@@ -8,8 +8,9 @@ cd "$parent_path"
 # Load the helpers
 source $parent_path/../common/helpers.sh
 
-# Load the config file
-source $parent_path/../config.sh
+# Load the config file (yaml)
+source $parent_path/../common/parse_yaml.sh
+eval $(parse_yaml $parent_path/../config.yml)
 
 # Auto restart services
 title "Enabling Service Auto Restart"
@@ -30,68 +31,99 @@ ca-certificates build-essential dos2unix gcc git git-lfs libmcrypt4 libpcre3-dev
 python3-pip re2c supervisor unattended-upgrades whois vim cifs-utils bash-completion zsh zip unzip expect
 
 # Create Swap Space
-if [ $swap_space -eq 1 ]; then
-  title "Create Swap Space"
-  if [ -f /swapfile ]; then
-    status "swapfile already exists"
-  else
-    total_ram=$(free -m | grep Mem: | awk '{print $2}')
-    sudo fallocate -l ${total_ram}M /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-    sudo swapon /swapfile
-    status "swapfile created"
-  fi
-fi
+title "Create Swap Space"
+case $installs_swap_space in
+  [yY][eE][sS]|[yY])
+    if [ -f /swapfile ]; then
+      status "swapfile already exists"
+    else
+      total_ram=$(free -m | grep Mem: | awk '{print $2}')
+      sudo fallocate -l ${total_ram}M /swapfile
+      sudo chmod 600 /swapfile
+      sudo mkswap /swapfile
+      sudo swapon /swapfile
+      status "swapfile created"
+    fi;;
+  *)
+    status "not creating swap space";;
+esac
 
-# Install Nginx
-if [ $nginx -eq 1 ]; then
-  title "Install Nginx"
-  source ./installers/nginx.sh
-fi
+title "Install Nginx"
+case $installs_nginx in
+  [yY][eE][sS]|[yY])
+    source ./installers/nginx.sh
+    status "nginx installed";;
+  *)
+    status "not installing nginx";;
+esac
 
-if [ $php -eq 1 ]; then
-  # Install PHP
-  title "Install PHP Version: $php_version"
-  source ./installers/php$php_version.sh
-fi
+title "Install PHP Version: $installs_php_version"
+case $installs_php in
+  [yY][eE][sS]|[yY])
+    source ./installers/php$installs_php_version.sh
+    status "php$installs_php_version installed";;
+  *)
+    status "not installing php$installs_php_version";;
+esac
 
-if [ $composer -eq 1 ]; then
-  # Install composer
-  title "Install Composer"
+title "Install Composer"
+case $installs_composer in
+  [yY][eE][sS]|[yY])
   source ./installers/composer.sh
-fi
+  status "composer installed";;
+  *)
+  status "not installing composer";;
+esac
 
-if [ $node_and_npm -eq 1 ]; then
-  # Install node
-  title "Install Node and NPM"
+title "Install Node and NPM"
+case $installs_node_and_npm in
+  [yY][eE][sS]|[yY])
   source ./installers/node.sh
-fi
+  status "node installed";;
+  *)
+  status "not installing node";;
+esac
 
-if [ $redis -eq 1 ]; then
-  title "Install Redis"
+title "Install Redis"
+case $installs_redis in
+  [yY][eE][sS]|[yY])
   source ./installers/redis.sh
-fi
+  status "redis installed";;
+  *)
+  status "not installing redis";;
+esac
 
 if [ $sqlite -eq 1 ]; then
   title "Install SQLite"
   source ./installers/sqlite.sh
 fi
 
-if [ $mysql -eq 1 ]; then
-  title "Install MySQL"
+title "Install MySQL"
+case $installs_database_mysql in
+  [yY][eE][sS]|[yY])
   source ./installers/mysql.sh
-fi
+  status "mysql installed";;
+  *)
+  status "not installing mysql";;
+esac
 
-if [ $mariadb -eq 1 ]; then
-  title "Install MariaDB"
+title "Install MariaDB"
+case $installs_database_mariadb in
+  [yY][eE][sS]|[yY])
   source ./installers/mariadb.sh
-fi
+  status "mariadb installed";;
+  *)
+  status "not installing mariadb";;
+esac
 
-if [ $certbot -eq 1 ]; then
-  title "Install Certbot (LetsEncrypt)"
+title "Install Certbot (LetsEncrypt)"
+case $installs_certbot in
+  [yY][eE][sS]|[yY])
   source ./installers/certbot.sh
-fi
+  status "certbot installed";;
+  *)
+  status "not installing certbot";;
+esac
 
 # Force Locale
 #echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
@@ -100,35 +132,59 @@ fi
 # Set My Timezone
 #sudo ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
-if [ $apache -eq 1 ]; then
-  title "Install apache"
+title "Install apache"
+case $installs_apache in
+  [yY][eE][sS]|[yY])
   source ./installers/apache.sh
-fi
+  status "apache installed";;
+  *)
+  status "not installing apache";;
+esac
 
-if [ $memcache -eq 1 ]; then
-  title "Install memcache"
+title "Install memcache"
+case $installs_memcache in
+  [yY][eE][sS]|[yY])
   source ./installers/memcache.sh
-fi
+  status "memcache installed";;
+  *)
+  status "not installing memcache";;
+esac
 
-if [ $beanstalk -eq 1 ]; then
-  title "Install beanstalk"
+title "Install beanstalk"
+case $installs_beanstalk in
+  [yY][eE][sS]|[yY])
   source ./installers/beanstalk.sh
-fi
+  status "beanstalk installed";;
+  *)
+  status "not installing beanstalk";;
+esac
 
-if [ $mailhog -eq 1 ]; then
-  title "Install mailhog"
+title "Install mailhog"
+case $installs_mailhog in
+  [yY][eE][sS]|[yY])
   source ./installers/mailhog.sh
-fi
+  status "mailhog installed";;
+  *)
+  status "not installing mailhog";;
+esac
 
-if [ $ngrok -eq 1 ]; then
-  title "Install ngrok"
+title "Install ngrok"
+case $installs_mailhog in
+  [yY][eE][sS]|[yY])
   source ./installers/ngrok.sh
-fi
+  status "ngrok installed";;
+  *)
+  status "not installing ngrok";;
+esac
 
-if [ $postfix -eq 1 ]; then
-  title "Install postfix"
+title "Install postfix"
+case $installs_postfix in
+  [yY][eE][sS]|[yY])
   source ./installers/postfix.sh
-fi
+  status "postfix installed";;
+  *)
+  status "not installing postfix";;
+esac
 
 # One last upgrade check
 title "One Last Upgrade Check"
