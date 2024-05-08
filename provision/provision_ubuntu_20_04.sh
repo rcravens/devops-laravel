@@ -57,8 +57,8 @@ case $installs_nginx in
     status "not installing nginx";;
 esac
 
-title "Install PHP Version: $installs_php_version"
-case $installs_php in
+title "Install PHP Version"
+case $installs_php_install in
   [yY][eE][sS]|[yY])
     source ./installers/php$installs_php_version.sh
     status "php$installs_php_version installed";;
@@ -67,7 +67,7 @@ case $installs_php in
 esac
 
 title "Install Composer"
-case $installs_composer in
+case $installs_php_composer in
   [yY][eE][sS]|[yY])
   source ./installers/composer.sh
   status "composer installed";;

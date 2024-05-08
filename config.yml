@@ -4,13 +4,13 @@ installs:
   php:
     install: yes
     composer: yes
-    php_version: 8.3   # version (e.g., 8.3)
+    version: 8.3   # version (e.g., 8.3)
   node_and_npm: yes
   redis: yes
   sqlite: yes
   database:
     mysql: yes
-    mariadb: yes
+    mariadb: no
     db_root_password: secret
   certbot: yes
   apache: yes
