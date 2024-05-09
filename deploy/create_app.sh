@@ -122,7 +122,7 @@ status "You should now be able to deploy running 'deploy' while logged in as $us
 title "Updating MySQL"
 status "MySQL Database: $username"
 status "MySQL User: $username"
-mysql -u root -p$db_root_password <<SQL
+mysql -u root -p$installs_database_root_password <<SQL
 CREATE DATABASE IF NOT EXISTS $username CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE USER IF NOT EXISTS '$username'@'localhost' IDENTIFIED BY '$db_password';
 GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';
@@ -157,7 +157,7 @@ if [ ! -f /etc/nginx/sites-available/$username.conf ]; then
     sudo sed -i "s|listen PORT;|listen $app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|listen \[::\]:PORT;|listen [::]:$app_port;|" /etc/nginx/sites-available/$username.conf
     sudo sed -i "s|root;|root $deploy_directory/current/public;|" /etc/nginx/sites-available/$username.conf
-    sudo sed -i "s|phpXXXX|php$php_version-$username|" /etc/nginx/sites-available/$username.conf
+    sudo sed -i "s|phpXXXX|php$installs_php_version-$username|" /etc/nginx/sites-available/$username.conf
     sudo ln -s /etc/nginx/sites-available/$username.conf /etc/nginx/sites-enabled/$username.conf
     sudo service nginx reload
     status "Created: /etc/nginx/sites-available/$username.conf"
@@ -166,18 +166,18 @@ else
 fi
 
 title "Creating PHP-FPM Pool Conf"
-if [ ! -f /etc/php/$php_version/fpm/pool.d/$username.conf ]; then
-    sudo cp /etc/php/$php_version/fpm/pool.d/www.conf /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s|\[www\]|[$username]|" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s/user =.*/user = $username/" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s/group =.*/group = $username/" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo sed -i "s|listen =.*|listen = /run/php/php$php_version-$username-fpm.sock|" /etc/php/$php_version/fpm/pool.d/$username.conf
-    sudo service php$php_version-fpm restart
-    status "Created: /etc/php/$php_version/fpm/pool.d/$username"
+if [ ! -f /etc/php/$installs_php_version/fpm/pool.d/$username.conf ]; then
+    sudo cp /etc/php/$installs_php_version/fpm/pool.d/www.conf /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s|\[www\]|[$username]|" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s/user =.*/user = $username/" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s/group =.*/group = $username/" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s/listen\.owner.*/listen.owner = $username/" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s/listen\.group.*/listen.group = $username/" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo sed -i "s|listen =.*|listen = /run/php/php$installs_php_version-$username-fpm.sock|" /etc/php/$installs_php_version/fpm/pool.d/$username.conf
+    sudo service php$installs_php_version-fpm restart
+    status "Created: /etc/php/$installs_php_version/fpm/pool.d/$username"
 else
-  status "Already existsL /etc/php/$php_version/fpm/pool.d/$username.conf"
+  status "Already existsL /etc/php/$installs_php_version/fpm/pool.d/$username.conf"
 fi
 
 # Create supervisor conf
