@@ -11,6 +11,26 @@ cd $my_path
 # Load common
 source $my_path/../common/load_common.sh
 
+title "Deploying to other servers"
+if [ -n "$servers" ]; then
+  for i in "${!servers[@]}"; do
+    if [ -f "$deploy_directory/build*.zip" ]; then
+      # need to use the ubuntu user with the private key already deplo
+      # copy the build to the other server
+      scp -i ~/.ssh/laravel_demo.pem $deploy_directory/build*.zip  ubuntu@${servers[$i]}:/home/ubuntu
+      ssh -i ~/.ssh/laravel_demo.pem ubuntu@"${servers[$1]}" <<ENDSSH
+        sudo mv /home/ubuntu/build*.zip /home/$username/deployments
+        sudo chown -R $username:$username /home/$username/deployments
+        sudo -u $username /usr/local/bin/devops/deploy/deploy.sh
+ENDSSH
+      status "Build copied and deployed to: ${servers[$i]}"
+    fi
+  done
+else
+  status "No other servers configured"
+fi
+exit 0
+
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
 if [ ! "$username" == "$current_user" ]; then

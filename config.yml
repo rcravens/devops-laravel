@@ -1,5 +1,6 @@
+servers: '10.0.1.256,10.0.2.256'
 installs:
-  swapspace: n
+  swapspace: yes
   nginx: yes
   php:
     install: yes
