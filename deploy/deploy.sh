@@ -15,6 +15,7 @@ title "Deploying to other servers"
 # NOTE: This is a bit sketchy
 # We only have the ubuntu user on this node that can connect to the other nodes
 # So we need to use the scp/ssh commands with ubuntu user sessions....not ideal
+# This also assumes that the deployment user is the same on all nodes
 #
 status "servers: $servers"
 if [ -n "$servers" ]; then
