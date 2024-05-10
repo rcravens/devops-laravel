@@ -19,7 +19,9 @@ title "Deploying to other servers"
 status "servers: $servers"
 if [ -n "$servers" ]; then
   for i in "${!servers[@]}"; do
-    if [ -f "$deploy_directory/build*.zip" ]; then
+    echo "inside the for loop: ${servers[$i]}"
+    if [ -f $deploy_directory/build*.zip ]; then
+      echo "inside the if block"
       # copy the build to the other server
       scp -i ~/.ssh/laravel_demo.pem $deploy_directory/build*.zip  ubuntu@${servers[$i]}:/home/ubuntu
       # move the zip file to the deployment user (assumes same username)
