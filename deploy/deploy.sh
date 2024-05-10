@@ -12,12 +12,19 @@ cd $my_path
 source $my_path/../common/load_common.sh
 
 title "Deploying to other servers"
+# NOTE: This is a bit sketchy
+# We only have the ubuntu user on this node that can connect to the other nodes
+# So we need to use the scp/ssh commands with ubuntu user sessions....not ideal
+#
+status "servers: $servers"
 if [ -n "$servers" ]; then
   for i in "${!servers[@]}"; do
     if [ -f "$deploy_directory/build*.zip" ]; then
-      # need to use the ubuntu user with the private key already deplo
       # copy the build to the other server
       scp -i ~/.ssh/laravel_demo.pem $deploy_directory/build*.zip  ubuntu@${servers[$i]}:/home/ubuntu
+      # move the zip file to the deployment user (assumes same username)
+      # chown to set the owner of the zip to the deployment user
+      # run the deployment script on the other node
       ssh -i ~/.ssh/laravel_demo.pem ubuntu@"${servers[$1]}" <<ENDSSH
         sudo mv /home/ubuntu/build*.zip /home/$username/deployments
         sudo chown -R $username:$username /home/$username/deployments
@@ -29,7 +36,6 @@ ENDSSH
 else
   status "No other servers configured"
 fi
-exit 0
 
 # Assuming this file is being run as the deployment user
 current_user=$(whoami)
